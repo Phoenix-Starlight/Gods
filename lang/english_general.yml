@@ -3,6 +3,7 @@ Version:
   Author: DogOnFire
   Version: 0.2
 Info:
+  HolylandSize: You religion now has claimed $Amount/$PlayerName Holyland
   CannotBuildAltarToOtherGods: You cannot build altars to other Gods
   CannotClaimMoreHolyland: You cannot claim more Holyland
   YourPrayerPower: Your prayer power is now $Amount
