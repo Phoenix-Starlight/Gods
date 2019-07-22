@@ -1,7 +1,9 @@
 Version:
   Name : Mob Goddess
   Author: DogOnFire
-  Version: 0.1
+  Version: 0.2
+GodToBelieversClaimedHolyLand:
+- $PlayerName claimed more Holy land in our glory!
 GodToBelieverPrayerWhenNoItemNeed:
 - $PlayerName, you already have the items you need to do my work!
 GodToBelieverMarriedCouple:
