@@ -3,7 +3,7 @@ Gods
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4b699612c3d849bfb895080498e1601a)](https://app.codacy.com/app/DogOnFire/Gods?utm_source=github.com&utm_medium=referral&utm_content=DogOnFire/Gods&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/DogOnFire/Gods.svg?branch=master)](https://travis-ci.com/DogOnFire/Gods)
-
+[![](https://tokei.rs/b1/github/XAMPPRocky/tokei?category=lines)](https://github.com/DogOnFire/Gods).
 
 # ![Gods](https://raw.githubusercontent.com/DogOnFire/Gods/master/img/Gods.jpg)
 
