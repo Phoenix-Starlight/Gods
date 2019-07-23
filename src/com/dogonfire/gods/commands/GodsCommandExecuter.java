@@ -80,41 +80,41 @@ public class GodsCommandExecuter implements CommandExecutor {
 	}
 
 	private void CommandGods(CommandSender sender) {
-		sender.sendMessage(ChatColor.YELLOW + "------------------ " + Gods.get().getDescription().getFullName() + " ------------------");
+		sender.sendMessage(ChatColor.YELLOW + "------------------ " + Gods.instance().getDescription().getFullName() + " ------------------");
 		sender.sendMessage(ChatColor.AQUA + "By DogOnFire");
 		sender.sendMessage("" + ChatColor.AQUA);
-		sender.sendMessage(ChatColor.AQUA + "There are currently " + ChatColor.WHITE + GodManager.get().getAllGods().size() + ChatColor.AQUA + " Gods and");
-		sender.sendMessage("" + ChatColor.WHITE + BelieverManager.get().getBelievers().size() + ChatColor.AQUA + " believers in " + GodsConfiguration.get().getServerName());
+		sender.sendMessage(ChatColor.AQUA + "There are currently " + ChatColor.WHITE + GodManager.instance().getAllGods().size() + ChatColor.AQUA + " Gods and");
+		sender.sendMessage("" + ChatColor.WHITE + BelieverManager.instance().getBelievers().size() + ChatColor.AQUA + " believers in " + GodsConfiguration.instance().getServerName());
 		sender.sendMessage("" + ChatColor.AQUA);
 		if (sender != null && sender instanceof Player) {
 			Player player = (Player) sender;
-			String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+			String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 			if (godName != null) {
-				List<UUID> priests = GodManager.get().getPriestsForGod(godName);
+				List<UUID> priests = GodManager.instance().getPriestsForGod(godName);
 				if (priests == null || !priests.contains(player.getUniqueId())) {
 					sender.sendMessage(ChatColor.WHITE + "You believe in " + ChatColor.GOLD + godName);
 				} else {
 					sender.sendMessage(ChatColor.WHITE + "You are the priest of " + ChatColor.GOLD + godName);
 				}
 
-				if (GodsConfiguration.get().isPrayersEnabled()) {
-					sender.sendMessage(ChatColor.WHITE + "You have " + ChatColor.GOLD + BelieverManager.get().getPrayerPower(player.getUniqueId()) + ChatColor.WHITE + " prayer power");
+				if (GodsConfiguration.instance().isPrayersEnabled()) {
+					sender.sendMessage(ChatColor.WHITE + "You have " + ChatColor.GOLD + BelieverManager.instance().getPrayerPower(player.getUniqueId()) + ChatColor.WHITE + " prayer power");
 				}
 			} else {
 				sender.sendMessage(ChatColor.RED + "You do not believe in any god");
 			}
-			if (GodsConfiguration.get().isMarriageEnabled()) {
+			if (GodsConfiguration.instance().isMarriageEnabled()) {
 				String partnerName = MarriageManager.get().getPartnerName(player.getUniqueId());
 				if (partnerName != null) {
 					sender.sendMessage(ChatColor.WHITE + "You are married to " + ChatColor.GOLD + partnerName);
 				}
 			}
 			sender.sendMessage("" + ChatColor.AQUA);
-			Gods.get().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.GodsHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help", 80);
-			Gods.get().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.AltarHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help altar", 160);
+			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.GodsHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help", 80);
+			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.AltarHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help altar", 160);
 
-			if (GodsConfiguration.get().isPrayersEnabled()) {
-				Gods.get().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.PrayForHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g prayfor", 240);
+			if (GodsConfiguration.instance().isPrayersEnabled()) {
+				Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.PrayForHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g prayfor", 240);
 			}
 		}
 		sender.sendMessage(ChatColor.GREEN + "For the full command list, please use " + ChatColor.AQUA + "/gods help");
@@ -124,7 +124,7 @@ public class GodsCommandExecuter implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 0) {
 			CommandGods(sender);
-			Gods.get().log(sender.getName() + " /gods");
+			Gods.instance().log(sender.getName() + " /gods");
 			return true;
 		}
 		

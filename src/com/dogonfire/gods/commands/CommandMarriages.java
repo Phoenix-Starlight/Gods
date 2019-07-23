@@ -22,7 +22,7 @@ public class CommandMarriages extends GodsCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!GodsConfiguration.get().isMarriageEnabled()) {
+		if (!GodsConfiguration.instance().isMarriageEnabled()) {
 			sender.sendMessage(ChatColor.RED + "Marriages are not enabled on this server");
 			return;
 		}
@@ -40,7 +40,7 @@ public class CommandMarriages extends GodsCommand {
 			sender.sendMessage("There are no married couples yet!");
 			return;
 		}
-		sender.sendMessage(ChatColor.YELLOW + "--------- The Married Couples in " + GodsConfiguration.get().getServerName() + " ---------");
+		sender.sendMessage(ChatColor.YELLOW + "--------- The Married Couples in " + GodsConfiguration.instance().getServerName() + " ---------");
 		int l = couples.size();
 
 		List<MarriageManager.MarriedCouple> couplesList = couples;
@@ -66,8 +66,8 @@ public class CommandMarriages extends GodsCommand {
 				date = minutes + " min ago";
 			}
 
-			String player1Name = Gods.get().getServer().getOfflinePlayer(couple.player1Id).getName();
-			String player2Name = Gods.get().getServer().getOfflinePlayer(couple.player2Id).getName();
+			String player1Name = Gods.instance().getServer().getOfflinePlayer(couple.player1Id).getName();
+			String player2Name = Gods.instance().getServer().getOfflinePlayer(couple.player2Id).getName();
 
 			if (sender != null) {
 
@@ -80,7 +80,7 @@ public class CommandMarriages extends GodsCommand {
 							+ StringUtils.rightPad(new StringBuilder().append(" Loved ").append(ChatColor.GOLD).append(date).toString(), 18));
 				}
 			} else {
-				Gods.get().log(StringUtils.rightPad(new StringBuilder(player1Name).append(" & ").append(player2Name).append(" (").append(couple.godName).append(")").toString(), 30) + ChatColor.AQUA + StringUtils.rightPad(new StringBuilder().append(
+				Gods.instance().log(StringUtils.rightPad(new StringBuilder(player1Name).append(" & ").append(player2Name).append(" (").append(couple.godName).append(")").toString(), 30) + ChatColor.AQUA + StringUtils.rightPad(new StringBuilder().append(
 						" Loved ").append(ChatColor.GOLD).append(date).toString(), 18));
 			}
 			n++;
@@ -90,8 +90,8 @@ public class CommandMarriages extends GodsCommand {
 
 		if (!playerShown) {
 			for (MarriageManager.MarriedCouple couple : couples) {
-				String player1Name = Gods.get().getServer().getOfflinePlayer(couple.player1Id).getName();
-				String player2Name = Gods.get().getServer().getOfflinePlayer(couple.player2Id).getName();
+				String player1Name = Gods.instance().getServer().getOfflinePlayer(couple.player1Id).getName();
+				String player2Name = Gods.instance().getServer().getOfflinePlayer(couple.player2Id).getName();
 
 				if ((couple.player1Id.equals(player.getUniqueId())) || (couple.player2Id.equals(player.getUniqueId()))) {
 					sender.sendMessage("" + ChatColor.GOLD + n + " - " + StringUtils.rightPad(new StringBuilder(player1Name).append(" & ").append(player2Name).append(" (").append(couple.godName).append(")").toString(), 40) + StringUtils.rightPad(

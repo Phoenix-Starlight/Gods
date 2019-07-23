@@ -29,12 +29,12 @@ public class CommandHunt extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		if (godName == null) {
 			sender.sendMessage(ChatColor.RED + "You do not believe in a God");
 			return;
 		}
-		Location pilgrimageLocation = QuestManager.get().getQuestLocation(godName);
+		Location pilgrimageLocation = QuestManager.instance().getQuestLocation(godName);
 		if (player == null || player.isFlying()) {
 			sender.sendMessage(ChatColor.RED + "No flying allowed.");
 			return;
@@ -44,12 +44,12 @@ public class CommandHunt extends GodsCommand {
 			return;
 		}
 		if (!pilgrimageLocation.getWorld().getName().equals(player.getWorld().getName())) {
-			Gods.get().logDebug("PilgrimageQuest for '" + player.getDisplayName() + "' is wrong world");
+			Gods.instance().logDebug("PilgrimageQuest for '" + player.getDisplayName() + "' is wrong world");
 			return;
 		}
 		Vector vector = pilgrimageLocation.toVector().subtract(player.getLocation().toVector());
-		LanguageManager.get().setAmount((int) vector.length());
-		Gods.get().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.QuestTargetRange, ChatColor.AQUA, (int) vector.length(), "", 20);
+		LanguageManager.instance().setAmount((int) vector.length());
+		Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.QuestTargetRange, ChatColor.AQUA, (int) vector.length(), "", 20);
 
 	}
 

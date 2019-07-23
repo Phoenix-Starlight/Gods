@@ -27,26 +27,26 @@ public class CommandPriestStartAttack extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		if (!GodManager.get().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId())) {
 			player.sendMessage(stringPreistOnly);
 			return;
 		}
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
-		if (GodManager.get().getContestedHolyLandForGod(godName) != null) {
+		if (GodManager.instance().getContestedHolyLandForGod(godName) != null) {
 			sender.sendMessage(ChatColor.RED + "You are already attacking a Holy Land!");
 			return;
 		}
-		String otherGodName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		if (!GodManager.get().hasWarRelation(godName, otherGodName)) {
+		String otherGodName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		if (!GodManager.instance().hasWarRelation(godName, otherGodName)) {
 			sender.sendMessage(ChatColor.RED + "You are not in war with " + ChatColor.GOLD + otherGodName + "!");
 			return;
 		}
-		GodManager.get().setContestedHolyLandForGod(godName, player.getLocation());
+		GodManager.instance().setContestedHolyLandForGod(godName, player.getLocation());
 		sender.sendMessage(ChatColor.AQUA + "You started an attack on the Holy Land of " + ChatColor.GOLD + otherGodName);
-		GodManager.get().sendInfoToBelievers(godName, LanguageManager.LANGUAGESTRING.AttackingHolyLandsHelp, ChatColor.AQUA, otherGodName, 10, 10, 80);
-		LanguageManager.get().setPlayerName(otherGodName);
-		GodManager.get().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversAttackStarted, 40);
+		GodManager.instance().sendInfoToBelievers(godName, LanguageManager.LANGUAGESTRING.AttackingHolyLandsHelp, ChatColor.AQUA, otherGodName, 10, 10, 80);
+		LanguageManager.instance().setPlayerName(otherGodName);
+		GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversAttackStarted, 40);
 	}
 
 }

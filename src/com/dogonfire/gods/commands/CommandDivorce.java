@@ -17,7 +17,7 @@ public class CommandDivorce extends GodsCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!GodsConfiguration.get().isMarriageEnabled()) {
+		if (!GodsConfiguration.instance().isMarriageEnabled()) {
 			sender.sendMessage(ChatColor.RED + "Marrige is not enabled on this server");
 			return;
 		}
@@ -30,7 +30,7 @@ public class CommandDivorce extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String thisGodName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String thisGodName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
 		if (thisGodName == null) {
 			player.sendMessage(ChatColor.RED + "You do not believe in a God");

@@ -1,6 +1,7 @@
 package com.dogonfire.gods.managers;
 
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -13,7 +14,7 @@ public class PermissionsManager
 {
 	private static PermissionsManager instance;
 
-	public static PermissionsManager get()
+	public static PermissionsManager instance()
 	{
 		if (instance == null)
 			instance = new PermissionsManager();
@@ -21,29 +22,24 @@ public class PermissionsManager
 	}
 
 	private String				pluginName			= "null";
-	private Gods				plugin;
 	private Permission 			vaultPermission;
 	
 	private PermissionsManager()
 	{
-	}
-
-	public PermissionsManager(Gods g)
-	{
-		this.plugin = g;
-			
-		RegisteredServiceProvider<Permission> permissionProvider = plugin.getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+		RegisteredServiceProvider<Permission> permissionProvider = Gods.instance().getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+		
+		if(permissionProvider==null)
+		{
+			Gods.instance().log(ChatColor.RED + "Could not detect Vault plugin.");
+			return;
+		}
+		
 		vaultPermission = permissionProvider.getProvider();
 	}
 
 	public void load()
 	{
 		// Nothing to see here
-	}
-
-	public Plugin getPlugin()
-	{
-		return plugin;
 	}
 
 	public String getPermissionPluginName()
@@ -58,12 +54,12 @@ public class PermissionsManager
 
 	public String getGroup(String playerName)
 	{
-		return vaultPermission.getPrimaryGroup(plugin.getServer().getPlayer(playerName));
+		return vaultPermission.getPrimaryGroup(Gods.instance().getServer().getPlayer(playerName));
 	}
 
 	public void setGroup(String playerName, String groupName)
 	{
-		Player player = plugin.getServer().getPlayer(playerName);
+		Player player = Gods.instance().getServer().getPlayer(playerName);
 		vaultPermission.playerAddGroup(player, groupName);
 	}
 }

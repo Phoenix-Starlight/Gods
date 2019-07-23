@@ -18,7 +18,7 @@ public class CommandEditBible extends GodsCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!GodsConfiguration.get().isBiblesEnabled()) {
+		if (!GodsConfiguration.instance().isBiblesEnabled()) {
 			sender.sendMessage(ChatColor.RED + "Bibles are not enabled on this server");
 			return;
 		}
@@ -31,21 +31,21 @@ public class CommandEditBible extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		if (godName == null) {
 			sender.sendMessage(ChatColor.RED + "You do not believe in a God");
 			return;
 		}
 
-		if (!GodManager.get().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId())) {
 			sender.sendMessage(ChatColor.RED + "Only your priest can edit your Holy Book");
 			return;
 		}
-		if (!HolyBookManager.get().giveEditBible(godName, player.getName())) {
+		if (!HolyBookManager.instance().giveEditBible(godName, player.getName())) {
 			sender.sendMessage(ChatColor.RED + "Could not produce a editable bible for " + godName);
 			return;
 		}
-		sender.sendMessage(ChatColor.AQUA + "You produced a copy of " + ChatColor.GOLD + HolyBookManager.get().getBibleTitle(godName) + ChatColor.AQUA + "!");
+		sender.sendMessage(ChatColor.AQUA + "You produced a copy of " + ChatColor.GOLD + HolyBookManager.instance().getBibleTitle(godName) + ChatColor.AQUA + "!");
 		sender.sendMessage(ChatColor.AQUA + "After you have edited it, set this as your bible with " + ChatColor.WHITE + "/g setbible" + ChatColor.AQUA + "!");
 	}
 

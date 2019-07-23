@@ -9,29 +9,33 @@ import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.GodManager;
 import com.dogonfire.gods.managers.HolyLandManager;
 
-public class CommandAttackHolyLand extends GodsCommand {
-
-	protected CommandAttackHolyLand() {
+public class CommandAttackHolyLand extends GodsCommand
+{
+	protected CommandAttackHolyLand()
+	{
 		super("attack");
 		this.permission = "gods.priest.attack";
 		this.description = "Join the attack on the enemy Holy Land";
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!hasPermission(sender)) {
+	public void onCommand(CommandSender sender, String command, String... args)
+	{
+		if (!hasPermission(sender))
+		{
 			sender.sendMessage(ChatColor.RED + "You do not have permission for that");
 			return;
 		}
-		if (sender instanceof Player == false) {
+		if (sender instanceof Player == false)
+		{
 			sender.sendMessage(stringPlayerOnly);
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		Location attackLocation = GodManager.get().getContestedHolyLandAttackLocationForGod(godName);
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		Location attackLocation = GodManager.instance().getContestedHolyLandAttackLocationForGod(godName);
 		player.teleport(attackLocation);
-		String otherGodName = HolyLandManager.get().getGodAtHolyLandLocation(attackLocation);
+		String otherGodName = HolyLandManager.instance().getGodAtHolyLandLocation(attackLocation);
 		sender.sendMessage(ChatColor.AQUA + "You joined the attack on the Holy Land of " + ChatColor.GOLD + otherGodName);
 	}
 }

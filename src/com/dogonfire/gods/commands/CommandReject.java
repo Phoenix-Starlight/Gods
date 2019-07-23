@@ -23,7 +23,7 @@ public class CommandReject extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		GodManager.get().believerReject(player.getUniqueId());
+		GodManager.instance().believerReject(player.getUniqueId());
 	}
 
 }

@@ -27,32 +27,32 @@ public class CommandInvite extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		if (!GodManager.get().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId())) {
 			player.sendMessage(ChatColor.RED + "Only priests can invite players");
 			return;
 		}
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
 		if (godName == null) {
 			player.sendMessage(ChatColor.RED + "You dont believe in a god");
 			return;
 		}
 		String playerName = args[1];
-		Player invitedPlayer = Gods.get().getServer().getPlayer(playerName);
+		Player invitedPlayer = Gods.instance().getServer().getPlayer(playerName);
 		if (invitedPlayer == null) {
 			player.sendMessage(ChatColor.RED + "There is no player with the name '" + ChatColor.YELLOW + playerName + ChatColor.RED + " online.");
 			return;
 		}
-		String invitedPlayerGod = BelieverManager.get().getGodForBeliever(invitedPlayer.getUniqueId());
+		String invitedPlayerGod = BelieverManager.instance().getGodForBeliever(invitedPlayer.getUniqueId());
 		if ((invitedPlayerGod != null) && (invitedPlayerGod.equals(godName))) {
 			player.sendMessage(ChatColor.YELLOW + playerName + ChatColor.RED + " already believes in '" + ChatColor.GOLD + godName + ChatColor.RED + "!");
 			return;
 		}
-		BelieverManager.get().setInvitation(invitedPlayer.getUniqueId(), godName);
-		Gods.get().log(godName + " invited to " + invitedPlayer.getName() + " to join the religion");
-		LanguageManager.get().setPlayerName(invitedPlayer.getName());
-		GodManager.get().GodSay(godName, invitedPlayer, LanguageManager.LANGUAGESTRING.GodToPlayerInvite, 10);
-		Gods.get().sendInfo(invitedPlayer.getUniqueId(), LanguageManager.LANGUAGESTRING.GodToBelieverQuestionHelp, ChatColor.AQUA, "/gods yes or /gods no", "/gods yes or /gods no", 40);
+		BelieverManager.instance().setInvitation(invitedPlayer.getUniqueId(), godName);
+		Gods.instance().log(godName + " invited to " + invitedPlayer.getName() + " to join the religion");
+		LanguageManager.instance().setPlayerName(invitedPlayer.getName());
+		GodManager.instance().GodSay(godName, invitedPlayer, LanguageManager.LANGUAGESTRING.GodToPlayerInvite, 10);
+		Gods.instance().sendInfo(invitedPlayer.getUniqueId(), LanguageManager.LANGUAGESTRING.GodToBelieverQuestionHelp, ChatColor.AQUA, "/gods yes or /gods no", "/gods yes or /gods no", 40);
 		player.sendMessage(ChatColor.AQUA + "You invited " + ChatColor.YELLOW + playerName + ChatColor.AQUA + " to join " + ChatColor.GOLD + godName + ChatColor.AQUA + "!");
 	}
 

@@ -16,7 +16,7 @@ public class CommandGiveHolyArtifact extends GodsCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!GodsConfiguration.get().isHolyArtifactsEnabled()) {
+		if (!GodsConfiguration.instance().isHolyArtifactsEnabled()) {
 			sender.sendMessage(ChatColor.RED + "Holy Artifacts are not enabled on this server");
 			return;
 		}
@@ -29,8 +29,8 @@ public class CommandGiveHolyArtifact extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		GodManager.get().blessPlayerWithHolyArtifact(godName, player);
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		GodManager.instance().blessPlayerWithHolyArtifact(godName, player);
 		sender.sendMessage(ChatColor.GOLD + godName + ChatColor.AQUA + " gave " + player.getName() + ChatColor.AQUA + " a Holy artifact!");
 	}
 

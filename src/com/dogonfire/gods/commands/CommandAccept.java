@@ -28,6 +28,6 @@ public class CommandAccept extends GodsCommand
 			return;
 		}
 		
-		GodManager.get().believerAccept(((Player) sender).getUniqueId());
+		GodManager.instance().believerAccept(((Player) sender).getUniqueId());
 	}
 }

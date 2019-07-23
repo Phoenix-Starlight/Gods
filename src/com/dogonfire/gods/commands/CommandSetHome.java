@@ -28,28 +28,28 @@ public class CommandSetHome extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		if (godName == null) {
 			sender.sendMessage(ChatColor.RED + "You do not believe in a God");
 			return;
 		}
-		if ((GodsConfiguration.get().isOnlyPriestCanSetHome()) && (!GodManager.get().isPriest(player.getUniqueId()))) {
+		if ((GodsConfiguration.instance().isOnlyPriestCanSetHome()) && (!GodManager.instance().isPriest(player.getUniqueId()))) {
 			sender.sendMessage(ChatColor.RED + "Only your priest can set the home for your religion");
 			return;
 		}
-		if (GodsConfiguration.get().isHolyLandEnabled()) {
-			if (HolyLandManager.get().isNeutralLandLocation(player.getLocation())) {
+		if (GodsConfiguration.instance().isHolyLandEnabled()) {
+			if (HolyLandManager.instance().isNeutralLandLocation(player.getLocation())) {
 				sender.sendMessage(ChatColor.RED + "You can only set religion home within your Holy Land");
 				return;
 			}
-			String locationGod = HolyLandManager.get().getGodAtHolyLandLocation(player.getLocation());
+			String locationGod = HolyLandManager.instance().getGodAtHolyLandLocation(player.getLocation());
 			if ((locationGod == null) || (!locationGod.equals(godName))) {
 				sender.sendMessage(ChatColor.RED + "You can only set religion home within your Holy Land");
 				return;
 			}
 		}
-		GodManager.get().setHomeForGod(godName, player.getLocation());
-		LanguageManager.get().setPlayerName(player.getName());
-		GodManager.get().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversSetHome, 2);
+		GodManager.instance().setHomeForGod(godName, player.getLocation());
+		LanguageManager.instance().setPlayerName(player.getName());
+		GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversSetHome, 2);
 	}
 }

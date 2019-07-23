@@ -7,9 +7,9 @@ import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class UpdateChecker
 {
@@ -50,25 +50,25 @@ public class UpdateChecker
 			{
 				conn.addRequestProperty("X-API-Key", this.apiKey);
 			}
-			conn.addRequestProperty("User-Agent", "MyHorse (by DoggyOnFire)");
+			conn.addRequestProperty("User-Agent", "Gods (by DoggyOnFire)");
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String response = reader.readLine();
 
-			JSONArray array = (JSONArray) JSONValue.parse(response);
+			JsonArray array = new JsonArray();//(JsonArray) JsonArray.parse(response);
 			if (array.size() > 0)
 			{
-				JSONObject latest = (JSONObject) array.get(array.size() - 1);
+				JsonObject latest = (JsonObject) array.get(array.size() - 1);
 
-				versionName = (String) latest.get("name");
+				versionName = latest.get("name").getAsString();
 
-				versionLink = (String) latest.get("downloadUrl");
+				versionLink = latest.get("downloadUrl").getAsString();
 
-				versionType = (String) latest.get("releaseType");
+				versionType = latest.get("releaseType").getAsString();
 
-				versionFileName = (String) latest.get("fileName");
+				versionFileName = latest.get("fileName").getAsString();
 
-				versionGameVersion = (String) latest.get("gameVersion");
+				versionGameVersion = latest.get("gameVersion").getAsString();
 			}
 			else
 			{

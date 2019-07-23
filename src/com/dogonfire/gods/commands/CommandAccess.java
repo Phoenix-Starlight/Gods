@@ -8,9 +8,10 @@ import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.GodManager;
 
-public class CommandAccess extends GodsCommand {
-
-	protected CommandAccess() {
+public class CommandAccess extends GodsCommand
+{
+	protected CommandAccess()
+	{
 		super("access");
 		this.permission = "gods.priest.access";
 		this.parameters = "[open/close]";
@@ -18,36 +19,46 @@ public class CommandAccess extends GodsCommand {
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!hasPermission(sender)) {
+	public void onCommand(CommandSender sender, String command, String... args)
+	{
+		if (!hasPermission(sender))
+		{
 			sender.sendMessage(ChatColor.RED + "You do not have permission for that");
 		}
-		if (sender instanceof Player == false) {
+		if (sender instanceof Player == false)
+		{
 			sender.sendMessage(stringPlayerOnly);
 			return;
 		}
 		Player player = (Player) sender;
-		if (!GodManager.get().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId()))
+		{
 			player.sendMessage(ChatColor.RED + "Only priests can set religion access");
 			return;
 		}
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		if (!GodManager.get().godExist(godName)) {
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		if (!GodManager.instance().godExist(godName))
+		{
 			player.sendMessage(ChatColor.RED + "That God does not exist");
 			return;
 		}
 		String access = args[0];
-		if (access.equalsIgnoreCase("open")) {
-			GodManager.get().setPrivateAccess(godName, false);
-			Gods.get().log(player.getName() + " /gods open");
+		if (access.equalsIgnoreCase("open"))
+		{
+			GodManager.instance().setPrivateAccess(godName, false);
+			Gods.instance().log(player.getName() + " /gods open");
 			player.sendMessage(ChatColor.AQUA + "You set the religion access to " + ChatColor.YELLOW + "open" + ChatColor.AQUA + ".");
 			player.sendMessage(ChatColor.AQUA + "Players can join religion by praying at altars.");
-		} else if (access.equalsIgnoreCase("close")) {
-			GodManager.get().setPrivateAccess(godName, true);
-			Gods.get().log(player.getName() + " /gods close");
+		}
+		else if (access.equalsIgnoreCase("close"))
+		{
+			GodManager.instance().setPrivateAccess(godName, true);
+			Gods.instance().log(player.getName() + " /gods close");
 			player.sendMessage(ChatColor.AQUA + "You set the religion access to " + ChatColor.RED + "closed" + ChatColor.AQUA + ".");
 			player.sendMessage(ChatColor.AQUA + "Players can now only pray to this religion by invitation.");
-		} else {
+		}
+		else
+		{
 			player.sendMessage(ChatColor.RED + "That is not a valid command");
 		}
 	}

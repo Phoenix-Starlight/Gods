@@ -13,7 +13,6 @@ import com.dogonfire.gods.managers.MarriageManager;
 
 public class CommandMarry extends GodsCommand
 {
-
 	protected CommandMarry()
 	{
 		super("marry");
@@ -25,7 +24,7 @@ public class CommandMarry extends GodsCommand
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args)
 	{
-		if (!GodsConfiguration.get().isMarriageEnabled())
+		if (!GodsConfiguration.instance().isMarriageEnabled())
 		{
 			sender.sendMessage(ChatColor.RED + "Marrige is not enabled on this server");
 		}
@@ -40,7 +39,7 @@ public class CommandMarry extends GodsCommand
 			return;
 		}
 		Player player = (Player) sender;
-		String thisGodName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String thisGodName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		if (thisGodName == null)
 		{
 			player.sendMessage(ChatColor.RED + "You do not believe in a God");
@@ -60,14 +59,14 @@ public class CommandMarry extends GodsCommand
 			return;
 		}
 
-		Player otherPlayer = Gods.get().getServer().getPlayer(otherPlayerName);
+		Player otherPlayer = Gods.instance().getServer().getPlayer(otherPlayerName);
 		if (otherPlayer == null)
 		{
 			player.sendMessage(ChatColor.RED + "There is no player with the name '" + ChatColor.WHITE + otherPlayerName + ChatColor.RED + " online.");
 			return;
 		}
 
-		String otherGodName = BelieverManager.get().getGodForBeliever(otherPlayer.getUniqueId());
+		String otherGodName = BelieverManager.instance().getGodForBeliever(otherPlayer.getUniqueId());
 
 		if (otherGodName == null)
 		{
@@ -96,10 +95,9 @@ public class CommandMarry extends GodsCommand
 
 		MarriageManager.get().proposeMarriage(player.getUniqueId(), otherPlayer.getUniqueId());
 
-		LanguageManager.get().setPlayerName(player.getName());
-		GodManager.get().GodSayWithQuestion(thisGodName, otherPlayer, LanguageManager.LANGUAGESTRING.GodToBelieverMarriageProposal, 1);
+		LanguageManager.instance().setPlayerName(player.getName());
+		GodManager.instance().GodSayWithQuestion(thisGodName, otherPlayer, LanguageManager.LANGUAGESTRING.GodToBelieverMarriageProposal, 1);
 
 		player.sendMessage(ChatColor.AQUA + "You proposed " + ChatColor.WHITE + otherPlayerName + ChatColor.AQUA + " to marry you in the name of " + ChatColor.GOLD + thisGodName + "!");
-
 	}
 }

@@ -24,8 +24,8 @@ public class CommandLeaveGod extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		if (GodManager.get().believerLeaveGod(player.getUniqueId())) {
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		if (GodManager.instance().believerLeaveGod(player.getUniqueId())) {
 			sender.sendMessage(ChatColor.AQUA + "You left the religion of " + ChatColor.YELLOW + godName);
 		} else {
 			sender.sendMessage(ChatColor.RED + "You are not part of any religion!");

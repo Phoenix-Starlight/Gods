@@ -3,6 +3,7 @@ author: DogOnFire
 version: ${project.version}
 website: "http://dev.bukkit.org/server-mods/gods"
 main: com.dogonfire.gods.Gods
+api-version: 1.14
 softdepend: 
   - PermissionsBukkit
   - PermissionsEx

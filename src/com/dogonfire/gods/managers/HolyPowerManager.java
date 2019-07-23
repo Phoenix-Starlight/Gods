@@ -103,29 +103,29 @@ public class HolyPowerManager
 			drunk(player, powerStrength);
 			break;
 		default:
-			Gods.get().log("Unknown holy power");
+			Gods.instance().log("Unknown holy power");
 		}
 	}
 
 	public void boostKnowledge(Player player, int powerValue)
 	{
-		Gods.get().logDebug("Boosting " + powerValue + " xp of knowledge");
+		Gods.instance().logDebug("Boosting " + powerValue + " xp of knowledge");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new TaskBoostKnowledge(player, powerValue), 1L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new TaskBoostKnowledge(player, powerValue), 1L);
 	}
 
 	public void callMoon(Player player, int powerValue)
 	{
-		Gods.get().logDebug("Starting call moon " + powerValue + " ");
+		Gods.instance().logDebug("Starting call moon " + powerValue + " ");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new TaskCallMoon(player, powerValue), 1L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new TaskCallMoon(player, powerValue), 1L);
 	}
 
 	public void callSun(Player player, int powerValue)
 	{
-		Gods.get().logDebug("Starting call sun " + powerValue + " rockets");
+		Gods.instance().logDebug("Starting call sun " + powerValue + " rockets");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new TaskCallSun(player, powerValue), 1L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new TaskCallSun(player, powerValue), 1L);
 	}
 
 	private boolean checkBlock(double x1, double y1, double z1, double w1, double h1, double d1, double x2, double y2, double z2, double w2, double h2, double d2)
@@ -212,9 +212,9 @@ public class HolyPowerManager
 
 	public void drunk(Player player, int powerValue)
 	{
-		Gods.get().logDebug("Drunking " + powerValue + " creatures");
+		Gods.instance().logDebug("Drunking " + powerValue + " creatures");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new TaskDrunk(player, powerValue), 1L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new TaskDrunk(player, powerValue), 1L);
 	}
 
 	public void earthQuake(final Player player, int value)
@@ -244,7 +244,7 @@ public class HolyPowerManager
 						temp.setX(x + location.getBlockX());
 						temp.setZ(z + location.getBlockZ());
 						Block block = temp.getBlock();
-						temp.getWorld().playEffect(temp, Effect.STEP_SOUND, block.getTypeId());
+						temp.getWorld().playEffect(temp, Effect.STEP_SOUND, block.getType());
 					}
 				}
 				Entity[] near = HolyPowerManager.this.getNearbyEntities(location, 1.5D);
@@ -282,7 +282,7 @@ public class HolyPowerManager
 				this.count += 1;
 			}
 		};
-		task.runTaskTimer(Gods.get(), 0L, 3L);
+		task.runTaskTimer(Gods.instance(), 0L, 3L);
 	}
 
 	public void fireBall(Player player, int power)
@@ -315,7 +315,7 @@ public class HolyPowerManager
 		HolyPower holyPower = null;
 		String[] text = description.split(" ");
 
-		Gods.get().logDebug(description);
+		Gods.instance().logDebug(description);
 		if (text[0].equals("Boosts"))
 		{
 			holyPower = HolyPower.KNOWLEDGE;
@@ -419,19 +419,19 @@ public class HolyPowerManager
 					{
 						if (location.getBlock().getRelative(BlockFace.WEST).getType() == Material.AIR)
 						{
-							location.getBlock().getRelative(BlockFace.WEST).setTypeIdAndData(Material.VINE.getId(), (byte) 1, false);
+							location.getBlock().getRelative(BlockFace.WEST).setType(Material.VINE, false);
 						}
 						if (location.getBlock().getRelative(BlockFace.EAST).getType() == Material.AIR)
 						{
-							location.getBlock().getRelative(BlockFace.EAST).setTypeIdAndData(Material.VINE.getId(), (byte) 1, false);
+							location.getBlock().getRelative(BlockFace.EAST).setType(Material.VINE, false);
 						}
 						if (location.getBlock().getRelative(BlockFace.NORTH).getType() == Material.AIR)
 						{
-							location.getBlock().getRelative(BlockFace.NORTH).setTypeIdAndData(Material.VINE.getId(), (byte) 1, false);
+							location.getBlock().getRelative(BlockFace.NORTH).setType(Material.VINE, false);
 						}
 						if (location.getBlock().getRelative(BlockFace.SOUTH).getType() == Material.AIR)
 						{
-							location.getBlock().getRelative(BlockFace.SOUTH).setTypeIdAndData(Material.VINE.getId(), (byte) 1, false);
+							location.getBlock().getRelative(BlockFace.SOUTH).setType(Material.VINE, false);
 						}
 					}
 					if ((location.getBlock().getType() == Material.GRASS) && (location.getBlock().getRelative(BlockFace.UP).getType() == Material.AIR))
@@ -439,13 +439,13 @@ public class HolyPowerManager
 						switch (this.random.nextInt(5))
 						{
 						case 0:
-							location.getBlock().getRelative(BlockFace.UP).setType(Material.RED_ROSE);
+							location.getBlock().getRelative(BlockFace.UP).setType(Material.POPPY);
 							break;
 						case 1:
-							location.getBlock().getRelative(BlockFace.UP).setType(Material.LONG_GRASS);
+							location.getBlock().getRelative(BlockFace.UP).setType(Material.TALL_GRASS);
 							break;
 						case 2:
-							location.getBlock().getRelative(BlockFace.UP).setType(Material.YELLOW_FLOWER);
+							location.getBlock().getRelative(BlockFace.UP).setType(Material.SUNFLOWER);
 							break;
 						case 3:
 							location.getBlock().getRelative(BlockFace.UP).setType(Material.GRASS);
@@ -458,9 +458,9 @@ public class HolyPowerManager
 
 	public void healing(Player player, int powerValue)
 	{
-		Gods.get().logDebug("Healing up to " + powerValue + " creatures");
+		Gods.instance().logDebug("Healing up to " + powerValue + " creatures");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new TaskHealRadius(player, powerValue), 1L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new TaskHealRadius(player, powerValue), 1L);
 	}
 
 	public void ice(final Player player, int power)
@@ -489,7 +489,7 @@ public class HolyPowerManager
 						for (int z = -1; z < 2; z++)
 						{
 							loc = block.getLocation().add(x, y, z);
-							if (world.getBlockTypeIdAt(loc) != Material.AIR.getId())
+							if (world.getBlockAt(loc).getType() != Material.AIR)
 							{
 								Block b = world.getBlockAt(loc);
 								if ((b.getType().isSolid()) && (HolyPowerManager.this.checkBlock(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), 1.0D, 1.0D, 1.0D, bLoc.getX() - 0.5D, bLoc.getY() - 0.5D, bLoc.getZ() - 0.5D, 1.0D, 1.0D, 1.0D)))
@@ -537,7 +537,7 @@ public class HolyPowerManager
 
 								if (!b.getType().isSolid())
 								{
-									changedBlocks.put(b.getLocation(), Long.valueOf(b.getTypeId() | b.getData() << 16));
+									changedBlocks.put(b.getLocation(), Long.valueOf(b.getType().getId() | b.getData() << 16));
 									b.setType(Material.ICE);
 								}
 							}
@@ -564,16 +564,16 @@ public class HolyPowerManager
 								Location position = (Location) changedBlocks.keySet().toArray()[index];
 								changedBlocks.remove(position);
 								Block c = position.getBlock();
-								position.getWorld().playEffect(position, Effect.STEP_SOUND, c.getTypeId());
-								c.setTypeId((int) (data & 0xFFFF));
-								c.setData((byte) (int) (data >> 16));
+								position.getWorld().playEffect(position, Effect.STEP_SOUND, c.getType());
+								//c.setType((int) (data & 0xFFFF));
+								//c.setData((byte) (int) (data >> 16));
 							}
 						}
-					}.runTaskTimer(Gods.get(), 80 + new Random().nextInt(40), 3L);
+					}.runTaskTimer(Gods.instance(), 80 + new Random().nextInt(40), 3L);
 				}
 			}
 		};
-		run.runTaskTimer(Gods.get(), 0L, 1L);
+		run.runTaskTimer(Gods.instance(), 0L, 1L);
 	}
 
 	void lightning(Player player, int powerStrength)
@@ -597,13 +597,13 @@ public class HolyPowerManager
 
 	public void lightningStorm(Player player, int powerValue)
 	{
-		player.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_THUNDER, 1.0F, 0.1F);
+		player.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1.0F, 0.1F);
 
 		player.getWorld().setStorm(true);
 
-		Gods.get().logDebug("Starting thunderstorm for " + powerValue + " minutes");
+		Gods.instance().logDebug("Starting thunderstorm for " + powerValue + " minutes");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new ThunderStormTask(player, System.currentTimeMillis() + powerValue * 60000), 60L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new ThunderStormTask(player, System.currentTimeMillis() + powerValue * 60000), 60L);
 	}
 
 	public void magicArrow(Player player, int powerStrength)
@@ -614,9 +614,9 @@ public class HolyPowerManager
 
 	public void shootFirework(Player player, int powerValue)
 	{
-		Gods.get().logDebug("Starting fireworks with " + powerValue + " rockets");
+		Gods.instance().logDebug("Starting fireworks with " + powerValue + " rockets");
 
-		Gods.get().getServer().getScheduler().scheduleSyncDelayedTask(Gods.get(), new TaskFirework(player, powerValue), 1L);
+		Gods.instance().getServer().getScheduler().scheduleSyncDelayedTask(Gods.instance(), new TaskFirework(player, powerValue), 1L);
 	}
 
 	private void tame(Player player, int powerStrength)
@@ -658,6 +658,6 @@ public class HolyPowerManager
 		newLoc.setYaw(start.getYaw());
 		player.teleport(newLoc);
 		world.playEffect(newLoc, Effect.ENDER_SIGNAL, 0);
-		world.playSound(newLoc, Sound.ENTITY_ENDERMEN_AMBIENT, 1.0F, 0.3F);
+		world.playSound(newLoc, Sound.ENTITY_ENDERMAN_AMBIENT, 1.0F, 0.3F);
 	}
 }

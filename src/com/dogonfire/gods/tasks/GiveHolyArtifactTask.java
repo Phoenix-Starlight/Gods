@@ -50,7 +50,7 @@ public class GiveHolyArtifactTask implements Runnable
 		{
 			this.plugin.logDebug("Creating holy artifact for " + this.player.getName());
 
-			Item artifact = HolyArtifactManager.get().createHolyArtifact(this.player.getName(), this.godType, this.godName, spawnLocation);
+			Item artifact = HolyArtifactManager.instance().createHolyArtifact(this.player.getName(), this.godType, this.godName, spawnLocation);
 
 			spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);
 		}
@@ -69,8 +69,8 @@ public class GiveHolyArtifactTask implements Runnable
 			Random random = new Random();
 			if (this.speak)
 			{
-				LanguageManager.get().setPlayerName(this.player.getName());
-				GodManager.get().GodSay(this.godName, this.player, LanguageManager.LANGUAGESTRING.GodToBelieverHolyArtifactBlessing, 2 + random.nextInt(10));
+				LanguageManager.instance().setPlayerName(this.player.getName());
+				GodManager.instance().GodSay(this.godName, this.player, LanguageManager.LANGUAGESTRING.GodToBelieverHolyArtifactBlessing, 2 + random.nextInt(10));
 			}
 		}
 	}

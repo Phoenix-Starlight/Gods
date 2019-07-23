@@ -5,7 +5,7 @@ import com.dogonfire.gods.Gods;
 public abstract class Task implements Runnable {
 
 	protected Gods getPlugin() {
-		return Gods.get();
+		return Gods.instance();
 	}
 
 	@Override

@@ -39,23 +39,23 @@ public class CommandListGods extends GodsCommand {
 		List<God> gods = new ArrayList<God>();
 		String playerGod = null;
 
-		Set<String> list = GodManager.get().getTopGods();
+		Set<String> list = GodManager.instance().getTopGods();
 		for (String godName : list) {
-			int power = (int) GodManager.get().getGodPower(godName);
+			int power = (int) GodManager.instance().getGodPower(godName);
 
-			int believers = BelieverManager.get().getBelieversForGod(godName).size();
+			int believers = BelieverManager.instance().getBelieversForGod(godName).size();
 			if (believers > 0) {
 				gods.add(new God(godName, power, believers));
 			}
 		}
 
 		if (gods.size() == 0) {
-			sender.sendMessage(ChatColor.GOLD + "There are no Gods in " + GodsConfiguration.get().getServerName() + "!");
+			sender.sendMessage(ChatColor.GOLD + "There are no Gods in " + GodsConfiguration.instance().getServerName() + "!");
 			return;
 		}
 
-		playerGod = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		sender.sendMessage(ChatColor.YELLOW + "--------- The Gods of " + GodsConfiguration.get().getServerName() + " ---------");
+		playerGod = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		sender.sendMessage(ChatColor.YELLOW + "--------- The Gods of " + GodsConfiguration.instance().getServerName() + " ---------");
 
 		Collections.sort(gods, new TopGodsComparator());
 
@@ -70,7 +70,7 @@ public class CommandListGods extends GodsCommand {
 		boolean playerGodShown = false;
 
 		for (God god : topGods) {
-			String fullGodName = String.format("%-16s", new Object[] { god.name }) + "   " + String.format("%-16s", new Object[] { GodManager.get().getTitleForGod(god.name) });
+			String fullGodName = String.format("%-16s", new Object[] { god.name }) + "   " + String.format("%-16s", new Object[] { GodManager.instance().getTitleForGod(god.name) });
 			if (sender != null) {
 				if ((playerGod != null) && (god.name.equals(playerGod))) {
 					playerGodShown = true;
@@ -83,7 +83,7 @@ public class CommandListGods extends GodsCommand {
 							.toString(), 2) + StringUtils.rightPad(new StringBuilder().append(" Believers ").append(god.believers).toString(), 2));
 				}
 			} else {
-				Gods.get().log(String.format("%2d", new Object[] { Integer.valueOf(n) }) + " - " + fullGodName + ChatColor.GOLD + StringUtils.rightPad(new StringBuilder().append(" Mood ").append(GodManager.get().getExactMoodForGod(god.name))
+				Gods.instance().log(String.format("%2d", new Object[] { Integer.valueOf(n) }) + " - " + fullGodName + ChatColor.GOLD + StringUtils.rightPad(new StringBuilder().append(" Mood ").append(GodManager.instance().getExactMoodForGod(god.name))
 						.toString(), 2) + StringUtils.rightPad(new StringBuilder().append(" Power ").append(god.power).toString(), 2) + StringUtils.rightPad(new StringBuilder().append(" Believers ").append(god.believers).toString(), 2));
 			}
 			n++;
@@ -93,7 +93,7 @@ public class CommandListGods extends GodsCommand {
 
 		if ((playerGod != null) && (!playerGodShown)) {
 			for (God god : gods) {
-				String fullGodName = String.format("%-16s", new Object[] { god.name }) + "   " + String.format("%-16s", new Object[] { GodManager.get().getTitleForGod(god.name) });
+				String fullGodName = String.format("%-16s", new Object[] { god.name }) + "   " + String.format("%-16s", new Object[] { GodManager.instance().getTitleForGod(god.name) });
 				if ((playerGod != null) && (god.name.equals(playerGod))) {
 					playerGodShown = true;
 					sender.sendMessage("" + ChatColor.GOLD + n + " - " + fullGodName + StringUtils.rightPad(new StringBuilder().append(" Power ").append(god.power).toString(), 2) + StringUtils.rightPad(new StringBuilder().append(" Believers ")
@@ -103,7 +103,7 @@ public class CommandListGods extends GodsCommand {
 			}
 		}
 		if (sender != null) {
-			Gods.get().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.InfoHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g info <godname>", 80);
+			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.InfoHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g info <godname>", 80);
 		}
 
 	}

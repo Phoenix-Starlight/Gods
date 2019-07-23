@@ -51,13 +51,13 @@ public class TaskGiveItem extends Task {
 		if (giveItem()) {
 			Random random = new Random();
 			if (this.speak) {
-				LanguageManager.get().setPlayerName(this.player.getName());
+				LanguageManager.instance().setPlayerName(this.player.getName());
 				try {
-					LanguageManager.get().setType(this.itemType.name());
+					LanguageManager.instance().setType(this.itemType.name());
 				} catch (Exception ex) {
 					getPlugin().logDebug(ex.getStackTrace().toString());
 				}
-				GodManager.get().GodSay(this.godName, this.player, LanguageManager.LANGUAGESTRING.GodToBelieverItemBlessing, 2 + random.nextInt(10));
+				GodManager.instance().GodSay(this.godName, this.player, LanguageManager.LANGUAGESTRING.GodToBelieverItemBlessing, 2 + random.nextInt(10));
 			}
 		}
 	}

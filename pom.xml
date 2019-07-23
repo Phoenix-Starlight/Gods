@@ -27,19 +27,19 @@
   <dependencies>
     <dependency>
       <groupId>com.sk89q.worldguard</groupId>
-      <artifactId>worldguard-legacy</artifactId>
-      <version>6.2</version>
+      <artifactId>worldguard-bukkit</artifactId>
+      <version>7.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q.worldedit</groupId>
-      <artifactId>worldedit-bukkit</artifactId> <!-- here you see it -->
-      <version>6.1.4-SNAPSHOT</version>
+      <artifactId>worldedit-bukkit</artifactId> 
+      <version>7.0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>    
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.10.2-R0.1-SNAPSHOT</version>
+      <version>1.14.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -55,11 +55,8 @@
     <sourceDirectory>${project.basedir}/src/</sourceDirectory>
     <resources>
       <resource>
+        <directory>src</directory>
         <filtering>true</filtering>
-        <directory>${project.basedir}/src/</directory>
-        <includes>
-          <include>*.yml</include>
-        </includes>
       </resource>
     </resources>
     <plugins>

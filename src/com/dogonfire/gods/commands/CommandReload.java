@@ -10,25 +10,29 @@ import com.dogonfire.gods.managers.GodManager;
 import com.dogonfire.gods.managers.QuestManager;
 import com.dogonfire.gods.managers.WhitelistManager;
 
-public class CommandReload extends GodsCommand {
-
-	protected CommandReload() {
+public class CommandReload extends GodsCommand
+{
+	protected CommandReload()
+	{
 		super("reload");
 		this.permission = "gods.reload";
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!hasPermission(sender)) {
+	public void onCommand(CommandSender sender, String command, String... args)
+	{
+		if (!hasPermission(sender))
+		{
 			sender.sendMessage(stringNoPermission);
 			return;
 		}
-		GodsConfiguration.get().loadSettings();
-		GodManager.get().load();
-		QuestManager.get().load();
-		BelieverManager.get().load();
-		WhitelistManager.get().load();
-		sender.sendMessage(ChatColor.YELLOW + Gods.get().getDescription().getFullName() + ": " + ChatColor.WHITE + "Reloaded configuration.");
-		Gods.get().log(sender.getName() + " /gods reload");
+		
+		GodsConfiguration.instance().loadSettings();
+		GodManager.instance().load();
+		QuestManager.instance().load();
+		BelieverManager.instance().load();
+		WhitelistManager.instance().load();
+		sender.sendMessage(ChatColor.YELLOW + Gods.instance().getDescription().getFullName() + ": " + ChatColor.WHITE + "Reloaded configuration.");
+		Gods.instance().log(sender.getName() + " /gods reload");
 	}
 }

@@ -9,19 +9,11 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,36 +22,53 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import com.dogonfire.gods.Gods;
 
 public class HolyLawManager implements Listener
 {
-	enum HolyLawType
+	/*
+	enum HolyLawActionType
+	{
+		KillMob,
+		KillPlayer,
+		EatFood,
+		SacrificeItem,
+		SacrificePlayer,
+		PlaceBlock,
+		BreakBlock,
+	}
+	
+	enum HolyLawRuleType
 	{
 		Holy,
-		Unholy		
+		Unholy				
 	}
 	
 	class HolyLaw
 	{
-		int Id;
-		HolyLawType lawtype;  // 0: None, 1:Holy, 2:Unholy
-		int time;     // 0: None, 1:Day, 2:Night
-		int actiontype;     // 1: MobKilled, 2:Killed, 3:Sacrifice
+		int id;
+		HolyLawType lawtype;  	// 0: None, 1:Holy, 2:Unholy
+		int time;     			// 0: None, 1:Day, 2:Night, 3:Midnight
+		int actiontype;     	// 1: MobKilled, 2:Killed, 3:Sacrifice
 		EntityType entityType;  // 
+		ItemType foodType;  // 
 		Biome biome;
-		int foodtype;
+		
+		public String Description()
+		{
+			return "Thou shall not kill spiders at midnight!";			
+		}
 	}
+	
 	
 	private Gods							plugin;
 	private FileConfiguration				holyLawsConfig		= null;
 	private File							holyLawsConfigFile	= null;
 	private Random							random				= new Random();
+
 	private List<EntityType>				mobCandidates       = new ArrayList<EntityType>();
-	private List<EntityType>				foodCandidates      = new ArrayList<EntityType>();
+	private List<ItemType>					foodCandidates      = new ArrayList<ItemType>();
 	private List<Biome>						biomeCandidates     = new ArrayList<Biome>();
 
 	private HashMap<String,HolyLaw>			blockPlacementLaws	= new HashMap<String,HolyLaw>();
@@ -73,6 +82,7 @@ public class HolyLawManager implements Listener
 	{
 		if (instance == null)
 			instance = new HolyLawManager();
+		
 		return instance;
 	}
 
@@ -90,12 +100,17 @@ public class HolyLawManager implements Listener
 		mobCandidates.add(EntityType.SPIDER);
 		mobCandidates.add(EntityType.ZOMBIE);
 
-		mobCandidates.add(EntityType.EGG);
+		foodCandidates.add(ItemType.EGG);
+		foodCandidates.add(ItemType.COOKED_PORKCHOP);
+		foodCandidates.add(ItemType.COOKED_BEEF);
+		foodCandidates.add(ItemType.BREAD);
+		foodCandidates.add(ItemType.BAKED_POTATO);
 		
+		biomeCandidates.add(Biome.SWAMPLAND);
+		biomeCandidates.add(Biome.PLAINS);
 		biomeCandidates.add(Biome.DESERT);
 		biomeCandidates.add(Biome.BIRCH_FOREST);
-		biomeCandidates.add(Biome.FOREST);
-		
+		biomeCandidates.add(Biome.FOREST);	
 	}
 
 	public void load()
@@ -138,9 +153,7 @@ public class HolyLawManager implements Listener
 		if(!blockPlacementLaws.containsKey(godName))
 		{
 			return;
-		}
-		
-		
+		}		
 	}
 	
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -153,6 +166,7 @@ public class HolyLawManager implements Listener
 			return;
 		}
 
+		/*
 		if(!blockBreakLaws.containsKey(godName))
 		{
 			return;
@@ -183,9 +197,7 @@ public class HolyLawManager implements Listener
 		if(holyLaw.lawtype == HolyLawType.Unholy)
 		{
 			if(holyLaw.biome!=null)
-			{
-				
-
+			{			
 				return;
 			}
 			
@@ -214,41 +226,35 @@ public class HolyLawManager implements Listener
 		}
 	}
 	
-	void generateHolyLawQuestion(String godName)
-	{		
-		// Alternate between holy and unholy question to ensure that they are equal numbers		
-	}
-	
-	public HolyLaw getCurrentHolyLaw(String godName)
+	public HolyLaw getPendingHolyLaw(String godName)
 	{
 		HolyLaw holyLaw = new HolyLaw();
 		
 		// Time out and return null
-
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".Id");
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".ActionType");
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".Biome");
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".EntityType");
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".FoodType");
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".LawType");
-		this.holyLawsConfig.get("CurrentLawQuestions." + godName + ".Time");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".Id");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".ActionType");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".Biome");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".EntityType");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".FoodType");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".LawType");
+		this.holyLawsConfig.get("PendingLaws." + godName + ".Time");
 				
 		return holyLaw;
 	}
 
-	void acceptPendingLawQuestion(String godName)
+	void acceptPendingLaw(String godName)
 	{
 		Set<String> keys;
 		
 		// Good, i will take this into consideration		
-		HolyLaw currentHolyLaw = getCurrentHolyLaw(godName);
+		HolyLaw currentHolyLaw = getPendingHolyLaw(godName);
 				
-		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.Id + ".ActionType", currentHolyLaw.actiontype);
-		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.Id + ".Biome", currentHolyLaw.biome);
-		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.Id + ".EntityType", currentHolyLaw.entityType);
-		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.Id + ".FoodType", currentHolyLaw.foodtype);
-		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.Id + ".LawType", currentHolyLaw.lawtype);
-		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.Id + ".Time", currentHolyLaw.time);
+		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.id + ".ActionType", currentHolyLaw.actiontype);
+		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.id + ".Biome", currentHolyLaw.biome);
+		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.id + ".EntityType", currentHolyLaw.entityType);
+		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.id + ".FoodType", currentHolyLaw.foodType);
+		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.id + ".LawType", currentHolyLaw.lawtype);
+		this.holyLawsConfig.set("Laws." + godName + "." + currentHolyLaw.id + ".Time", currentHolyLaw.time);
 						
 		this.holyLawsConfig.set("CurrentLawQuestions." + godName, null);
 		
@@ -258,7 +264,7 @@ public class HolyLawManager implements Listener
 	public void rejectPendingLawQuestion(String godName)
 	{
 		// Good, i will take this into consideration
-		HolyLaw currentHolyLaw = getCurrentHolyLaw(godName);	
+		HolyLaw currentHolyLaw = getPendingHolyLaw(godName);	
 						
 		this.holyLawsConfig.set("CurrentLawQuestion." + godName, null);
 		
@@ -270,7 +276,24 @@ public class HolyLawManager implements Listener
 		return this.holyLawsConfig.getString("CurrentLawQuestion." + godName + ".Question.Text");		
 	}
 	
-	public List<String> generateLawQuestionsForGod(String godName, Location playerLocation)
+	private Set<HolyLaw> getHolyLaws(String godName)
+	{
+		Set<HolyLaw> laws = new HashSet<HolyLaw>(); 
+				
+		for(String id : holyLawsConfig.getConfigurationSection(godName).getKeys(false))
+		{
+			ItemType itemType = ItemType.fromID(holyLawsConfig.getInt(godName + "." + id + ".ItemType"));
+			EntityType entityType = EntityType.fromId(holyLawsConfig.getInt(godName + "." + id + ".EntityType"));
+			Biome biomeType = Biome.valueOf(holyLawsConfig.getString(godName + "." + id + ".Biome"));
+					
+			laws.add(new HolyLaw(id));		
+		}
+		
+		return laws;
+	}
+	
+	// NOTE: Law action must be relatively rare occuring, such as breaking diamond blocks. Not wood blocks.
+	public String generateNewLawQuestionForGod(String godName)
 	{
 		// How do you feel about bacon?
 		// I dont care
@@ -280,6 +303,9 @@ public class HolyLawManager implements Listener
 		// About killing players?
 		// Holy!
 		// Only at night!
+		//   When is it holy?
+		//		At midnight!
+		//      In the morning!
 		
 		// About sacrificing players
 		// Own/Others
@@ -289,10 +315,94 @@ public class HolyLawManager implements Listener
 		
 		// About building in xxx-lands?
 		
-		// About mining (ore) in xxx-lands?
+		// About mining (diamond ore) in xxx-lands?
 		// No! They are holy! Must be protected
+		// No problem
+		
+		// First check existing law types
+		for(HolyLaw holyLaw : getHolyLaws(godName))
+		{
+			HolyLaw holyLaw = blockBreakLaws.get(godName);
+						
+		}
+		
+		int r = random.nextInt(HolyLawActionType.values().length);
+		HolyLawActionType lawActionType = HolyLawActionType.values()[r];
+		String question = "I got nothing.";
+		
+		HolyLaw newLaw = new HolyLaw(lawActionType);
+		
+		switch(lawActionType)
+		{
+			case KillMob : question = "How do you feel about eating " + itemType + "?"; break; 	
+			case KillPlayer : question = "How do you feel about eating " + itemType + "?"; break; 	
+			case SacrificeItem : question = "How do you feel about eating " + itemType + "?"; break; 	
+			case SacrificePlayer : question = "How do you feel about eating " + itemType + "?"; break; 	
+		}
+		
+		setPendingLaw(godtName, newLaw);
+		
+		// Alternate between holy and unholy question to ensure that they are in equal numbers		
+		return null;
+	}
+	
+	public String generateRefinementLawQuestionForGod(String godName)
+	{
 		
 		return null;
+	}
+
+	public List<String> generateNewLawAnswers(String godName)
+	{
+		List<String> answers = new ArrayList<String>();
+		
+		answers.add("Holy! There is nothing greater!");
+		answers.add("Unholy blasfemy!");
+		answers.add("Meh");		
+		
+		return answers;
+	}
+	
+	public List<String> generateRefinementLawAnswers(String godName)
+	{
+		List<String> answers = new ArrayList<String>();
+		
+		answers.add("Perfect.");
+		answers.add("No, this law is fulfilled. It must be removed.");  // 
+		answers.add("Yes, but only when done in a " + biomeString);
+		answers.add("Yes, but only when done at " + timeString);		
+		
+		return answers;
+	}
+
+	public void setPendingLawHoly(String godName)
+	{
+		
+	}
+	
+	public void setPendingLawUnholy(String godName)
+	{
+		
+	}
+	
+	public void setPendingLawTime(String godName)
+	{		
+		
+	}
+
+	public void setPendingLawBiome(String godName)
+	{		
+		
+	}
+
+	public void skipPendingLaw(String godName)
+	{
+		
+	}
+
+	public void deleteLaw(String godName)
+	{
+		
 	}
 
 	public List<String> getHolyMobsLawsForGod(String godName)
@@ -325,13 +435,13 @@ public class HolyLawManager implements Listener
 		return mobList;		
 	}
 
-	public void SetHolyMob(String godName, EntityType mobType)
+	public void setHolyMob(String godName, EntityType mobType)
 	{
 		this.holyLawsConfig.set("Laws." + godName + ".Holy.MobKill." + mobType + ".StartTime", 0);		
 		this.holyLawsConfig.set("Laws." + godName + ".Holy.MobKill." + mobType + ".EndTime", 24000);		
 	}
 
-	public boolean IsHolyMobKill(String godName, EntityType mobType, int time)
+	public boolean isHolyMobKill(String godName, EntityType mobType, int time)
 	{
 		if(this.holyLawsConfig.getString(godName + ".Holy.MobKill." + mobType) != null)		
 		{
@@ -366,19 +476,19 @@ public class HolyLawManager implements Listener
 		return this.holyLawsConfig.getString("Laws." + godName + ".Holy.MobKill." + mobType + ".Time");		
 	}
 
-	public boolean IsUnholyMobKill(String godName, EntityType mobType)
+	public boolean isUnholyMobKill(String godName, EntityType mobType)
 	{
 		return this.holyLawsConfig.getString(godName + ".Unholy.MobKill." + mobType.toString()) != null;		
 	}
 
-	public void SetHolyPlayerKill(String godName)
+	public void setHolyPlayerKill(String godName)
 	{
 		this.holyLawsConfig.set("Laws." + godName + ".Holy.PlayerKill.StartTime", 0);		
 		this.holyLawsConfig.set("Laws." + godName + ".Holy.PlayerKill.EndTime", 24000);		
 		this.holyLawsConfig.set("Laws." + godName + ".Holy.PlayerKill.Biome", Biome.BIRCH_FOREST);		
 	}
 
-	public boolean IsHolyPlayerKill(String godName, UUID playerId, int time)
+	public boolean isHolyPlayerKill(String godName, UUID playerId, int time)
 	{
 		if(this.holyLawsConfig.getString(godName + ".Holy.PlayerKill." + playerId) != null)		
 		{
@@ -403,7 +513,7 @@ public class HolyLawManager implements Listener
 		return time > startTime && time < endTime; 		
 	}
 
-	public boolean IsUnholyPlayerKill(String godName, UUID playerId, int time)
+	public boolean isUnholyPlayerKill(String godName, UUID playerId, int time)
 	{
 		if(this.holyLawsConfig.getString(godName + ".Unholy.PlayerKill." + playerId) != null)		
 		{
@@ -432,9 +542,9 @@ public class HolyLawManager implements Listener
 	{
 		List<String> foodList = new ArrayList<String>();
 		
-		for(EntityType type : foodCandidates)
+		for(ItemType type : foodCandidates)
 		{
-			if(this.holyLawsConfig.getString("Laws." + godName + ".Holy.Food." + type)!=null)
+			if(this.holyLawsConfig.getString("Laws." + godName + ".Holy.Food." + type.toString())!=null)
 			{
 				foodList.add(type.toString());
 			}
@@ -443,7 +553,7 @@ public class HolyLawManager implements Listener
 		return foodList;		
 	}
 	
-	public boolean IsHolyFood(String godName, EntityType foodType, int time)
+	public boolean isHolyFood(String godName, EntityType foodType, int time)
 	{
 		if(this.holyLawsConfig.getString(godName + ".Holy.Food." + foodType) != null)		
 		{
@@ -468,7 +578,7 @@ public class HolyLawManager implements Listener
 		return time > startTime && time < endTime; 		
 	}
 
-	public boolean IsUnholyFood(String godName, EntityType foodType, int time)
+	public boolean isUnholyFood(String godName, EntityType foodType, int time)
 	{
 		if(this.holyLawsConfig.getString(godName + ".Unholy.Food." + foodType) != null)		
 		{
@@ -492,5 +602,5 @@ public class HolyLawManager implements Listener
 
 		return time > startTime && time < endTime; 		
 	}
-	
+	*/
 }

@@ -27,14 +27,14 @@ public class CommandKick extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		if (!GodManager.get().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId())) {
 			sender.sendMessage(ChatColor.RED + "Only priests can kick believers from a religion");
 			return;
 		}
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		String believerName = args[1];
-		OfflinePlayer offlineBeliever = Gods.get().getServer().getOfflinePlayer(believerName);
-		String believerGodName = BelieverManager.get().getGodForBeliever(offlineBeliever.getUniqueId());
+		OfflinePlayer offlineBeliever = Gods.instance().getServer().getOfflinePlayer(believerName);
+		String believerGodName = BelieverManager.instance().getGodForBeliever(offlineBeliever.getUniqueId());
 		if ((believerGodName == null) || (!believerGodName.equals(godName))) {
 			sender.sendMessage(ChatColor.RED + "There is no such believer called '" + believerName + "' in your religion");
 			return;
@@ -43,13 +43,13 @@ public class CommandKick extends GodsCommand {
 			sender.sendMessage(ChatColor.RED + "You cannot kick yourself from your own religion, Bozo!");
 			return;
 		}
-		BelieverManager.get().removeBeliever(godName, offlineBeliever.getUniqueId());
+		BelieverManager.instance().removeBeliever(godName, offlineBeliever.getUniqueId());
 		sender.sendMessage(ChatColor.AQUA + "You kicked " + ChatColor.YELLOW + believerName + ChatColor.AQUA + " from your religion!");
-		Player believer = Gods.get().getServer().getPlayer(believerName);
+		Player believer = Gods.instance().getServer().getPlayer(believerName);
 		if (believer != null) {
 			believer.sendMessage(ChatColor.RED + "You were kicked from the religion of " + ChatColor.YELLOW + godName + ChatColor.AQUA + "!");
 		}
-		Gods.get().log(sender.getName() + " /gods kick " + believerName);
+		Gods.instance().log(sender.getName() + " /gods kick " + believerName);
 
 	}
 

@@ -137,7 +137,7 @@ public class ProphecyManager
 
 		if (currentProphecy == Prophecy.UnholyMobWillBeSlainByBeliever) 
 		{
-			if (mobType.equals(GodManager.get().getHolyMobTypeForGod(godName).name())) 
+			if (mobType.equals(GodManager.instance().getHolyMobTypeForGod(godName).name())) 
 			{
 				fullfillCurrentProphecy(godName, playerName);
 			}
@@ -165,19 +165,19 @@ public class ProphecyManager
 		String prophecyText = "MISSINGPROPHECY";
 
 		//plugin.getLanguageManager().setType(plugin.getLanguageManager().getMobTypeName(plugin.getGodManager().getUnholyMobTypeForGod(godName)));
-		LanguageManager.get().setPlayerName(playerName);
+		LanguageManager.instance().setPlayerName(playerName);
 		
 		switch (prophecy) 
 		{
-			case Header: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                                      These are things I foreseen will come to happen in " + GodsConfiguration.get().getServerName() + "."; break;
-			case BelieverWillLeaveReligion: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                             These are things I foreseen will come to happen in " + GodsConfiguration.get().getServerName() + ".";
-			case DragonBossWillBeSlain : prophecyText = LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossWillBeSlainPastProphecyBibleText); break;
-			case UnholyMobWillBeSlainByBeliever : prophecyText = LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.UnholyMobWillBeSlainPastProphecyBibleText); break;
-			case HeathenWillBeSlain: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                             These are things I foreseen will come to happen in " + GodsConfiguration.get().getServerName() + ".";
-			case ReligionHarvested: prophecyText = "The evil " + GodManager.get().getHolyFoodTypeForGod(godName) + "was slain by the great " + playerName; break;
+			case Header: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                                      These are things I foreseen will come to happen in " + GodsConfiguration.instance().getServerName() + "."; break;
+			case BelieverWillLeaveReligion: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                             These are things I foreseen will come to happen in " + GodsConfiguration.instance().getServerName() + ".";
+			case DragonBossWillBeSlain : prophecyText = LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossWillBeSlainPastProphecyBibleText); break;
+			case UnholyMobWillBeSlainByBeliever : prophecyText = LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.UnholyMobWillBeSlainPastProphecyBibleText); break;
+			case HeathenWillBeSlain: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                             These are things I foreseen will come to happen in " + GodsConfiguration.instance().getServerName() + ".";
+			case ReligionHarvested: prophecyText = "The evil " + GodManager.instance().getHolyFoodTypeForGod(godName) + "was slain by the great " + playerName; break;
 			case NewPriestWillBeSelected: prophecyText = playerName + "became our new leader of to guide our people"; break;
 			case None: prophecyText = "And a champion will find a holy artifact"; break;
-			case RandomBelieverWillBeKilledByHeathen: prophecyText = "And our believer  will be killed by the evil " + GodManager.get().getHolyFoodTypeForGod(godName) + "!";
+			case RandomBelieverWillBeKilledByHeathen: prophecyText = "And our believer  will be killed by the evil " + GodManager.instance().getHolyFoodTypeForGod(godName) + "!";
 			case RandomBelieverWillBeKilledByUnholyMob: prophecyText = "And a will be killed by a sneaky heathen!";
 			case ReligionKills100Mobs: prophecyText = "The foolish " + playerName + "was slain";
 			case HolyArtifactWillBeFound: break;
@@ -186,11 +186,11 @@ public class ProphecyManager
 		switch (effect) 
 		{
 			case None : prophecyText += ""; break;
-			case DragonBoss: prophecyText += LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossProphecyEffectPastBibleText); break;
+			case DragonBoss: prophecyText += LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossProphecyEffectPastBibleText); break;
 			case LongRain: prophecyText = " and the sky will thunder!"; break;
 			case RainItems: prophecyText = " and the skies will weap rain with for 3 days!"; break;
-			case Rain: prophecyText = " and the skies will be filled with " + GodManager.get().getHolyFoodTypeForGod(godName) + "!";
-			case Storm: prophecyText +=  LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.StormProphecyEffectPastBibleText); break;
+			case Rain: prophecyText = " and the skies will be filled with " + GodManager.instance().getHolyFoodTypeForGod(godName) + "!";
+			case Storm: prophecyText +=  LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.StormProphecyEffectPastBibleText); break;
 			case SilverfishSwarm: prophecyText = " and silverfish will appear, roaming the lands!"; break;
 			case SkyWillDarken: prophecyText = " and the skies will darken and sun dissapear!"; break;
 		}
@@ -203,16 +203,16 @@ public class ProphecyManager
 		String prophecyText = "MISSINGPROPHECY";
 
 		//plugin.getLanguageManager().setType(plugin.getLanguageManager().getMobTypeName(plugin.getGodManager().getUnholyMobTypeForGod(godName)));
-		LanguageManager.get().setPlayerName(godName);
+		LanguageManager.instance().setPlayerName(godName);
 		
 		switch (prophecy) 
 		{
-			case Header: prophecyText = LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.ProphecyHeaderBibleText); break;
-			case BelieverWillLeaveReligion : prophecyText = LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.BelieverWillLeaveReligionProphecyBibleText); break;
-			case DragonBossWillBeSlain : prophecyText = LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossWillBeSlainFutureProphecyBibleText); break;
-			case UnholyMobWillBeSlainByBeliever : prophecyText = LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.UnholyMobWillBeSlainFutureProphecyBibleText); break;
-			case HeathenWillBeSlain: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                             These are things I foreseen will come to happen in " + GodsConfiguration.get().getServerName() + "."; break;
-			case ReligionHarvested: prophecyText = "A champion will slay the nasty "+ GodManager.get().getHolyFoodTypeForGod(godName); break;
+			case Header: prophecyText = LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.ProphecyHeaderBibleText); break;
+			case BelieverWillLeaveReligion : prophecyText = LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.BelieverWillLeaveReligionProphecyBibleText); break;
+			case DragonBossWillBeSlain : prophecyText = LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossWillBeSlainFutureProphecyBibleText); break;
+			case UnholyMobWillBeSlainByBeliever : prophecyText = LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.UnholyMobWillBeSlainFutureProphecyBibleText); break;
+			case HeathenWillBeSlain: prophecyText = ChatColor.GOLD + "The Prophecies of " + godName + ChatColor.BLACK + "                                             These are things I foreseen will come to happen in " + GodsConfiguration.instance().getServerName() + "."; break;
+			case ReligionHarvested: prophecyText = "A champion will slay the nasty "+ GodManager.instance().getHolyFoodTypeForGod(godName); break;
 			case NewPriestWillBeSelected: prophecyText = "A new leader of " + godName + " will guide our people"; break;
 			case None: prophecyText = "A champion will find a holy artifact"; break;
 			case RandomBelieverWillBeKilledByHeathen: prophecyText = "And our believer  will be killed by the evil $Type!"; break;
@@ -223,12 +223,12 @@ public class ProphecyManager
 		
 		switch (effect) 
 		{
-			case DragonBoss: prophecyText += LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossProphecyEffectFutureBibleText); break;
+			case DragonBoss: prophecyText += LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.DragonBossProphecyEffectFutureBibleText); break;
 			case LongRain: prophecyText += " and the sky will thunder!"; break;
 			case None: prophecyText += ""; break;
 			case RainItems: prophecyText += " and the skies will weap rain with for 3 days!"; break;
 			case Rain: prophecyText += " and the skies was be filled with $Type!"; break;
-			case Storm: prophecyText += LanguageManager.get().getLanguageStringForBook(godName, LANGUAGESTRING.StormProphecyEffectFutureBibleText); break;
+			case Storm: prophecyText += LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.StormProphecyEffectFutureBibleText); break;
 			case HolyFoodRain: prophecyText +=  " and it rained with $Type"; break;
 			case LongNight: prophecyText +=  " and day will turn into night"; break;
 			case SilverfishSwarm: prophecyText +=  ""; break;
@@ -245,7 +245,7 @@ public class ProphecyManager
 		List<String> players = new ArrayList<String>();
 
 		// Make sure bible has a text
-		HolyBookManager.get().getBible(godName);
+		HolyBookManager.instance().getBible(godName);
 		
 		players.add("NoOne");
 		prophecies.add(Prophecy.Header.name());
@@ -278,11 +278,11 @@ public class ProphecyManager
 		List<String> prophecies = getPropheciesForGod(godName);
 
 		// Tell everyone
-		if(GodsConfiguration.get().isBroadcastProphecyFullfillment())
+		if(GodsConfiguration.instance().isBroadcastProphecyFullfillment())
 		{
-			LanguageManager.get().setPlayerName(playerName);
+			LanguageManager.instance().setPlayerName(playerName);
 			//plugin.getLanguageManager().setType(godName);
-			plugin.getServer().broadcastMessage(LanguageManager.get().getLanguageString(godName, LanguageManager.LANGUAGESTRING.GodToBelieversProphecyFulfilled));
+			plugin.getServer().broadcastMessage(LanguageManager.instance().getLanguageString(godName, LanguageManager.LANGUAGESTRING.GodToBelieversProphecyFulfilled));
 		}
 		
 		// Launch the effect
@@ -304,8 +304,8 @@ public class ProphecyManager
 		// Check for being the last one
 		if (currentProphecyIndex >= prophecies.size()) 
 		{
-			LanguageManager.get().setPlayerName(HolyBookManager.get().getBibleTitle(godName));
-			GodManager.get().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversAllPropheciesFulfilled, 10);
+			LanguageManager.instance().setPlayerName(HolyBookManager.instance().getBibleTitle(godName));
+			GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversAllPropheciesFulfilled, 10);
 			clearPropheciesForGod(godName);
 			return;
 		}
@@ -344,7 +344,7 @@ public class ProphecyManager
 			}
 		}
 
-		HolyBookManager.get().setProphecyPages(godName, prophecyPages);
+		HolyBookManager.instance().setProphecyPages(godName, prophecyPages);
 	}
 	
 	public void launchProphecyEffect(String godName, ProphecyEffect prophecyEffect)

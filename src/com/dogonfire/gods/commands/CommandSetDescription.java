@@ -25,18 +25,18 @@ public class CommandSetDescription extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		if (!GodManager.get().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId())) {
 			sender.sendMessage(ChatColor.RED + "Only priests can set religion info");
 			return;
 		}
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		String description = "";
 		for (String arg : args) {
 			if (!arg.equals(args[0])) {
 				description = description + " " + arg;
 			}
 		}
-		GodManager.get().setGodDescription(godName, description);
-		sender.sendMessage(ChatColor.AQUA + "You set your religion description to " + ChatColor.YELLOW + GodManager.get().getGodDescription(godName));
+		GodManager.instance().setGodDescription(godName, description);
+		sender.sendMessage(ChatColor.AQUA + "You set your religion description to " + ChatColor.YELLOW + GodManager.instance().getGodDescription(godName));
 	}
 }
