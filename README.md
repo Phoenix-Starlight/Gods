@@ -16,6 +16,10 @@ In this way, many gods may exist at a time, all with names created by the player
 
 The main purpose for believing in these Gods is to gain from the help the Gods provide (see below) and to provide some basic faction play based on ideology and culture (I.e. "My god is better than yours because apples are holy!").
 
+Another purpose is simply to get people inspired to build awesome churches and use them for their Gods.
+
+With Holy Lands, players can easily protect their lands from grief by simply building alters to their Gods.
+
 
 ### Resources
 
