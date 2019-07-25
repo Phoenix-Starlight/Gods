@@ -5,12 +5,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Biome;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -28,6 +30,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
+import com.sk89q.worldedit.world.biome.BiomeType;
 
 public class HolyLandManager implements Listener
 {
@@ -47,6 +50,7 @@ public class HolyLandManager implements Listener
 
 	private String					pattern			= "HH:mm dd-MM-yyyy";
 	private DateFormat				formatter		= new SimpleDateFormat(this.pattern);
+	private Random 					random 			= new Random();
 
 	private HolyLandManager()
 	{
@@ -143,22 +147,58 @@ public class HolyLandManager implements Listener
 		return godName;
 	}
 
-	/*
-	public String getGodForBeliever(String believerName)
+	public String getHolyLandName(Location location)
 	{
-		return this.landConfig.getString(believerName + ".God");
+		String name = this.landConfig.getString("Holyland." + hashLocation(location) + ".Name");
+		if (name != null)
+		{
+			return name;
+		}
+		return null;
 	}
-	*/
 
-	/*
-	public long getHolyLandIdentifierFromLocation(Location location)
+	public void setHolyLandName(Location location, String name)
 	{
-		long x = location.getBlockX() << 32;
-		long z = location.getBlockZ() & 0xFFFFFFFF;
+		this.landConfig.set("Holyland." + hashLocation(location) + ".Name", name);
+		
+		save();
+	}	
 
-		return x | z;
+	public void sendTitleForHolyLand(Player player, String godName, Location location)
+	{
+		TitleManager.sendTitle(player, 1*20, 3*20, 1*20, ChatColor.GOLD + "Holyland of " + godName, ChatColor.WHITE + this.getHolyLandName(location));
 	}
-	*/
+
+	private String generateHolyLandName(Biome type)
+	{
+		String[] first = new String[] {"Upper ", "Lower ", "High ", ""};
+		String[] second = new String[] {"Flower", "Grass", "Cold"};
+		String[] third = new String[] {"place", "field", "shire"};
+				
+		switch(type)
+		{
+			case SUNFLOWER_PLAINS :
+			case PLAINS :
+				first = new String[] {"Upper ", "Lower ", "High ", ""};
+				second = new String[] {"Flower", "Grass", "Cold"};
+				third = new String[] {"place", "field", "shire"};
+				break;
+			case DARK_FOREST :
+			case BIRCH_FOREST :
+				first = new String[] {"Upper ", "Lower ", "High ", ""};
+				second = new String[] {"Fire", "Dank", "Cold"};
+				third = new String[] {"forest", "wood", ""};
+				break;
+			case MOUNTAINS :
+				first = new String[] {"Upper ", "Lower ", "High ", ""};
+				second = new String[] {"Rock", "High", "Sky"};
+				third = new String[] {"hill", "mountain"};
+				break;				
+		}
+		
+		
+		return first[random.nextInt(first.length)] + second[random.nextInt(second.length)] + third[random.nextInt(third.length)];
+	}
 
 	public String getNearestBeliever(Location location)
 	{
@@ -337,11 +377,13 @@ public class HolyLandManager implements Listener
 		{
 			return;
 		}
+		
 		if (isNeutralLandLocation(event.getLocation()))
 		{
 			Gods.instance().logDebug("Prevented " + event.getEntityType() + " from spawning in Neutral land");
 			return;
 		}
+		
 		String godName = getGodAtHolyLandLocation(event.getLocation());
 		if (godName != null)
 		{
@@ -349,21 +391,27 @@ public class HolyLandManager implements Listener
 			{
 				return;
 			}
+			
 			if (event.getEntity().getType() == GodManager.instance().getHolyMobTypeForGod(godName))
 			{
 				return;
 			}
+			
+			if (event.getEntity().getType() == GodManager.instance().getUnholyMobTypeForGod(godName))
+			{
+				Gods.instance().logDebug("Prevented unholy mob " + event.getEntityType() + " from spawning in Holy Land of " + godName);
+				event.setCancelled(true);
+				return;
+			}
+
 			if (GodManager.instance().getGodMobSpawning(godName))
 			{
 				return;
 			}
-			if (GodManager.instance().getHolyMobTypeForGod(godName).equals(event.getEntityType()))
-			{
-				return;				
-			}
+					
 			if (!isMobTypeAllowedToSpawn(event.getEntityType()))
 			{
-				Gods.instance().logDebug("Prevented " + event.getEntityType() + " from spawning in Holy Land of " + godName);
+				Gods.instance().logDebug("Prevented banned " + event.getEntityType() + " from spawning in Holy Land of " + godName);
 				event.setCancelled(true);
 			}
 		}
@@ -535,22 +583,21 @@ public class HolyLandManager implements Listener
 			String playerGod = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 			if ((playerGod != null) && (playerGod.equals(godTo)))
 			{
-				TitleManager.sendTitle(player, 1*20, 3*20, 1*20, ChatColor.GOLD + "Holyland of " + godTo, ChatColor.WHITE + GodManager.instance().getGodDescription(godTo));
-				//Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.EnterHolyLandInfoYourGod, ChatColor.GOLD, godTo, ChatColor.AQUA + GodManager.instance().getGodDescription(godTo), 1);
+				TitleManager.sendTitle(player, 1*20, 3*20, 1*20, ChatColor.GOLD + "Holyland of " + godTo, ChatColor.WHITE + this.getHolyLandName(to));
 			}
 			else
 			{
 				TitleManager.sendTitle(player, 1*20, 3*20, 1*20, ChatColor.GOLD + "Holyland of " + godTo, GodManager.instance().getGodDescription(godTo));
-				//Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.EnterHolyLandInfoOtherGod, ChatColor.GREEN, godTo, ChatColor.AQUA + GodManager.instance().getGodDescription(godTo), 1);
 			}
 		}
 		else if ((godFrom != null) && (godTo == null))
 		{
 			TitleManager.sendTitle(player, 1*20, 3*20, 1*20, ChatColor.DARK_GREEN + "Wilderness", ChatColor.WHITE + "");
-			//Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.EnterWildernessInfo, ChatColor.DARK_GREEN, 0, "", 1);
 		}
 	}
 
+	
+	
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent event)
 	{
@@ -619,13 +666,21 @@ public class HolyLandManager implements Listener
 				}
 				catch (Exception ex)
 				{
-					this.landConfig.set(holylandHash, null);
+					unsetHolyLand(Long.parseLong(holylandHash));
 				}
-				long diff = thisDate.getTime() - lastPrayerDate.getTime();
-				long diffMinutes = diff / 60000L;
-				if (diffMinutes > GodsConfiguration.instance().getNumberOfDaysForAbandonedHolyLands() * 24 * 60)
+				
+				if(lastPrayerDate == null)
 				{
-					this.landConfig.set(holylandHash, null);
+					unsetHolyLand(Long.parseLong(holylandHash));
+				}
+				else
+				{
+					long diff = thisDate.getTime() - lastPrayerDate.getTime();
+					long diffMinutes = diff / 60000L;
+					if (diffMinutes > GodsConfiguration.instance().getNumberOfDaysForAbandonedHolyLands() * 24 * 60)
+					{
+						unsetHolyLand(Long.parseLong(holylandHash));
+					}
 				}
 			}
 		}
@@ -677,6 +732,19 @@ public class HolyLandManager implements Listener
 		save();
 	}
 
+	public void removeHolyLandsForGod(String godName)
+	{
+		for (String hash : this.landConfig.getConfigurationSection("Holyland").getKeys(false))
+		{
+			String holylandGodName = this.landConfig.getString("Holyland." + hash + ".GodName");
+			
+			if(holylandGodName.equals(godName))
+			{
+				unsetHolyLand(Long.parseLong(hash));
+			}
+		}
+	}
+	
 	public void setHolyLand(Location location, String godName)
 	{
 		long hash = hashLocation(location);
@@ -690,6 +758,19 @@ public class HolyLandManager implements Listener
 		this.landConfig.set("Holyland." + hash + ".LastPrayerTime", this.formatter.format(thisDate));
 		this.landConfig.set("Holyland." + hash + ".World", location.getWorld().getName());
 
+		save();
+	}
+
+	public void unsetHolyLand(Location location)
+	{
+		long hash = hashLocation(location);
+		unsetHolyLand(hash);
+	}
+
+	public void unsetHolyLand(long hash)
+	{
+		this.landConfig.set("Holyland." + hash, null);
+		
 		save();
 	}
 
@@ -750,6 +831,7 @@ public class HolyLandManager implements Listener
 		}
 		
 		setHolyLand(location, godName);
+		setHolyLandName(location, generateHolyLandName(location.getWorld().getBiome(location.getBlockX(), location.getBlockZ())));
 
 		int claimed = getClaimedChunksForGod(godName);
 		int max = getMaximumChunksForGod(godName);

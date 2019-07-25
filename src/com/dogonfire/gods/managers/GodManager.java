@@ -215,8 +215,19 @@ public class GodManager
 			}
 			
 			QuestManager.instance().handleJoinReligion(player.getName(), godName);
-			
-			HolyBookManager.instance().giveBible(godName, player.getName());
+
+			if(GodsConfiguration.instance().isBiblesEnabled())
+			{
+				if(GodsConfiguration.instance().isGiveBibleWhenJoinReligion())
+				{
+					HolyBookManager.instance().giveBible(godName, player.getName());
+				}
+
+				if(GodsConfiguration.instance().isGiveInstructionsWhenJoinReligion())
+				{
+					InstructionBookManager.instance().giveInstructions(player.getName());
+				}
+			}			
 		}
 
 		return true;
@@ -1469,6 +1480,11 @@ public class GodManager
 		List<String> offlineGods = new ArrayList<String>();
 		for (String godName : allGods)
 		{
+			if (godName == null)
+			{
+				continue;
+			}
+			
 			if (!this.onlineGods.contains(godName))
 			{
 				offlineGods.add(godName);
@@ -3509,6 +3525,11 @@ public class GodManager
 		this.godsConfig.set(godName, null);
 
 		HolyBookManager.instance().clearBible(godName);
+
+		if(GodsConfiguration.instance().isHolyLandEnabled())
+		{
+			HolyLandManager.instance().removeHolyLandsForGod(godName);
+		}
 
 		save();
 	}

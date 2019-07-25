@@ -548,11 +548,11 @@ public class BlockListener implements Listener
 	{
 		Player player = event.getPlayer();
 		String godName = null;
-		if ((player == null) || (!Gods.instance().isEnabledInWorld(player.getWorld())))
+		if ((player == null) || !Gods.instance().isEnabledInWorld(player.getWorld()))
 		{
 			return;
 		}
-		if ((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
+		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
 		{
 			Material type = player.getItemInHand().getType();
 			if ((type != null) && (type != Material.AIR))

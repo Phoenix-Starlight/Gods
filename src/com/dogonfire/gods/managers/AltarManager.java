@@ -316,7 +316,6 @@ public class AltarManager
 		{
 			if ((GodsConfiguration.instance().isHolyLandEnabled()) && (PermissionsManager.instance().hasPermission(player, "gods.holyland")))
 			{
-				//HolyLandManager.instance().setPrayingHotspot(player.getName(), godName, altarBlock.getLocation());
 				HolyLandManager.instance().addAltar(player, godName, altarBlock.getLocation());
 			}
 			

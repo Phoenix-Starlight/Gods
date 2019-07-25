@@ -60,6 +60,8 @@ public class GodsConfiguration
 	private boolean			sacrificesEnabled					= true;
 	private boolean			holyLandEnabled						= false;
 	private boolean			biblesEnabled						= false;
+	private boolean			giveBibleWhenJoinReligion			= false;
+	private boolean			giveInstructionsWhenJoinReligion	= false;
 	private boolean			holyArtifactsEnabled				= false;
 	private boolean			propheciesEnabled					= false;
 	private boolean			chatFormattingEnabled				= false;
@@ -343,6 +345,16 @@ public class GodsConfiguration
 	public final boolean isBiblesEnabled()
 	{
 		return biblesEnabled;
+	}
+	
+	public final boolean isGiveBibleWhenJoinReligion()
+	{
+		return giveBibleWhenJoinReligion;
+	}
+	
+	public final boolean isGiveInstructionsWhenJoinReligion()
+	{
+		return giveInstructionsWhenJoinReligion;
 	}
 
 	public final boolean isBlessingEnabled()
