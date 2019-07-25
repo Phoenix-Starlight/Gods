@@ -6,3 +6,9 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+jdk:
+  - openjdk8 
+script:
+  - mvn clean package
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
