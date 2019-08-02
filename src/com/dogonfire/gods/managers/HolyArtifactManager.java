@@ -225,7 +225,7 @@ public class HolyArtifactManager
 				List<String> lorePages = new ArrayList<String>();
 				lorePages.add(lorePage);
 				lorePages.add(ChatColor.WHITE + "Damage: 12");
-				lorePages.add(ChatColor.GREEN + HolyPowerManager.get().describe(holyPower, powerValue));
+				lorePages.add(ChatColor.GREEN + HolyPowerManager.instance().describe(holyPower, powerValue));
 
 				itemMeta.setLore(lorePages);
 			}
@@ -371,6 +371,8 @@ public class HolyArtifactManager
 				break;
 //			case SKULL_ITEM:
 //				itemName = "Pumpkin seeds of " + godName;
+			default:
+				break;
 			}
 			break;
 		case WEREWOLVES:
@@ -384,11 +386,15 @@ public class HolyArtifactManager
 				break;
 //			case WALL_SIGN:
 //				itemName = "Enchantment book of " + godName;
+			default:
+				break;
 			}
 			break;
 		case MOON:
 			switch (itemType)
 			{
+			default:
+				break;
 //			case RAW_CHICKEN:
 //				itemName = "Moonbucket of " + godName;
 			}
@@ -396,6 +402,8 @@ public class HolyArtifactManager
 		case NATURE:
 			switch (itemType)
 			{
+			default:
+				break;
 //			case RAW_CHICKEN: itemName = "Sunbucket of " + godName;
 			}
 			break;
@@ -417,6 +425,8 @@ public class HolyArtifactManager
 			{
 //			case SIGN_POST:	itemName = "Shears of " + godName;	break;
 			case WOODEN_AXE: itemName = "Leash of " + godName;
+			default:
+				break;
 			}
 			break;
 		case SUN:
@@ -479,14 +489,14 @@ public class HolyArtifactManager
 		{
 			return;
 		}
-		HolyPowerManager.HolyPower holyPower = HolyPowerManager.get().getHolyPowerFromDescription(item.getItemMeta().getLore().get(2).substring(2));
+		HolyPowerManager.HolyPower holyPower = HolyPowerManager.instance().getHolyPowerFromDescription(item.getItemMeta().getLore().get(2).substring(2));
 
 		Player player = Gods.instance().getServer().getPlayer(playerName);
 		if (player == null)
 		{
 			return;
 		}
-		HolyPowerManager.get().activatePower(player, holyPower, 1);
+		HolyPowerManager.instance().activatePower(player, holyPower, 1);
 		
 
 		// item.setDurability((short) (item.getDurability() - 1));

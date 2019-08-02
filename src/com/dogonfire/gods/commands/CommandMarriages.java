@@ -35,7 +35,7 @@ public class CommandMarriages extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		List<MarriageManager.MarriedCouple> couples = MarriageManager.get().getMarriedCouples();
+		List<MarriageManager.MarriedCouple> couples = MarriageManager.instance().getMarriedCouples();
 		if (couples.size() == 0) {
 			sender.sendMessage("There are no married couples yet!");
 			return;

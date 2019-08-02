@@ -82,6 +82,8 @@ public class HolyArtifact
 		case MELON_STEM:
 			name = godName + "'s toothpick";
 			break;
+		default:
+			break;
 		}
 		return name;
 	}

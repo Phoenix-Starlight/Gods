@@ -32,7 +32,7 @@ public class ProphecyManager
 
 	private static ProphecyManager instance;
 
-	public static ProphecyManager get()
+	public static ProphecyManager instance()
 	{
 		if (instance == null)
 			instance = new ProphecyManager();

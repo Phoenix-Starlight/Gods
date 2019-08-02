@@ -22,7 +22,7 @@ public class ThunderStormTask extends Task {
 	public void run() {
 		this.player.getWorld().setStorm(true);
 
-		Entity[] entities = HolyPowerManager.get().getNearbyLivingEntities(this.player.getLocation(), 20.0D);
+		Entity[] entities = HolyPowerManager.instance().getNearbyLivingEntities(this.player.getLocation(), 20.0D);
 
 		Entity targetEntity = entities[this.random.nextInt(entities.length)];
 		if (targetEntity != this.player) {

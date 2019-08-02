@@ -94,7 +94,7 @@ public class Gods extends JavaPlugin
 	{
 		pluginInstance = this;
 		
-		getCommand("gods").setExecutor(GodsCommandExecuter.get());
+		getCommand("gods").setExecutor(GodsCommandExecuter.instance());
 		
 		GodsConfiguration.instance().loadSettings();
 		GodsConfiguration.instance().saveSettings();
@@ -116,7 +116,7 @@ public class Gods extends JavaPlugin
 		if (pm.getPlugin("PlaceholderAPI") != null)
 		{
 			log("PlaceholderAPI found.");
-			new GodsPlaceholderExpansion(Gods.get()).register();
+			new GodsPlaceholderExpansion(Gods.instance()).register();
 		}
 		else
 		{

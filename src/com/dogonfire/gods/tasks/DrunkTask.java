@@ -29,7 +29,7 @@ public class DrunkTask implements Runnable
 	{
 		this.player.playSound(this.player.getLocation(), Sound.AMBIENT_CAVE, 1.0F, 0.1F);
 
-		Entity[] entities = HolyPowerManager.get().getNearbyLivingEntities(this.player.getLocation(), 20.0D);
+		Entity[] entities = HolyPowerManager.instance().getNearbyLivingEntities(this.player.getLocation(), 20.0D);
 		int n = 0;
 		for (Entity entity : entities)
 		{

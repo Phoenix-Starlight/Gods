@@ -29,6 +29,7 @@ import com.dogonfire.gods.managers.WhitelistManager;
 
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("unused")
 public class GodsTest
 {
 	@Test
@@ -55,7 +56,7 @@ public class GodsTest
 //	{        
 //		Gods plugin = mock(Gods.class);
 //		
-//		//plugin.getCommand("gods").setExecutor(GodsCommandExecuter.get());
+//		//plugin.getCommand("gods").setExecutor(GodsCommandExecuter.instance());
 //	
 //		GodsConfiguration.instance().loadSettings();
 //		GodsConfiguration.instance().saveSettings();
@@ -89,7 +90,7 @@ public class GodsTest
 //        
 //        //manager.parseCommand(player, "test", new ArrayList<String>());
 //
-//        //plugin.getCommand("gods").setExecutor(GodsCommandExecuter.get());
+//        //plugin.getCommand("gods").setExecutor(GodsCommandExecuter.instance());
 //        //plugin.onCommand(sender, command, label, args)
 //        
 //        //assertTrue(hasRun);

@@ -31,11 +31,9 @@ import org.bukkit.util.Vector;
 
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
-import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.bukkit.BukkitUtil;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
@@ -81,7 +79,7 @@ public class QuestManager
 		boolean complete = false;
 
 		List<String> players = this.questsConfig.getStringList(godName + ".Players");
-		if (players.contains(playerId))
+		if (players.contains(playerId.toString()))
 		{
 			return false;
 		}
@@ -550,6 +548,8 @@ public class QuestManager
 						break;
 					case SEA:
 						newQuest = generateGiveItemsQuest(godName, Material.CAKE);
+					default:
+						break;
 					}
 				}
 				break;
@@ -1433,6 +1433,9 @@ public class QuestManager
 			break;
 		case SLAYDRAGON:
 			GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversSlayDragonQuestFailed, 2 + this.random.nextInt(100));
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -1472,6 +1475,9 @@ public class QuestManager
 				case MOBSACRIFICE:
 					LanguageManager.instance().setType(questTargetType);
 					GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversHolywarQuestStarted, 2 + this.random.nextInt(100));
+					break;
+				default:
+					break;
 				}
 			}
 			catch (Exception ex)
@@ -1494,7 +1500,7 @@ public class QuestManager
 			switch (questType)
 			{
 			case SPREADLOVE:
-				LanguageManager.instance().setType(LanguageManager.instance().getMobTypeName(EntityType.fromName(questTargetType)));
+				LanguageManager.instance().setType(LanguageManager.instance().getMobTypeName(EntityType.valueOf(questTargetType.toUpperCase())));
 				GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversCrusadeQuestStarted, 2 + this.random.nextInt(100));
 				break;
 			case GIVEITEMS:
@@ -1563,6 +1569,9 @@ public class QuestManager
 				GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversSacrificeQuestStarted, 2 + this.random.nextInt(100));
 
 				GodManager.instance().sendInfoToBelievers(godName, LanguageManager.LANGUAGESTRING.SacrificeHelp, ChatColor.AQUA, 150);
+				break;
+			default:
+				break;
 			}
 		}
 		catch (Exception ex)
@@ -1637,6 +1646,8 @@ public class QuestManager
 			break;
 		case SLAY:
 			GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversSlayQuestProgress, 2 + this.random.nextInt(100));
+		default:
+			break;
 		}
 	}
 
@@ -1696,38 +1707,38 @@ public class QuestManager
 		/*
 		 * case PILGRIMAGE: { int delay = 2 + this.random.nextInt(100); if
 		 * (this.random.nextInt(6) == 0) { try {
-		 * LanguageManager.get().setType(targetType); } catch (Exception ex) {
-		 * Gods.get().logDebug(ex.getStackTrace().toString()); }
-		 * GodManager.get().godSayToBelievers(godName,
+		 * LanguageManager.instance().setType(targetType); } catch (Exception ex) {
+		 * Gods.instance().logDebug(ex.getStackTrace().toString()); }
+		 * GodManager.instance().godSayToBelievers(godName,
 		 * LanguageManager.LANGUAGESTRING.GodToBelieversPilgrimageQuestStatus,
 		 * delay); }
 		 * 
 		 * for (UUID believerId :
-		 * BelieverManager.get().getBelieversForGod(godName)) { if
-		 * (!BelieverManager.get().isHunting(believerId)) { if
-		 * (this.random.nextInt(10) == 0) { Gods.get().sendInfo(believerId,
+		 * BelieverManager.instance().getBelieversForGod(godName)) { if
+		 * (!BelieverManager.instance().isHunting(believerId)) { if
+		 * (this.random.nextInt(10) == 0) { Gods.instance().sendInfo(believerId,
 		 * LanguageManager.LANGUAGESTRING.QuestTargetHelp, ChatColor.AQUA, 0,
 		 * "", 20); } } else { Location pilgrimageLocation =
 		 * getQuestLocation(godName);
 		 * 
-		 * Player player = Gods.get().getServer().getPlayer(believerId);
+		 * Player player = Gods.instance().getServer().getPlayer(believerId);
 		 * 
 		 * if(player == null || player.isFlying()) { continue; }
 		 * 
-		 * if (pilgrimageLocation == null) { Gods.get().logDebug(
+		 * if (pilgrimageLocation == null) { Gods.instance().logDebug(
 		 * "Quest target location is null for " + godName); return; }
 		 * 
 		 * if
 		 * (!pilgrimageLocation.getWorld().getName().equals(player.getWorld().
-		 * getName()) ) { Gods.get().logDebug("PilgrimageQuest for '" +
+		 * getName()) ) { Gods.instance().logDebug("PilgrimageQuest for '" +
 		 * player.getDisplayName() + "' is wrong world"); return; }
 		 * 
 		 * Vector vector =
 		 * pilgrimageLocation.toVector().subtract(player.getLocation().toVector(
 		 * ));
 		 * 
-		 * LanguageManager.get().setAmount((int) vector.length());
-		 * Gods.get().sendInfo(believerId,
+		 * LanguageManager.instance().setAmount((int) vector.length());
+		 * Gods.instance().sendInfo(believerId,
 		 * LanguageManager.LANGUAGESTRING.QuestTargetRange, ChatColor.AQUA,
 		 * (int) vector.length(), "", 20); } } } break;
 		 */
@@ -1809,6 +1820,9 @@ public class QuestManager
 				return;
 			}
 			GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversHolywarQuestStatus, 2 + this.random.nextInt(100));
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -1912,23 +1926,23 @@ public class QuestManager
 			// int delay = 2 + this.random.nextInt(100);
 			// try
 			// {
-			// LanguageManager.get().setType(targetType);
+			// LanguageManager.instance().setType(targetType);
 			// }
 			// catch (Exception ex)
 			// {
-			// Gods.get().logDebug(ex.getStackTrace());
+			// Gods.instance().logDebug(ex.getStackTrace());
 			// }
-			// GodManager.get().godSayToBelievers(godName,
+			// GodManager.instance().godSayToBelievers(godName,
 			// LanguageManager.LANGUAGESTRING.GodToBelieversSlayDragonQuestStatus,
 			// delay);
 			// for (String believerName :
-			// BelieverManager.get().getBelieversForGod(godName))
+			// BelieverManager.instance().getBelieversForGod(godName))
 			// {
-			// if (!BelieverManager.get().isHunting(believerName))
+			// if (!BelieverManager.instance().isHunting(believerName))
 			// {
 			// if (this.random.nextInt(6) == 0)
 			// {
-			// Gods.get().sendInfo(believerName,
+			// Gods.instance().sendInfo(believerName,
 			// LanguageManager.LANGUAGESTRING.QuestTargetHelp, ChatColor.AQUA,
 			// 0, "", 20);
 			// }
@@ -1936,23 +1950,23 @@ public class QuestManager
 			// else
 			// {
 			// Location dragonLocation = getQuestLocation(godName);
-			// Player player = Gods.get().getServer().getPlayer(believerName);
+			// Player player = Gods.instance().getServer().getPlayer(believerName);
 			// if (dragonLocation == null)
 			// {
-			// Gods.get().logDebug("Quest target location is null for " +
+			// Gods.instance().logDebug("Quest target location is null for " +
 			// godName);
 			// return;
 			// }
 			// if (player == null)
 			// {
-			// Gods.get().logDebug("DragonQuest player '" + believerName + "' is
+			// Gods.instance().logDebug("DragonQuest player '" + believerName + "' is
 			// null");
 			// return;
 			// }
 			// if
 			// (dragonLocation.getWorld().getName().equals(player.getWorld().getName()))
 			// {
-			// Gods.get().logDebug("DragonQuest for '" + believerName + "' is
+			// Gods.instance().logDebug("DragonQuest for '" + believerName + "' is
 			// wrong
 			// world");
 			// return;
@@ -1960,7 +1974,7 @@ public class QuestManager
 			// Vector vector =
 			// dragonLocation.toVector().subtract(player.getLocation().toVector());
 			//
-			// Gods.get().sendInfo(believerName,
+			// Gods.instance().sendInfo(believerName,
 			// LanguageManager.LANGUAGESTRING.QuestTargetRange, ChatColor.AQUA,
 			// (int)
 			// vector.length(), "", 1);
@@ -2029,6 +2043,8 @@ public class QuestManager
 						GodManager.instance().godSayToBeliever(godName, believerId, LanguageManager.LANGUAGESTRING.GodToBelieversGetHolyArtifactQuestRange, delay + 20 + this.random.nextInt(100));
 					}
 				}
+			default:
+				break;
 			}
 		}
 	}
@@ -2418,6 +2434,9 @@ public class QuestManager
 					LanguageManager.instance().setType(LanguageManager.instance().getItemTypeName(Material.getMaterial(questTargetType)));
 					LanguageManager.instance().setPlayerName(player.getDisplayName());
 					GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversSacrificeQuestCompleted, 2 + this.random.nextInt(10));
+					break;
+				default:
+					break;
 				}
 			}
 			catch (Exception ex)
@@ -2731,7 +2750,7 @@ public class QuestManager
 		}
 
 		// Item artifactItem =
-		// Gods.get().getHolyArtifactManager().createHolyArtifact(godType,
+		// Gods.instance().getHolyArtifactManager().createHolyArtifact(godType,
 		// godName,
 		// targetLocation);
 		// contents.addItem(new ItemStack[] { artifactItem.getItemStack() });

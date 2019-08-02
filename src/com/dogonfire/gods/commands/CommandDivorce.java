@@ -37,14 +37,14 @@ public class CommandDivorce extends GodsCommand {
 			return;
 		}
 
-		String partnerName = MarriageManager.get().getPartnerName(player.getUniqueId());
+		String partnerName = MarriageManager.instance().getPartnerName(player.getUniqueId());
 
 		if (partnerName == null) {
 			player.sendMessage(ChatColor.RED + "You are not married, bozo!");
 			return;
 		}
 
-		MarriageManager.get().divorce(player.getUniqueId());
+		MarriageManager.instance().divorce(player.getUniqueId());
 
 		player.sendMessage(ChatColor.AQUA + "You divorced " + ChatColor.WHITE + partnerName + "!");
 	}

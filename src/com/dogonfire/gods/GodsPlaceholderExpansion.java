@@ -113,7 +113,7 @@ class GodsPlaceholderExpansion extends PlaceholderExpansion {
         if(identifier.equals("name_space")){
         	String god = "";
         	
-        	god = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+        	god = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
         	
         	if (god == null) {
         		god = "";
@@ -129,7 +129,7 @@ class GodsPlaceholderExpansion extends PlaceholderExpansion {
         if(identifier.equals("name")){
         	String god = "";
         	
-        	god = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+        	god = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
         	
         	if (god == null) {
         		god = "";
@@ -140,20 +140,20 @@ class GodsPlaceholderExpansion extends PlaceholderExpansion {
 
         // %gods_prayerpower%
         if(identifier.equals("prayerpower")){
-            return String.valueOf(BelieverManager.get().getPrayerPower(player.getUniqueId()));
+            return String.valueOf(BelieverManager.instance().getPrayerPower(player.getUniqueId()));
         }
         
         // %gods_color%
         if(identifier.equals("color")){
         	String god = "";
         	
-        	god = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+        	god = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
         	
         	if (god == null) {
         		god = "";
         	}
         	
-        	ChatColor godColor = GodManager.get().getColorForGod(god);
+        	ChatColor godColor = GodManager.instance().getColorForGod(god);
         	
             return "&" + String.valueOf(godColor.getChar());
         }

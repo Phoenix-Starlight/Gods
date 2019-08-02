@@ -637,13 +637,13 @@ public class GodsConfiguration
 		if (this.marriageEnabled)
 		{
 			this.marriageFireworksEnabled = config.getBoolean("Marriage.WeddingFireworks", true);
-			MarriageManager.get().load();
+			MarriageManager.instance().load();
 		}
 		
 		this.holyArtifactsEnabled = config.getBoolean("HolyArtifacts.Enabled", true);	
 		if (this.holyArtifactsEnabled)
 		{
-			HolyPowerManager.get();
+			HolyPowerManager.instance();
 			HolyArtifactManager.instance().load();
 		}
 
@@ -660,7 +660,7 @@ public class GodsConfiguration
 		this.chatFormattingEnabled = config.getBoolean("ChatFormatting.Enabled", false);
 
 		if (this.chatFormattingEnabled)
-			ChatManager.get().load();
+			ChatManager.instance().load();
 
 		this.holyLandEnabled = config.getBoolean("HolyLand.Enabled", false);
 
@@ -787,7 +787,7 @@ public class GodsConfiguration
 					for (String blockMaterial : config.getStringList("Altars.BlockTypes." + godType))
 					{
 						Gods.instance().log("Setting block type " + blockMaterial + " for God type " + godType);
-						AltarManager.get().setAltarBlockTypeForGodType(GodType.valueOf(godType), Material.getMaterial(blockMaterial));
+						AltarManager.instance().setAltarBlockTypeForGodType(GodType.valueOf(godType), Material.getMaterial(blockMaterial));
 					}
 				}
 				catch (Exception ex)
@@ -799,11 +799,11 @@ public class GodsConfiguration
 		else
 		{
 			Gods.instance().log("No altar blocktypes found in config. Setting defaults.");
-			AltarManager.get().resetAltarBlockTypes();
+			AltarManager.instance().resetAltarBlockTypes();
 
 			for (GodType godType : GodManager.GodType.values())
 			{
-				config.set("Altars.BlockTypes." + godType.name(), AltarManager.get().getAltarBlockTypesFromGodType(godType));
+				config.set("Altars.BlockTypes." + godType.name(), AltarManager.instance().getAltarBlockTypesFromGodType(godType));
 			}
 			saveSettings();
 		}
@@ -836,7 +836,7 @@ public class GodsConfiguration
 		config.set("Settings.DefaultPrivateReligions", Boolean.valueOf(this.defaultPrivateReligions));
 		for (GodManager.GodType godType : GodManager.GodType.values())
 		{
-			config.set("Altars.BlockTypes." + godType.name(), AltarManager.get().getAltarBlockTypesFromGodType(godType));
+			config.set("Altars.BlockTypes." + godType.name(), AltarManager.instance().getAltarBlockTypesFromGodType(godType));
 		}
 		config.set("ItemBlessing.Enabled", Boolean.valueOf(this.itemBlessingEnabled));
 		config.set("ItemBlessing.MinGodPowerItemBlessings", Integer.valueOf(this.minGodPowerForItemBlessings));

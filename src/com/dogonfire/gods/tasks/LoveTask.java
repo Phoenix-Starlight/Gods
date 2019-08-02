@@ -48,7 +48,7 @@ public class LoveTask implements Runnable
 
 			if (firework)
 			{
-				HolyPowerManager.get().shootFirework(player1, 16);
+				HolyPowerManager.instance().shootFirework(player1, 16);
 			}
 		}
 
@@ -59,7 +59,7 @@ public class LoveTask implements Runnable
 
 			if (firework)
 			{
-				HolyPowerManager.get().shootFirework(player2, 16);
+				HolyPowerManager.instance().shootFirework(player2, 16);
 			}
 		}	
 

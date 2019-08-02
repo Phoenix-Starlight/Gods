@@ -24,7 +24,7 @@ public class GodsCommandExecuter implements CommandExecutor
 {
 	private static GodsCommandExecuter instance;
 
-	public static GodsCommandExecuter get()
+	public static GodsCommandExecuter instance()
 	{
 		if (instance == null)
 			instance = new GodsCommandExecuter();
@@ -119,7 +119,7 @@ public class GodsCommandExecuter implements CommandExecutor
 			}
 			if (GodsConfiguration.instance().isMarriageEnabled())
 			{
-				String partnerName = MarriageManager.get().getPartnerName(player.getUniqueId());
+				String partnerName = MarriageManager.instance().getPartnerName(player.getUniqueId());
 				if (partnerName != null)
 				{
 					sender.sendMessage(ChatColor.WHITE + "You are married to " + ChatColor.GOLD + partnerName);

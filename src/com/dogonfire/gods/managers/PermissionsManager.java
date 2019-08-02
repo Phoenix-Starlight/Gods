@@ -1,7 +1,7 @@
 package com.dogonfire.gods.managers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.dogonfire.gods.Gods;
@@ -15,7 +15,7 @@ public class PermissionsManager
 	public static PermissionsManager instance()
 	{
 		if (instance == null)
-			instance = new PermissionsManager(Gods.get());
+			instance = new PermissionsManager(Gods.instance());
 		return instance;
 	}
 
@@ -52,7 +52,7 @@ public class PermissionsManager
 
 	public boolean hasPermission(Player player, String node)
 	{
-		if (Gods.get().vaultEnabled) {
+		if (Gods.instance().vaultEnabled) {
 			return vaultPermission.has(player, node);
 		}
 		return false;
@@ -60,7 +60,7 @@ public class PermissionsManager
 
 	public String getGroup(String playerName)
 	{
-		if (Gods.get().vaultEnabled) {
+		if (Gods.instance().vaultEnabled) {
 			return vaultPermission.getPrimaryGroup(null, plugin.getServer().getPlayer(playerName));
 		}
 		return "";
@@ -68,7 +68,7 @@ public class PermissionsManager
 
 	public void setGroup(String playerName, String groupName)
 	{
-		if (Gods.get().vaultEnabled) {
+		if (Gods.instance().vaultEnabled) {
 			Player player = plugin.getServer().getPlayer(playerName);
 			vaultPermission.playerAddGroup(null, player, groupName);
 		}

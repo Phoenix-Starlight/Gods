@@ -23,7 +23,7 @@ public class AltarManager
 {
 	private static AltarManager instance;
 
-	public static AltarManager get()
+	public static AltarManager instance()
 	{
 		if (instance == null)
 			instance = new AltarManager();
@@ -63,7 +63,7 @@ public class AltarManager
 
 		Block altarBlock = block.getRelative(directional.getFacing().getOppositeFace());
 
-		Gods.get().logDebug("getAltarBlockFromSign(): AltarBlock block is " + altarBlock.getType().name());
+		Gods.instance().logDebug("getAltarBlockFromSign(): AltarBlock block is " + altarBlock.getType().name());
 		if (getGodTypeForAltarBlockType(altarBlock.getType()) == null)
 		{
 			return null;
@@ -391,7 +391,7 @@ public class AltarManager
 
 		Block altarBlock = block.getRelative(directional.getFacing().getOppositeFace());
 
-		Gods.get().logDebug("isAltarSign(): AltarBlock block is " + altarBlock.getType().name());
+		Gods.instance().logDebug("isAltarSign(): AltarBlock block is " + altarBlock.getType().name());
 		if (getGodTypeForAltarBlockType(altarBlock.getType()) == null)
 		{
 			return false;
