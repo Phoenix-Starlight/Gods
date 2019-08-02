@@ -42,9 +42,9 @@ public class CommandFollowers extends GodsCommand {
 
 		String godName = "";
 		if (args.length >= 2) {
-			godName = GodManager.get().formatGodName(args[1]);
+			godName = GodManager.instance().formatGodName(args[1]);
 		} else {
-			godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+			godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		}
 
 		if (godName == null) {
@@ -52,10 +52,10 @@ public class CommandFollowers extends GodsCommand {
 			return;
 		}
 
-		Set<UUID> list = BelieverManager.get().getBelieversForGod(godName);
+		Set<UUID> list = BelieverManager.instance().getBelieversForGod(godName);
 
 		for (UUID believerId : list) {
-			Date lastPrayer = BelieverManager.get().getLastPrayerTime(believerId);
+			Date lastPrayer = BelieverManager.instance().getLastPrayerTime(believerId);
 			believers.add(new Believer(believerId, lastPrayer));
 		}
 
@@ -64,7 +64,7 @@ public class CommandFollowers extends GodsCommand {
 			return;
 		}
 
-		playerGod = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		playerGod = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		sender.sendMessage(ChatColor.YELLOW + "--------- The Followers of " + godName + " ---------");
 		Collections.sort(believers, new BelieversComparator());
 
@@ -94,7 +94,7 @@ public class CommandFollowers extends GodsCommand {
 				date = minutes + " min ago";
 			}
 
-			String believerName = Gods.get().getServer().getOfflinePlayer(believer.believerId).getName();
+			String believerName = Gods.instance().getServer().getOfflinePlayer(believer.believerId).getName();
 
 			if (sender != null) {
 				if (playerGod != null && (believer.believerId.equals(player.getUniqueId()))) {
@@ -104,13 +104,13 @@ public class CommandFollowers extends GodsCommand {
 					sender.sendMessage(ChatColor.YELLOW + StringUtils.rightPad(believerName, 20) + ChatColor.AQUA + StringUtils.rightPad(new StringBuilder().append(" Prayed ").append(ChatColor.GOLD).append(date).toString(), 18));
 				}
 			} else {
-				Gods.get().log(StringUtils.rightPad(believerName, 20) + ChatColor.AQUA + StringUtils.rightPad(new StringBuilder().append(" Prayed ").append(ChatColor.GOLD).append(date).toString(), 18));
+				Gods.instance().log(StringUtils.rightPad(believerName, 20) + ChatColor.AQUA + StringUtils.rightPad(new StringBuilder().append(" Prayed ").append(ChatColor.GOLD).append(date).toString(), 18));
 			}
 		}
 
 		if ((playerGod != null) && (!playerShown)) {
 			for (Believer believer : believers) {
-				String believerName = Gods.get().getServer().getOfflinePlayer(believer.believerId).getName();
+				String believerName = Gods.instance().getServer().getOfflinePlayer(believer.believerId).getName();
 
 				if ((playerGod != null) && (believer.believerId.equals(player.getUniqueId()))) {
 					sender.sendMessage(ChatColor.GOLD + StringUtils.rightPad(believerName, 20) + StringUtils.rightPad(new StringBuilder().append(" Prayed ").append(believer.lastPrayer).toString(), 18));

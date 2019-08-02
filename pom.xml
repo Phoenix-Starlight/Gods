@@ -29,36 +29,28 @@
         <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
   </repositories>
-  <dependencies>
+  <dependencies>  
     <dependency>
       <groupId>com.sk89q.worldguard</groupId>
-      <artifactId>worldguard-legacy</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <artifactId>worldguard-bukkit</artifactId>
+      <version>7.0.1-SNAPSHOT</version>                 
     </dependency>
     <dependency>
       <groupId>com.sk89q.worldedit</groupId>
-      <artifactId>worldedit-bukkit</artifactId>
-      <version>7.0.0-SNAPSHOT</version>
+      <artifactId>worldedit-bukkit</artifactId> 
+      <version>7.0.1-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
-        <exclusion>
-          <artifactId>bukkit</artifactId>
-          <groupId>com.sk89q.worldedit.worldedit-libs</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>paperlib</artifactId>
-          <groupId>io.papermc</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>log4j-slf4j-impl</artifactId>
-          <groupId>org.apache.logging.log4j</groupId>
-        </exclusion>
+      	<exclusion>
+        	<groupId>org.apache.logging.log4j</groupId>
+        	<artifactId>log4j-slf4j-impl</artifactId>
+      	</exclusion>
       </exclusions>
     </dependency>    
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.13-R0.1-SNAPSHOT</version>
+      <version>1.14.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -81,11 +73,12 @@
      </dependency>
   </dependencies>
   <build>
-    <defaultGoal>clean package</defaultGoal>
+    <defaultGoal>clean cobertura:cobertura</defaultGoal>
     <finalName>${project.name}-${project.version}</finalName>
     <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
     <resources>
       <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
         <filtering>true</filtering>
         <directory>${project.basedir}/src/main/resources</directory>
         <includes>

@@ -51,7 +51,7 @@ public class CommandHelp extends GodsCommand
 
 	private void helpGeneral(CommandSender sender)
 	{
-		sender.sendMessage(ChatColor.YELLOW + "------------------ " + Gods.get().getDescription().getFullName() + " ------------------");
+		sender.sendMessage(ChatColor.YELLOW + "------------------ " + Gods.instance().getDescription().getFullName() + " ------------------");
 		sender.sendMessage(ChatColor.AQUA + "/gods" + ChatColor.WHITE + " - Basic info");
 		sender.sendMessage(ChatColor.AQUA + "/gods help altar" + ChatColor.WHITE + " - How to build an altar to a God");
 		sender.sendMessage(ChatColor.AQUA + "/gods help blocks" + ChatColor.WHITE + " - What type of blocks are used for God altars");
@@ -64,27 +64,27 @@ public class CommandHelp extends GodsCommand
 			}
 		}
 
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.info")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.info")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods info" + ChatColor.WHITE + " - ");
 		}
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.info")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.info")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods info <godname>" + ChatColor.WHITE + " - Show info about a specific God");
 		}
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.love")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.love")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods love" + ChatColor.WHITE + " - Love your partner");
 		}
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.home")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.home")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods home" + ChatColor.WHITE + " - Teleports you to your religion home");
 		}
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.sethome")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.sethome")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods sethome" + ChatColor.WHITE + " - Sets the home of your religion");
 		}
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.leave")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.leave")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods leave" + ChatColor.WHITE + " - Leave your religion");
 		}
@@ -92,30 +92,30 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.AQUA + "/gods yes" + ChatColor.WHITE + " - Accept a proposal from your god");
 		sender.sendMessage(ChatColor.AQUA + "/gods no" + ChatColor.WHITE + " - Reject a proposal from your god");
 
-		if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.reload")))
+		if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.reload")))
 		{
 			sender.sendMessage(ChatColor.AQUA + "/gods reload" + ChatColor.WHITE + " - Reload config for gods system");
 		}
 
-		if (GodManager.get().isPriest(((Player)sender).getUniqueId()))
+		if (GodManager.instance().isPriest(((Player)sender).getUniqueId()))
 		{
-			if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.priest.invite")))
+			if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.priest.invite")))
 			{
 				sender.sendMessage(ChatColor.AQUA + "/gods invite <playername>" + ChatColor.WHITE + " - Invite a player to your religion");
 			}
-			if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.priest.kick")))
+			if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.priest.kick")))
 			{
 				sender.sendMessage(ChatColor.AQUA + "/gods kick <playername>" + ChatColor.WHITE + " - Kick a believer from your religion");
 			}
-			if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.priest.editbible")))
+			if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.priest.editbible")))
 			{
 				sender.sendMessage(ChatColor.AQUA + "/gods editbible" + ChatColor.WHITE + " - Edits the Holy Book for your religion");
 			}
-			if ((sender.isOp()) || (PermissionsManager.get().hasPermission((Player) sender, "gods.priest.setbible")))
+			if ((sender.isOp()) || (PermissionsManager.instance().hasPermission((Player) sender, "gods.priest.setbible")))
 			{
 				sender.sendMessage(ChatColor.AQUA + "/gods setbible" + ChatColor.WHITE + " - Sets a book to be the Holy Book for your religion");
 			}
-			if (GodsConfiguration.get().isHolyLandEnabled())
+			if (GodsConfiguration.instance().isHolyLandEnabled())
 			{
 				sender.sendMessage(ChatColor.AQUA + "/gods desc <text>" + ChatColor.WHITE + " - Set the description for your religion");
 			}
@@ -149,7 +149,7 @@ public class CommandHelp extends GodsCommand
 			{
 				for (String blockMaterial : materials)
 				{
-					sender.sendMessage(ChatColor.WHITE + blockMaterial + "  --->  " + GodManager.get().getColorForGodType(godType) + LanguageManager.get().getGodTypeName(godType, "God"));
+					sender.sendMessage(ChatColor.WHITE + blockMaterial + "  --->  " + GodManager.instance().getColorForGodType(godType) + LanguageManager.instance().getGodTypeName(godType, "God"));
 				}
 			}
 		}

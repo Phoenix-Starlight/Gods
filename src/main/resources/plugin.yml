@@ -5,6 +5,7 @@ api-version: 1.13
 load: POSTWORLD
 website: "http://dev.bukkit.org/server-mods/gods"
 main: com.dogonfire.gods.Gods
+api-version: 1.14
 softdepend: 
   - PermissionsBukkit
   - PermissionsEx
@@ -177,6 +178,9 @@ permissions:
   gods.priest.setforce: 
     default: true
     description: "Allows priest to change the divine force for their God"
+  gods.priest.name: 
+    default: true
+    description: "Allows priest to name their holyland"
   gods.priest.war: 
     default: true
     description: "Allows priest to declare war relations to another God"

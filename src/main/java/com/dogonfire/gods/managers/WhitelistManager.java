@@ -12,7 +12,7 @@ public class WhitelistManager
 {
 	private static WhitelistManager instance;
 
-	public static WhitelistManager get()
+	public static WhitelistManager instance()
 	{
 		if (instance == null)
 			instance = new WhitelistManager();
@@ -52,16 +52,16 @@ public class WhitelistManager
 
 	public void load()
 	{
-		if (GodsConfiguration.get().isUseWhitelist())
+		if (GodsConfiguration.instance().isUseWhitelist())
 		{
 			if (this.whiteListFile == null)
 			{
-				this.whiteListFile = new File(Gods.get().getDataFolder(), "whitelist.yml");
+				this.whiteListFile = new File(Gods.instance().getDataFolder(), "whitelist.yml");
 			}
 
 			this.whiteList = YamlConfiguration.loadConfiguration(this.whiteListFile);
 
-			Gods.get().log("Loaded " + this.whiteList.getKeys(false).size() + " whitelisted Gods.");
+			Gods.instance().log("Loaded " + this.whiteList.getKeys(false).size() + " whitelisted Gods.");
 
 			if (this.whiteList.getKeys(false).size() == 0)
 			{
@@ -70,29 +70,29 @@ public class WhitelistManager
 				save();
 			}
 
-			GodsConfiguration.get().setUseBlacklist(false);
+			GodsConfiguration.instance().setUseBlacklist(false);
 
-			Gods.get().log("Using whitelist");
+			Gods.instance().log("Using whitelist");
 		}
 
-		if (GodsConfiguration.get().isUseBlacklist())
+		if (GodsConfiguration.instance().isUseBlacklist())
 		{
 			if (this.blackListFile == null)
 			{
-				this.blackListFile = new File(Gods.get().getDataFolder(), "blacklist.yml");
+				this.blackListFile = new File(Gods.instance().getDataFolder(), "blacklist.yml");
 			}
 			this.blackList = YamlConfiguration.loadConfiguration(this.blackListFile);
 
-			Gods.get().log("Loaded " + this.blackList.getKeys(false).size() + " blacklisted Gods.");
+			Gods.instance().log("Loaded " + this.blackList.getKeys(false).size() + " blacklisted Gods.");
 			if (this.blackList.getKeys(false).size() == 0)
 			{
 				this.blackList.set("TheExampleGodName", "");
 
 				save();
 			}
-			GodsConfiguration.get().setUseWhitelist(false);
+			GodsConfiguration.instance().setUseWhitelist(false);
 
-			Gods.get().log("Using blacklist");
+			Gods.instance().log("Using blacklist");
 		}
 	}
 
@@ -104,7 +104,7 @@ public class WhitelistManager
 		}
 		catch (Exception ex)
 		{
-			Gods.get().log("Could not save whitelist to " + this.whiteListFile + ": " + ex.getMessage());
+			Gods.instance().log("Could not save whitelist to " + this.whiteListFile + ": " + ex.getMessage());
 		}
 		try
 		{
@@ -112,7 +112,7 @@ public class WhitelistManager
 		}
 		catch (Exception ex)
 		{
-			Gods.get().log("Could not save blacklist to " + this.blackListFile + ": " + ex.getMessage());
+			Gods.instance().log("Could not save blacklist to " + this.blackListFile + ": " + ex.getMessage());
 		}
 	}
 }

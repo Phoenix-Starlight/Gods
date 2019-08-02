@@ -26,19 +26,19 @@ public class CommandSetPriest extends GodsCommand {
 			sender.sendMessage(stringNoPermission);
 			return;
 		}
-		String godName = GodManager.get().formatGodName(args[1]);
-		if (!GodManager.get().godExist(godName)) {
+		String godName = GodManager.instance().formatGodName(args[1]);
+		if (!GodManager.instance().godExist(godName)) {
 			sender.sendMessage(ChatColor.RED + "There is no god called '" + ChatColor.GOLD + godName + ChatColor.AQUA + "'");
 			return;
 		}
 
-		Player otherPlayer = Gods.get().getServer().getPlayer(args[2]);
+		Player otherPlayer = Gods.instance().getServer().getPlayer(args[2]);
 		if (otherPlayer == null) {
 			sender.sendMessage(ChatColor.RED + "There is no such player online");
 			return;
 		}
 
-		if (GodManager.get().assignPriest(godName, otherPlayer.getUniqueId())) {
+		if (GodManager.instance().assignPriest(godName, otherPlayer.getUniqueId())) {
 			sender.sendMessage(ChatColor.AQUA + "You set " + ChatColor.GOLD + otherPlayer.getName() + ChatColor.AQUA + " as priest of " + ChatColor.GOLD + godName);
 		} else {
 			sender.sendMessage(ChatColor.GOLD + otherPlayer.getName() + ChatColor.RED + " was not assigned as a priest of " + ChatColor.GOLD + godName);

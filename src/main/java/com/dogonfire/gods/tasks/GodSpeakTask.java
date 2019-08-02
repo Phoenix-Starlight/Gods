@@ -109,24 +109,24 @@ public class GodSpeakTask implements Runnable
 			return;
 		}
 		
-		LanguageManager.get().setAmount(this.amount);
+		LanguageManager.instance().setAmount(this.amount);
 		
 		try
 		{
-			LanguageManager.get().setType(this.typeString);
+			LanguageManager.instance().setType(this.typeString);
 		}
 		catch (Exception ex)
 		{
 			this.plugin.logDebug(ex.getStackTrace().toString());
 		}
 		
-		LanguageManager.get().setPlayerName(this.playerNameString);
+		LanguageManager.instance().setPlayerName(this.playerNameString);
 		
 		if (this.message != null)
 		{
 			player.sendMessage(ChatColor.GOLD + "<" + this.godName + ">: " + ChatColor.WHITE +
 
-			ChatColor.BOLD + LanguageManager.get().getLanguageString(this.godName, this.message));
+			ChatColor.BOLD + LanguageManager.instance().getLanguageString(this.godName, this.message));
 		}
 		else
 		{

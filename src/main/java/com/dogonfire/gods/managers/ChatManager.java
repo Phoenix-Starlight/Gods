@@ -64,7 +64,7 @@ public class ChatManager
 		}
 		catch (Exception ex)
 		{
-			Gods.get().log("Could not save config to " + this.chatConfigFile.getName() + ": " + ex.getMessage());
+			Gods.instance().log("Could not save config to " + this.chatConfigFile.getName() + ": " + ex.getMessage());
 		}
 	}
 }

@@ -18,27 +18,27 @@ public class ChatListener implements Listener {
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		Player player = event.getPlayer();
 
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
-		if (GodsConfiguration.get().isChatFormattingEnabled()) {
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		if (GodsConfiguration.instance().isChatFormattingEnabled()) {
 			event.setFormat(ChatManager.get().formatChat(event.getPlayer(), godName, event.getFormat()));
 		}
 
 		if (godName == null) {
 			return;
 		}
-		if (BelieverManager.get().getReligionChat(player.getUniqueId())) {
+		if (BelieverManager.instance().getReligionChat(player.getUniqueId())) {
 			event.setCancelled(true);
-			for (Player otherPlayer : Gods.get().getServer().getOnlinePlayers()) {
-				String otherGod = BelieverManager.get().getGodForBeliever(otherPlayer.getUniqueId());
+			for (Player otherPlayer : Gods.instance().getServer().getOnlinePlayers()) {
+				String otherGod = BelieverManager.instance().getGodForBeliever(otherPlayer.getUniqueId());
 				if ((otherGod != null) && (otherGod.equals(godName))) {
-					if (GodManager.get().isPriest(player.getUniqueId())) {
+					if (GodManager.instance().isPriest(player.getUniqueId())) {
 						otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + player.getName() + ": " + ChatColor.WHITE + event.getMessage());
 					} else {
 						otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + ChatColor.RED + player.getName() + ChatColor.YELLOW + ": " + ChatColor.WHITE + event.getMessage());
 					}
 				}
 			}
-			Gods.get().log(player.getName() + "(GODCHAT): " + event.getMessage());
+			Gods.instance().log(player.getName() + "(GODCHAT): " + event.getMessage());
 		}
 	}
 }

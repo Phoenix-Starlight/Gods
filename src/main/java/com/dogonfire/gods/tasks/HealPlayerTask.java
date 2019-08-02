@@ -39,8 +39,8 @@ public class HealPlayerTask implements Runnable
 		Random random = new Random();
 		if (healPlayer())
 		{
-			LanguageManager.get().setPlayerName(this.player.getName());
-			GodManager.get().GodSay(this.godName, this.player, this.languageString, 2 + random.nextInt(10));
+			LanguageManager.instance().setPlayerName(this.player.getName());
+			GodManager.instance().GodSay(this.godName, this.player, this.languageString, 2 + random.nextInt(10));
 
 			this.plugin.log(this.godName + " healed " + this.player.getName());
 		}

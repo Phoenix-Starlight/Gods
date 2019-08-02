@@ -15,6 +15,6 @@ public class SetupGlobalQuestTask implements Runnable
 
 	public void run()
 	{
-		QuestManager.get().GodSayNewGlobalQuest();
+		QuestManager.instance().GodSayNewGlobalQuest();
 	}
 }

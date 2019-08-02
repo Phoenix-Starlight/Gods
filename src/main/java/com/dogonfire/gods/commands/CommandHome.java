@@ -26,13 +26,13 @@ public class CommandHome extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
 		if (godName == null) {
 			sender.sendMessage(ChatColor.RED + "You do not believe in a God");
 			return;
 		}
-		Location location = GodManager.get().getHomeForGod(godName);
+		Location location = GodManager.instance().getHomeForGod(godName);
 		if (location == null) {
 			return;
 		}

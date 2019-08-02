@@ -47,17 +47,17 @@ public class TaskInfo extends Task {
 			return;
 		}
 
-		LanguageManager.get().setPlayerName(this.name1);
+		LanguageManager.instance().setPlayerName(this.name1);
 
 		try {
-			LanguageManager.get().setType(this.name2);
+			LanguageManager.instance().setType(this.name2);
 		} catch (Exception ex) {
 			getPlugin().logDebug(ex.getStackTrace().toString());
 		}
 
-		LanguageManager.get().setAmount(this.amount);
+		LanguageManager.instance().setAmount(this.amount);
 
-		String questionMessage = LanguageManager.get().getInfoString(this.message, this.color);
+		String questionMessage = LanguageManager.instance().getInfoString(this.message, this.color);
 
 		player.sendMessage(
 

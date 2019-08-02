@@ -25,18 +25,18 @@ public class CommandChat extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String godName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
 		if (godName == null) {
 			sender.sendMessage(ChatColor.RED + "You do not believe in a God");
 			return;
 		}
 
-		if (BelieverManager.get().getReligionChat(player.getUniqueId())) {
-			BelieverManager.get().setReligionChat(player.getUniqueId(), false);
+		if (BelieverManager.instance().getReligionChat(player.getUniqueId())) {
+			BelieverManager.instance().setReligionChat(player.getUniqueId(), false);
 			sender.sendMessage(ChatColor.AQUA + "You are now chatting public");
 		} else {
-			BelieverManager.get().setReligionChat(player.getUniqueId(), true);
+			BelieverManager.instance().setReligionChat(player.getUniqueId(), true);
 			sender.sendMessage(ChatColor.AQUA + "You are now only chatting with the believers of " + ChatColor.YELLOW + godName);
 		}
 	}
