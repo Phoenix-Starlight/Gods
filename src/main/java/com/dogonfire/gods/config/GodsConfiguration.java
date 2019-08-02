@@ -41,7 +41,7 @@ public class GodsConfiguration
 {
 	private static GodsConfiguration instance;
 
-	public static GodsConfiguration get()
+	public static GodsConfiguration instance()
 	{
 		if (instance == null)
 			instance = new GodsConfiguration();
@@ -60,6 +60,8 @@ public class GodsConfiguration
 	private boolean			sacrificesEnabled					= true;
 	private boolean			holyLandEnabled						= false;
 	private boolean			biblesEnabled						= false;
+	private boolean			giveBibleWhenJoinReligion			= false;
+	private boolean			giveInstructionsWhenJoinReligion	= false;
 	private boolean			holyArtifactsEnabled				= false;
 	private boolean			propheciesEnabled					= false;
 	private boolean			chatFormattingEnabled				= false;
@@ -123,8 +125,6 @@ public class GodsConfiguration
 	private int				minSecondsBetweenChangingGod		= 5 * 60;
 	private int				requiredBelieversForQuests			= 1;
 	private int				numberOfDaysForAbandonedHolyLands	= 14;
-	private int				minHolyLandRadius					= 10;
-	private int				maxHolyLandRadius					= 1000;
 	private int				maxHolyArtifacts					= 50;
 	private int				prayerPowerForItem					= 20;
 	private int				prayerPowerForQuest					= 50;
@@ -207,11 +207,6 @@ public class GodsConfiguration
 		return maxHolyArtifacts;
 	}
 
-	public final int getMaxHolyLandRadius()
-	{
-		return maxHolyLandRadius;
-	}
-
 	public final int getMaxInvitationTimeSeconds()
 	{
 		return maxInvitationTimeSeconds;
@@ -255,11 +250,6 @@ public class GodsConfiguration
 	public final int getMinHolyArtifactBlessingTime()
 	{
 		return minHolyArtifactBlessingTime;
-	}
-
-	public final int getMinHolyLandRadius()
-	{
-		return minHolyLandRadius;
 	}
 
 	public final int getMinItemBlessingTime()
@@ -355,6 +345,16 @@ public class GodsConfiguration
 	public final boolean isBiblesEnabled()
 	{
 		return biblesEnabled;
+	}
+	
+	public final boolean isGiveBibleWhenJoinReligion()
+	{
+		return giveBibleWhenJoinReligion;
+	}
+	
+	public final boolean isGiveInstructionsWhenJoinReligion()
+	{
+		return giveInstructionsWhenJoinReligion;
 	}
 
 	public final boolean isBlessingEnabled()
@@ -609,7 +609,7 @@ public class GodsConfiguration
 
 	public void loadSettings()
 	{
-		FileConfiguration config = Gods.get().getConfig();
+		FileConfiguration config = Gods.instance().getConfig();
 
 		this.debug = config.getBoolean("Settings.Debug", false);
 		this.downloadLanguageFile = config.getBoolean("Settings.DownloadLanguageFile", true);
@@ -618,41 +618,45 @@ public class GodsConfiguration
 		List<String> worldNames = config.getStringList("Settings.Worlds");
 		if ((worldNames == null) || (worldNames.size() == 0))
 		{
-			Gods.get().log("No worlds found in config file.");
-			for (World world : Gods.get().getServer().getWorlds())
+			Gods.instance().log("No worlds found in config file.");
+			for (World world : Gods.instance().getServer().getWorlds())
 			{
 				this.worlds.add(world.getName());
-				Gods.get().log("Enabed in world '" + world.getName() + "'");
+				Gods.instance().log("Enabed in world '" + world.getName() + "'");
 			}
 			config.set("Settings.Worlds", this.worlds);
-			Gods.get().saveConfig();
+			Gods.instance().saveConfig();
 		}
 		else
 		{
 			for (String worldName : worldNames)
 			{
 				this.worlds.add(worldName);
-				Gods.get().log("Enabled in '" + worldName + "'");
+				Gods.instance().log("Enabled in '" + worldName + "'");
 			}
 			if (worldNames.size() == 0)
 			{
-				Gods.get().log("WARNING: No worlds are set in config file. Gods are disabled on this server!");
+				Gods.instance().log("WARNING: No worlds are set in config file. Gods are disabled on this server!");
 			}
 		}
 		this.biblesEnabled = config.getBoolean("Bibles.Enabled", true);
 		if (this.biblesEnabled)
-			HolyBookManager.get().load();
-		this.marriageEnabled = config.getBoolean("Marriage.Enabled", true);
+		{
+			HolyBookManager.instance().load();
+		}
+		
+		this.marriageEnabled = config.getBoolean("Marriage.Enabled", true);		
 		if (this.marriageEnabled)
 		{
 			this.marriageFireworksEnabled = config.getBoolean("Marriage.WeddingFireworks", true);
 			MarriageManager.get().load();
 		}
-		this.holyArtifactsEnabled = config.getBoolean("HolyArtifacts.Enabled", true);
+		
+		this.holyArtifactsEnabled = config.getBoolean("HolyArtifacts.Enabled", true);	
 		if (this.holyArtifactsEnabled)
 		{
 			HolyPowerManager.get();
-			HolyArtifactManager.get().load();
+			HolyArtifactManager.instance().load();
 		}
 
 		this.prayersEnabled = config.getBoolean("Prayers.Enabled", true);
@@ -673,10 +677,8 @@ public class GodsConfiguration
 		this.holyLandEnabled = config.getBoolean("HolyLand.Enabled", false);
 
 		if (this.holyLandEnabled)
-			HolyLandManager.get().load();
+			HolyLandManager.instance().load();
 
-		this.minHolyLandRadius = config.getInt("HolyLand.MinRadius", 10);
-		this.maxHolyLandRadius = config.getInt("HolyLand.MaxRadius", 1000);
 		this.holyLandRadiusPrPower = config.getDouble("HolyLand.RadiusPrPower", 1.25D);
 		this.holyLandDefaultPvP = config.getBoolean("HolyLand.DefaultPvP", false);
 		this.holyLandDefaultMobDamage = config.getBoolean("HolyLand.DefaultMobDamage", true);
@@ -691,20 +693,20 @@ public class GodsConfiguration
 			{
 				try
 				{
-					Gods.get().logDebug("adding breakable block type " + blockType);
+					Gods.instance().logDebug("adding breakable block type " + blockType);
 					this.holylandBreakableBlockTypes.add(Material.getMaterial(blockType));
 				}
 				catch (Exception ex)
 				{
-					Gods.get().log("ERROR parsing HolyLand.BreakableBlockTypes blocktype '" + blockType + "' in config");
+					Gods.instance().log("ERROR parsing HolyLand.BreakableBlockTypes blocktype '" + blockType + "' in config");
 				}
 			}
 		}
 		else
 		{
-			Gods.get().log("No HolyLand.BreakableBlockTypes section found in config.");
-			Gods.get().log("Adding '" + Material.SMOOTH_STONE.name() + "' to BreakableBlockTypes");
-			this.holylandBreakableBlockTypes.add(Material.SMOOTH_STONE);
+			Gods.instance().log("No HolyLand.BreakableBlockTypes section found in config.");
+			Gods.instance().log("Adding '" + Material.SMOOTH_STONE_SLAB.name() + "' to BreakableBlockTypes");
+			this.holylandBreakableBlockTypes.add(Material.SMOOTH_STONE_SLAB);
 		}
 
 		this.sacrificesEnabled = config.getBoolean("Sacrifices.Enabled", true);
@@ -729,19 +731,19 @@ public class GodsConfiguration
 			{
 				try
 				{
-					Gods.get().logDebug("Setting value for reward item " + rewardItem + " to " + config.getInt(new StringBuilder().append("Quests.RewardValues.").append(rewardItem).toString()));
+					Gods.instance().logDebug("Setting value for reward item " + rewardItem + " to " + config.getInt(new StringBuilder().append("Quests.RewardValues.").append(rewardItem).toString()));
 
-					QuestManager.get().setItemRewardValue(Material.getMaterial(rewardItem), config.getInt("Quests.RewardValues." + rewardItem));
+					QuestManager.instance().setItemRewardValue(Material.getMaterial(rewardItem), config.getInt("Quests.RewardValues." + rewardItem));
 				}
 				catch (Exception ex)
 				{
-					Gods.get().log("ERROR parsing Quests.RewardValues value '" + rewardItem + "' in config");
+					Gods.instance().log("ERROR parsing Quests.RewardValues value '" + rewardItem + "' in config");
 				}
 			}
 		}
 		else
 		{
-			QuestManager.get().resetItemRewardValues();
+			QuestManager.instance().resetItemRewardValues();
 		}
 
 		this.blessingEnabled = config.getBoolean("Blessing.Enabled", true);
@@ -800,19 +802,19 @@ public class GodsConfiguration
 					{
 						String blockMaterial = (String) ((Iterator<?>) localObject).next();
 
-						Gods.get().log("Setting block type " + blockMaterial + " for God type " + godType);
+						Gods.instance().log("Setting block type " + blockMaterial + " for God type " + godType);
 						AltarManager.get().setAltarBlockTypeForGodType(GodManager.GodType.valueOf(godType), Material.getMaterial(blockMaterial));
 					}
 				}
 				catch (Exception ex)
 				{
-					Gods.get().log("ERROR parsing Altars.BlockType value '" + godType + "' in config");
+					Gods.instance().log("ERROR parsing Altars.BlockType value '" + godType + "' in config");
 				}
 			}
 		}
 		else
 		{
-			Gods.get().log("No altar blocktypes found in config. Setting defaults.");
+			Gods.instance().log("No altar blocktypes found in config. Setting defaults.");
 			AltarManager.get().resetAltarBlockTypes();
 
 			for (GodType godType : GodManager.GodType.values())
@@ -825,7 +827,7 @@ public class GodsConfiguration
 
 	public void saveSettings()
 	{
-		FileConfiguration config = Gods.get().getConfig();
+		FileConfiguration config = Gods.instance().getConfig();
 		config.set("Settings.Debug", Boolean.valueOf(this.debug));
 		config.set("Settings.DownloadLanguageFile", Boolean.valueOf(this.downloadLanguageFile));
 		config.set("Settings.Language", this.languageIdentifier);
@@ -891,8 +893,6 @@ public class GodsConfiguration
 		config.set("Commandments.BroadcastMobSlain", Boolean.valueOf(this.commandmentsBroadcastMobSlain));
 
 		config.set("HolyLand.Enabled", Boolean.valueOf(this.holyLandEnabled));
-		config.set("HolyLand.MinRadius", Integer.valueOf(this.minHolyLandRadius));
-		config.set("HolyLand.MaxRadius", Integer.valueOf(this.maxHolyLandRadius));
 		config.set("HolyLand.RadiusPrPower", Double.valueOf(this.holyLandRadiusPrPower));
 		config.set("HolyLand.DefaultPvP", Boolean.valueOf(this.holyLandDefaultPvP));
 		config.set("HolyLand.DefaultMobDamage", Boolean.valueOf(this.holyLandDefaultMobDamage));
@@ -920,7 +920,7 @@ public class GodsConfiguration
 
 		config.set("Prayers.Enabled", Boolean.valueOf(this.prayersEnabled));
 
-		Gods.get().saveConfig();
+		Gods.instance().saveConfig();
 	}
 
 	public final void setAllowInteractionInNeutralLands(boolean allowInteractionInNeutralLands)
@@ -1163,11 +1163,6 @@ public class GodsConfiguration
 		this.maxHolyArtifacts = maxHolyArtifacts;
 	}
 
-	public final void setMaxHolyLandRadius(int maxHolyLandRadius)
-	{
-		this.maxHolyLandRadius = maxHolyLandRadius;
-	}
-
 	public final void setMaxInvitationTimeSeconds(int maxInvitationTimeSeconds)
 	{
 		this.maxInvitationTimeSeconds = maxInvitationTimeSeconds;
@@ -1211,11 +1206,6 @@ public class GodsConfiguration
 	public final void setMinHolyArtifactBlessingTime(int minHolyArtifactBlessingTime)
 	{
 		this.minHolyArtifactBlessingTime = minHolyArtifactBlessingTime;
-	}
-
-	public final void setMinHolyLandRadius(int minHolyLandRadius)
-	{
-		this.minHolyLandRadius = minHolyLandRadius;
 	}
 
 	public final void setMinItemBlessingTime(int minItemBlessingTime)

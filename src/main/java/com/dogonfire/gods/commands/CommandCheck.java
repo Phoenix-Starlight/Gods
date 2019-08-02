@@ -29,11 +29,11 @@ public class CommandCheck extends GodsCommand {
 			return;
 		}
 
-		String godName = BelieverManager.get().getGodForBeliever(believer.getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(believer.getUniqueId());
 
 		if (godName == null) {
 			sender.sendMessage(ChatColor.AQUA + believer.getDisplayName() + " does not believe in a god");
-		} else if (GodManager.get().isPriest(believer.getUniqueId())) {
+		} else if (GodManager.instance().isPriest(believer.getUniqueId())) {
 			sender.sendMessage(ChatColor.AQUA + believer.getDisplayName() + " is the Priest of " + ChatColor.YELLOW + godName);
 		} else {
 			sender.sendMessage(ChatColor.AQUA + believer.getDisplayName() + " believes in " + ChatColor.YELLOW + godName);

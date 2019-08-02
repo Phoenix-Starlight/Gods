@@ -26,36 +26,37 @@ import com.dogonfire.gods.tasks.TaskInfo;
 public class Gods extends JavaPlugin
 {
 	private static Gods pluginInstance;
+
 	public boolean vaultEnabled	= false;
 
-	public static Gods get()
+	public static Gods instance()
 	{
 		return pluginInstance;
 	}
 
 	public boolean isBlacklistedGod(String godName)
 	{
-		if (GodsConfiguration.get().isUseBlacklist())
+		if (GodsConfiguration.instance().isUseBlacklist())
 		{
-			return WhitelistManager.get().isBlacklistedGod(godName);
+			return WhitelistManager.instance().isBlacklistedGod(godName);
 		}
 		return false;
 	}
 
 	public boolean isEnabledInWorld(World world)
 	{
-		return GodsConfiguration.get().getWorlds().contains(world.getName());
+		return GodsConfiguration.instance().getWorlds().contains(world.getName());
 	}
 
 	public boolean isWhitelistedGod(String godName)
 	{
-		if (GodsConfiguration.get().isUseWhitelist())
+		if (GodsConfiguration.instance().isUseWhitelist())
 		{
-			return WhitelistManager.get().isWhitelistedGod(godName);
+			return WhitelistManager.instance().isWhitelistedGod(godName);
 		}
 		return true;
 	}
-	
+
 	public void log(String message)
 	{
 		this.getLogger().info(message);
@@ -63,7 +64,7 @@ public class Gods extends JavaPlugin
 
 	public void logDebug(String message)
 	{
-		if (GodsConfiguration.get().isDebug())
+		if (GodsConfiguration.instance().isDebug())
 		{
 			this.getLogger().info("[Debug] " + message);
 		}
@@ -74,16 +75,16 @@ public class Gods extends JavaPlugin
 	{
 		reloadSettings();
 
-		GodManager.get().save();
-		QuestManager.get().save();
-		BelieverManager.get().save();
+		GodManager.instance().save();
+		QuestManager.instance().save();
+		BelieverManager.instance().save();
 		
-		if ((GodsConfiguration.get().isUseBlacklist()) || (GodsConfiguration.get().isUseWhitelist()))
-			WhitelistManager.get().save();
-		if (GodsConfiguration.get().isHolyLandEnabled())
-			HolyLandManager.get().save();
-		if (GodsConfiguration.get().isBiblesEnabled())
-			HolyBookManager.get().save();
+		if ((GodsConfiguration.instance().isUseBlacklist()) || (GodsConfiguration.instance().isUseWhitelist()))
+			WhitelistManager.instance().save();
+		if (GodsConfiguration.instance().isHolyLandEnabled())
+			HolyLandManager.instance().save();
+		if (GodsConfiguration.instance().isBiblesEnabled())
+			HolyBookManager.instance().save();
 		
 		pluginInstance = null;
 	}
@@ -95,8 +96,8 @@ public class Gods extends JavaPlugin
 		
 		getCommand("gods").setExecutor(GodsCommandExecuter.get());
 		
-		GodsConfiguration.get().loadSettings();
-		GodsConfiguration.get().saveSettings();
+		GodsConfiguration.instance().loadSettings();
+		GodsConfiguration.instance().saveSettings();
 		
 		PluginManager pm = getServer().getPluginManager();
 
@@ -122,14 +123,21 @@ public class Gods extends JavaPlugin
 			logDebug("PlaceholderAPI not found.");
 		}
 		
-		PermissionsManager.get().load();
-		LanguageManager.get().load();
-		GodManager.get().load();
-		QuestManager.get().load();
-		BelieverManager.get().load();
-		WhitelistManager.get().load();
+		GodsConfiguration.instance().loadSettings();
+		GodsConfiguration.instance().saveSettings();
+		PermissionsManager.instance().load();
+		LanguageManager.instance().load();
+		GodManager.instance().load();
+		QuestManager.instance().load();
+		BelieverManager.instance().load();
+		WhitelistManager.instance().load();
 		
-		getServer().getPluginManager().registerEvents(HolyLandManager.get(), this);
+		if(GodsConfiguration.instance().isHolyLandEnabled())
+		{
+			HolyLandManager.instance().load();
+			getServer().getPluginManager().registerEvents(HolyLandManager.instance(), this);
+		}		
+		
 		getServer().getPluginManager().registerEvents(new BlockListener(), this);
 		getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
@@ -138,7 +146,7 @@ public class Gods extends JavaPlugin
 			@Override
 			public void run()
 			{
-				GodManager.get().update();
+				GodManager.instance().update();
 			}
 		}.runTaskTimer(this, 20L, 200L);
 
@@ -148,9 +156,9 @@ public class Gods extends JavaPlugin
 	{
 		reloadConfig();
 
-		GodsConfiguration.get().loadSettings();
+		GodsConfiguration.instance().loadSettings();
 
-		WhitelistManager.get().load();
+		WhitelistManager.instance().load();
 	}
 
 	public void sendInfo(UUID playerId, LanguageManager.LANGUAGESTRING message, ChatColor color, int amount, String name, int delay)

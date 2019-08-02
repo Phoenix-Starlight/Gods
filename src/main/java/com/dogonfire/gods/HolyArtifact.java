@@ -45,45 +45,42 @@ public class HolyArtifact
 		case CHICKEN:
 			name = godName + "'s Paperbasket";
 			break;
-		case COMPARATOR:
-			name = godName + "'s Cinematicket";
-			break;
+//		case REDSTONE_COMPARATOR:
+//			name = godName + "'s Cinematicket";
+//			break;
 		case SAND:
 			name = "Bone of " + godName;
 			break;
 		case COBBLESTONE_STAIRS:
 			name = "Matchstick of " + godName;
 			break;
-		case SIGN:
-			name = godName + "'s nailcutter";
-			break;
+//		case SIGN_POST:
+//			name = godName + "'s nailcutter";
+//			break;
 		case REDSTONE_WIRE:
 			name = "Bedside Clock of " + godName;
 			break;
-		case REDSTONE_TORCH:
-			name = "Fishing pole of " + godName;
-			break;
+//		case REDSTONE_TORCH_ON:
+//			name = "Fishing pole of " + godName;
+//			break;
 		case PUMPKIN_SEEDS:
 			name = godName + "'s boots";
 			break;
-		case WOODEN_SHOVEL:
-			break;
-		case OAK_STAIRS:
-			break;
-		case OAK_SLAB:
-			break;
-		case WOODEN_SWORD:
-			break;
-		case WHITE_WOOL:
-			name = godName + "'s favorite song";
-			break;
-		case SPAWNER:
-			name = "Butterknife of " + godName;
-			break;
+//		case WOOD_SPADE:
+//		case WOOD_STAIRS:
+//		case WOOD_STEP:
+//		case WOOD_SWORD:
+//		case WOOL:
+//			name = godName + "'s favorite song";
+//			break;
+//		case MONSTER_EGG:
+//			name = godName + "'s gardening shovel";
+//			break;
+//		case MOB_SPAWNER:
+//			name = "Butterknife of " + godName;
+//			break;
 		case MELON_STEM:
 			name = godName + "'s toothpick";
-			break;
-		default:
 			break;
 		}
 		return name;

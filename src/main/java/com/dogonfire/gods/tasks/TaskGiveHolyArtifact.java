@@ -44,7 +44,7 @@ public class TaskGiveHolyArtifact extends Task
 		{
 			getPlugin().logDebug("Creating holy artifact for " + this.player.getName());
 
-			HolyArtifactManager.get().createHolyArtifact(this.player.getName(), this.godType, this.godName, spawnLocation);
+			HolyArtifactManager.instance().createHolyArtifact(this.player.getName(), this.godType, this.godName, spawnLocation);
 
 			spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);
 		}
@@ -64,8 +64,8 @@ public class TaskGiveHolyArtifact extends Task
 			Random random = new Random();
 			if (this.speak)
 			{
-				LanguageManager.get().setPlayerName(this.player.getName());
-				GodManager.get().GodSay(this.godName, this.player, LanguageManager.LANGUAGESTRING.GodToBelieverHolyArtifactBlessing, 2 + random.nextInt(10));
+				LanguageManager.instance().setPlayerName(this.player.getName());
+				GodManager.instance().GodSay(this.godName, this.player, LanguageManager.LANGUAGESTRING.GodToBelieverHolyArtifactBlessing, 2 + random.nextInt(10));
 			}
 		}
 	}

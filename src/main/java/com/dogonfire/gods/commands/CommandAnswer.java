@@ -5,13 +5,12 @@ import org.bukkit.entity.Player;
 
 import com.dogonfire.gods.managers.GodManager;
 
-public class CommandAccept extends GodsCommand
+public class CommandAnswer extends GodsCommand
 {
-
-	protected CommandAccept()
+	protected CommandAnswer()
 	{
 		super("accept");
-		this.permission = "gods.accept";
+		this.permission = "gods.answer";
 	}
 
 	@Override
@@ -28,6 +27,6 @@ public class CommandAccept extends GodsCommand
 			return;
 		}
 		
-		GodManager.instance().believerAccept(((Player) sender).getUniqueId());
+		GodManager.instance().believerAnswer(((Player) sender).getUniqueId(), args[0]);
 	}
 }

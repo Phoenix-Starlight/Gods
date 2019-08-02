@@ -12,7 +12,7 @@ public class PermissionsManager
 {
 	private static PermissionsManager instance = null;
 
-	public static PermissionsManager get()
+	public static PermissionsManager instance()
 	{
 		if (instance == null)
 			instance = new PermissionsManager(Gods.get());
@@ -29,6 +29,13 @@ public class PermissionsManager
 			
 		if (g.vaultEnabled) {
 			RegisteredServiceProvider<Permission> permissionProvider = plugin.getServer().getServicesManager().getRegistration(Permission.class);
+
+			if(permissionProvider==null)
+			{
+				Gods.instance().log(ChatColor.RED + "Could not detect Vault plugin.");
+				return;
+			}
+
 			vaultPermission = permissionProvider.getProvider();
 		}
 	}
@@ -36,11 +43,6 @@ public class PermissionsManager
 	public void load()
 	{
 		// Nothing to see here
-	}
-
-	public Plugin getPlugin()
-	{
-		return plugin;
 	}
 
 	public String getPermissionPluginName()

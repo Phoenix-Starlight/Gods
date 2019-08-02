@@ -6,22 +6,24 @@ import org.bukkit.entity.Player;
 
 import com.dogonfire.gods.managers.PermissionsManager;
 
-public abstract class GodsCommand {
-
+public abstract class GodsCommand
+{
 	// These are the Strings that will be used for common responses to player
 	// commands
-	protected static final String stringNoPermission = ChatColor.RED + "You do not have permission to perform this command.";
-	protected static final String stringPlayerOnly = ChatColor.RED + "This is a Player-Only command.";
-	protected static final String stringPreistOnly = ChatColor.RED + "This is a Priest-Only command.";
+	protected static final String	stringNoPermission	= ChatColor.RED + "You do not have permission to perform this command.";
+	protected static final String	stringPlayerOnly	= ChatColor.RED + "This is a Player-Only command.";
+	protected static final String	stringPreistOnly	= ChatColor.RED + "This is a Priest-Only command.";
 
-	protected final String name;
-	protected String permission, parameters, description;
+	protected final String			name;
+	protected String				permission, parameters, description;
 
-	protected GodsCommand(String name) {
+	protected GodsCommand(String name)
+	{
 		this.name = name;
 	}
 
-	protected void sendUsage(CommandSender sender) {
+	protected void sendUsage(CommandSender sender)
+	{
 		if (parameters != null && parameters.length() > 0)
 			sender.sendMessage(String.format("%gUsage: /gods %g %s", ChatColor.GREEN.toString(), name, parameters == null ? "" : parameters));
 	}
@@ -33,7 +35,8 @@ public abstract class GodsCommand {
 	 *            a string the represents a command
 	 * @return true if the string represents this command, false otherwise
 	 */
-	protected final boolean isCommand(String key) {
+	protected final boolean isCommand(String key)
+	{
 		return key.equalsIgnoreCase(name);
 	}
 
@@ -44,7 +47,8 @@ public abstract class GodsCommand {
 	 *            the person you would like to check the permissions of
 	 * @return true if they have permission, false otherwise
 	 */
-	protected final boolean hasPermission(CommandSender sender) {
+	protected final boolean hasPermission(CommandSender sender)
+	{
 		if (sender == null)
 			return false;
 		if (sender.isOp())
@@ -52,13 +56,13 @@ public abstract class GodsCommand {
 		if (permission == null)
 			return false;
 		if (sender instanceof Player)
-			return PermissionsManager.get().hasPermission((Player) sender, permission);
+			return PermissionsManager.instance().hasPermission((Player) sender, permission);
 		return sender.hasPermission(permission);
 	}
 
 	/**
-	 * The onCommand method for the Command classes. This is to be called when you
-	 * want a command to attempt execution
+	 * The onCommand method for the Command classes. This is to be called when
+	 * you want a command to attempt execution
 	 * 
 	 * @param sender
 	 *            the user issuing the command

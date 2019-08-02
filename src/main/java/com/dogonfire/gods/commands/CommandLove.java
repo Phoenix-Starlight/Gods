@@ -20,7 +20,7 @@ public class CommandLove extends GodsCommand {
 
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!GodsConfiguration.get().isMarriageEnabled()) {
+		if (!GodsConfiguration.instance().isMarriageEnabled()) {
 			sender.sendMessage(ChatColor.RED + "Marriage is not enabled on this server");
 			return;
 		}
@@ -33,7 +33,7 @@ public class CommandLove extends GodsCommand {
 			return;
 		}
 		Player player = (Player) sender;
-		String thisGodName = BelieverManager.get().getGodForBeliever(player.getUniqueId());
+		String thisGodName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
 		if (thisGodName == null) {
 			player.sendMessage(ChatColor.RED + "You do not believe in a God");
@@ -44,13 +44,13 @@ public class CommandLove extends GodsCommand {
 			player.sendMessage(ChatColor.RED + "You are not married, bozo!");
 			return;
 		}
-		Player partner = Gods.get().getServer().getPlayer(partnerId);
+		Player partner = Gods.instance().getServer().getPlayer(partnerId);
 		if (partner == null) {
-			player.sendMessage(ChatColor.WHITE + Gods.get().getServer().getOfflinePlayer(partnerId).getName() + ChatColor.RED + " is not online!");
+			player.sendMessage(ChatColor.WHITE + Gods.instance().getServer().getOfflinePlayer(partnerId).getName() + ChatColor.RED + " is not online!");
 			return;
 		}
 		MarriageManager.get().love(player.getUniqueId());
-		player.sendMessage(ChatColor.AQUA + "You love " + ChatColor.WHITE + Gods.get().getServer().getPlayer(partnerId).getDisplayName() + "!");
+		player.sendMessage(ChatColor.AQUA + "You love " + ChatColor.WHITE + Gods.instance().getServer().getPlayer(partnerId).getDisplayName() + "!");
 	}
 
 }
