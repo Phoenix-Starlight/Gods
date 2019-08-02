@@ -465,19 +465,16 @@ public class BlockListener implements Listener
 					}
 				}
 			}
-			else if ((event.getAction().equals(Action.LEFT_CLICK_AIR)) || (event.getAction().equals(Action.LEFT_CLICK_BLOCK)))
+			else if (((event.getAction().equals(Action.LEFT_CLICK_AIR)) || (event.getAction().equals(Action.LEFT_CLICK_BLOCK))) && ((event.getItem() != null) && (player.getInventory().getItemInMainHand() != null)))
 			{
-				if ((event.getItem() != null) && (player.getInventory().getItemInMainHand() != null))
+				ItemStack book = player.getInventory().getItemInMainHand();
+				if (book.getType() == Material.WRITTEN_BOOK)
 				{
-					ItemStack book = player.getInventory().getItemInMainHand();
-					if (book.getType() == Material.WRITTEN_BOOK)
+					String godName = HolyBookManager.instance().getGodForBible(book);
+					if (godName != null)
 					{
-						String godName = HolyBookManager.instance().getGodForBible(book);
-						if (godName != null)
-						{
-							GodManager.instance().handleBibleMelee(godName, player);
-							QuestManager.instance().handleBibleMelee(godName, player.getUniqueId());
-						}
+						GodManager.instance().handleBibleMelee(godName, player);
+						QuestManager.instance().handleBibleMelee(godName, player.getUniqueId());
 					}
 				}
 			}
@@ -710,7 +707,7 @@ public class BlockListener implements Listener
 	}
 
 	@EventHandler
-	public void OnPlayerPickupItem(EntityPickupItemEvent event)
+	public void onPlayerPickupItem(EntityPickupItemEvent event)
 	{
 		if (!(event.getEntity() instanceof Player)) {
 			return;
@@ -775,7 +772,6 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.instance().handleNewCursingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
@@ -787,7 +783,6 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.instance().handleNewBlessingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
@@ -811,7 +806,6 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.instance().handleNewRitualAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));

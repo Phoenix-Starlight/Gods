@@ -110,7 +110,7 @@ class GodsPlaceholderExpansion extends PlaceholderExpansion {
         }
 
         // %gods_name_space%
-        if(identifier.equals("name_space")){
+        if("name_space".equals(identifier)){
         	String god = "";
         	
         	god = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
@@ -126,7 +126,7 @@ class GodsPlaceholderExpansion extends PlaceholderExpansion {
         }
         
      // %gods_name%
-        if(identifier.equals("name")){
+        if("name".equals(identifier)){
         	String god = "";
         	
         	god = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
@@ -139,12 +139,12 @@ class GodsPlaceholderExpansion extends PlaceholderExpansion {
         }
 
         // %gods_prayerpower%
-        if(identifier.equals("prayerpower")){
+        if("prayerpower".equals(identifier)){
             return String.valueOf(BelieverManager.instance().getPrayerPower(player.getUniqueId()));
         }
         
         // %gods_color%
-        if(identifier.equals("color")){
+        if("color".equals(identifier)){
         	String god = "";
         	
         	god = BelieverManager.instance().getGodForBeliever(player.getUniqueId());

@@ -25,7 +25,7 @@ public class CommandAlliance extends GodsCommand {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for that");
 			return;
 		}
-		if (sender instanceof Player == false) {
+		if (!(sender instanceof Player)) {
 			sender.sendMessage(stringPlayerOnly);
 			return;
 		}

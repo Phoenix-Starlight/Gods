@@ -12,16 +12,16 @@ public class PermissionsManager
 {
 	private static PermissionsManager instance = null;
 
+	private String				pluginName			= "null";
+	private Gods				plugin;
+	private Permission 			vaultPermission		= null;
+
 	public static PermissionsManager instance()
 	{
 		if (instance == null)
 			instance = new PermissionsManager(Gods.instance());
 		return instance;
 	}
-
-	private String				pluginName			= "null";
-	private Gods				plugin;
-	private Permission 			vaultPermission		= null;
 
 	public PermissionsManager(Gods g)
 	{
