@@ -13,6 +13,7 @@ import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
 import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.GodManager;
+import com.dogonfire.gods.managers.HolyLandManager;
 import com.dogonfire.gods.managers.GodManager.GodMood;
 import com.dogonfire.gods.managers.LanguageManager;
 import com.dogonfire.gods.managers.TitleManager;
@@ -94,10 +95,7 @@ public class CommandInfo extends GodsCommand
 		}
 
 		sender.sendMessage(moodColor + godName + " is " + LanguageManager.instance().getGodMoodName(godMood));
-
-		TitleManager.sendTitle((Player)sender, 20, 20, 20, "Hello", "This is me");
-		TitleManager.sendTitle((Player)sender, 200, 200, 200, "Hello2", "This is me2");
-		
+	
 		Material neededItem = GodManager.instance().getSacrificeItemTypeForGod(godName);
 		if (neededItem != null)
 		{
@@ -151,11 +149,9 @@ public class CommandInfo extends GodsCommand
 		
 		if(GodsConfiguration.instance().isHolyLandEnabled())
 		{
-			int claimed = 4;
-			int maxclaim = 10;
+			int claimed = HolyLandManager.instance().getClaimedChunksForGod(godName);
+			int maxclaim = HolyLandManager.instance().getMaximumChunksForGod(godName);
 			sender.sendMessage(ChatColor.AQUA + "Holyland claimed: " + ChatColor.GOLD + claimed + "/" + maxclaim);					
 		}
-
 	}
-
 }

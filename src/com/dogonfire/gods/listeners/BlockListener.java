@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
@@ -395,7 +394,7 @@ public class BlockListener implements Listener
 	public void OnPlayerDropItem(PlayerDropItemEvent event)
 	{
 		Player player = event.getPlayer();
-		if ((player == null) || (!Gods.instance().isEnabledInWorld(player.getWorld())))
+		if ((player == null) || !Gods.instance().isEnabledInWorld(player.getWorld()))
 		{
 			return;
 		}
@@ -772,7 +771,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewCursingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
@@ -784,7 +783,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewBlessingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
@@ -796,7 +795,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewPrayingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
@@ -808,7 +807,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewRitualAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);

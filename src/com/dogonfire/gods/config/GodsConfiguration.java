@@ -2,7 +2,6 @@ package com.dogonfire.gods.config;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,20 +22,6 @@ import com.dogonfire.gods.managers.HolyPowerManager;
 import com.dogonfire.gods.managers.MarriageManager;
 import com.dogonfire.gods.managers.QuestManager;
 
-/**
- * The Gods parent class was controlling so much that everything constantly
- * connected back to it even when doing so was not needed. In an effect to
- * compartmentalize this plugin in such a way that everything is managed in it's
- * own package, and also in an attempt to remove unneeded references within
- * classes, all unchanging and easily-accessible information is being placed
- * into an identifiable location and being provided with simple getters and
- * setters to allow for the use of that information. This class exists as a
- * location to store and lookup configuration values for various parts of the
- * plugin. And instance of this class can be obtained by calling get()
- * 
- * @author Jacob
- *
- */
 public class GodsConfiguration
 {
 	private static GodsConfiguration instance;
@@ -44,7 +29,10 @@ public class GodsConfiguration
 	public static GodsConfiguration instance()
 	{
 		if (instance == null)
+		{
 			instance = new GodsConfiguration();
+		}
+		
 		return instance;
 	}
 
@@ -687,7 +675,7 @@ public class GodsConfiguration
 		this.numberOfDaysForAbandonedHolyLands = config.getInt("HolyLand.DeleteAbandonedHolyLandsAfterDays", 14);
 
 		List<String> blockList = config.getStringList("HolyLand.BreakableBlockTypes");
-		if ((blockList != null) && (blockList.size() > 0))
+		if (blockList != null && blockList.size() > 0)
 		{
 			for (String blockType : blockList)
 			{
@@ -705,8 +693,8 @@ public class GodsConfiguration
 		else
 		{
 			Gods.instance().log("No HolyLand.BreakableBlockTypes section found in config.");
-			Gods.instance().log("Adding '" + Material.SMOOTH_STONE_SLAB.name() + "' to BreakableBlockTypes");
-			this.holylandBreakableBlockTypes.add(Material.SMOOTH_STONE_SLAB);
+			Gods.instance().log("Adding '" + Material.SMOOTH_STONE.name() + "' to BreakableBlockTypes");
+			this.holylandBreakableBlockTypes.add(Material.SMOOTH_STONE);
 		}
 
 		this.sacrificesEnabled = config.getBoolean("Sacrifices.Enabled", true);
@@ -790,20 +778,16 @@ public class GodsConfiguration
 
 		configSection = config.getConfigurationSection("Altars.BlockTypes");
 
-		Object localObject;
-
 		if (configSection != null)
 		{
 			for (String godType : configSection.getKeys(false))
 			{
 				try
 				{
-					for (localObject = config.getStringList("Altars.BlockTypes." + godType).iterator(); ((Iterator<?>) localObject).hasNext();)
+					for (String blockMaterial : config.getStringList("Altars.BlockTypes." + godType))
 					{
-						String blockMaterial = (String) ((Iterator<?>) localObject).next();
-
 						Gods.instance().log("Setting block type " + blockMaterial + " for God type " + godType);
-						AltarManager.get().setAltarBlockTypeForGodType(GodManager.GodType.valueOf(godType), Material.getMaterial(blockMaterial));
+						AltarManager.get().setAltarBlockTypeForGodType(GodType.valueOf(godType), Material.getMaterial(blockMaterial));
 					}
 				}
 				catch (Exception ex)
@@ -903,20 +887,23 @@ public class GodsConfiguration
 		List<String> blockTypes = new ArrayList<String>();
 		for (Material blockType : this.holylandBreakableBlockTypes)
 		{
-			blockTypes.add(blockType.name());
+			if(blockType!=null)
+			{
+				blockTypes.add(blockType.name());
+			}
 		}
 		config.set("HolyLand.BreakableBlockTypes", blockTypes);
 
-		config.set("ChatFormatting.Enabled", Boolean.valueOf(this.chatFormattingEnabled));
+		config.set("ChatFormatting.Enabled", this.chatFormattingEnabled);
 
-		config.set("Bibles.Enabled", Boolean.valueOf(this.biblesEnabled));
+		config.set("Bibles.Enabled", this.biblesEnabled);
 
-		config.set("Prophecies.Enabled", Boolean.valueOf(this.propheciesEnabled));
+		config.set("Prophecies.Enabled", this.propheciesEnabled);
 
-		config.set("HolyArtifacts.Enabled", Boolean.valueOf(this.holyArtifactsEnabled));
+		config.set("HolyArtifacts.Enabled", this.holyArtifactsEnabled);
 
-		config.set("Marriage.Enabled", Boolean.valueOf(this.marriageEnabled));
-		config.set("Marriage.WeddingFireworks", Boolean.valueOf(this.marriageFireworksEnabled));
+		config.set("Marriage.Enabled", this.marriageEnabled);
+		config.set("Marriage.WeddingFireworks", this.marriageFireworksEnabled);
 
 		config.set("Prayers.Enabled", Boolean.valueOf(this.prayersEnabled));
 

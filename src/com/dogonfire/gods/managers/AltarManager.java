@@ -52,7 +52,7 @@ public class AltarManager
 
 	public Block getAltarBlockFromSign(Block block)
 	{
-		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.WALL_SIGN))
 		{
 			return null;
 		}
@@ -77,7 +77,7 @@ public class AltarManager
 		List<String> list = new ArrayList<String>();
 		for (Material blockMaterial : this.altarBlockTypes.keySet())
 		{
-			if ((this.altarBlockTypes.get(blockMaterial) != null) && (((List<?>) this.altarBlockTypes.get(blockMaterial)).contains(godType)))
+			if (this.altarBlockTypes.containsKey(blockMaterial) && this.altarBlockTypes.get(blockMaterial).contains(godType))
 			{
 				list.add(blockMaterial.name());
 			}
@@ -87,7 +87,7 @@ public class AltarManager
 
 	public Player getBlessedPlayerFromAltarSign(Block block, String[] lines)
 	{
-		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.WALL_SIGN))
 		{
 			return null;
 		}
@@ -109,7 +109,7 @@ public class AltarManager
 
 	public Player getCursedPlayerFromAltar(Block block, String[] lines)
 	{
-		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.WALL_SIGN))
 		{
 			return null;
 		}
@@ -131,7 +131,7 @@ public class AltarManager
 	
 	public Player getRitualFromAltar(Block block, String[] lines)
 	{
-		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.WALL_SIGN))
 		{
 			return null;
 		}
@@ -365,7 +365,7 @@ public class AltarManager
 		
 		for (BlockFace face : new BlockFace[] { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST })
 		{
-			if (block.getRelative(face).getType() == Material.OAK_WALL_SIGN)
+			if (block.getRelative(face).getType() == Material.WALL_SIGN)
 			{
 				return true;
 			}
@@ -376,7 +376,7 @@ public class AltarManager
 
 	public boolean isAltarSign(Block block)
 	{
-		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.WALL_SIGN))
 		{
 			return false;
 		}
@@ -414,19 +414,19 @@ public class AltarManager
 		{
 			return false;
 		}
-		if (altarBlock.getRelative(BlockFace.EAST).getType() == Material.OAK_WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.EAST).getType() == Material.WALL_SIGN)
 		{
 			return true;
 		}
-		if (altarBlock.getRelative(BlockFace.WEST).getType() == Material.OAK_WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.WEST).getType() == Material.WALL_SIGN)
 		{
 			return true;
 		}
-		if (altarBlock.getRelative(BlockFace.NORTH).getType() == Material.OAK_WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.NORTH).getType() == Material.WALL_SIGN)
 		{
 			return true;
 		}
-		if (altarBlock.getRelative(BlockFace.SOUTH).getType() == Material.OAK_WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.SOUTH).getType() == Material.WALL_SIGN)
 		{
 			return true;
 		}
@@ -549,17 +549,28 @@ public class AltarManager
 		//}
 	}
 
-	public void setAltarBlockTypeForGodType(GodManager.GodType godType, Material blockMaterial)
+	public void setAltarBlockTypeForGodType(GodType godType, Material blockMaterial)
 	{
-		List<GodManager.GodType> godTypes = new ArrayList<GodType>();
-		if (this.altarBlockTypes.containsKey(blockMaterial))
+		if(blockMaterial==null)
 		{
-			godTypes = this.altarBlockTypes.get(blockMaterial);
+			Gods.instance().log("setAltarBlockTypeForGodType blockMaterial==null for godType " + godType.name());
+			return;
 		}
+		
+		List<GodType> godTypes = new ArrayList<GodType>();
+		
+		if (!this.altarBlockTypes.containsKey(blockMaterial))
+		{
+			altarBlockTypes.put(blockMaterial, new ArrayList<GodType>());
+		}
+				
+		godTypes = this.altarBlockTypes.get(blockMaterial);
+		
 		if (!godTypes.contains(godType))
 		{
 			godTypes.add(godType);
 		}
+		
 		this.altarBlockTypes.put(blockMaterial, godTypes);
 	}
 }
