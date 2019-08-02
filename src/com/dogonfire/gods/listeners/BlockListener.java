@@ -395,7 +395,7 @@ public class BlockListener implements Listener
 	public void OnPlayerDropItem(PlayerDropItemEvent event)
 	{
 		Player player = event.getPlayer();
-		if ((player == null) || (!Gods.get().isEnabledInWorld(player.getWorld())))
+		if ((player == null) || !Gods.instance().isEnabledInWorld(player.getWorld()))
 		{
 			return;
 		}
@@ -774,6 +774,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewCursingAltar(event))
 			{
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
@@ -785,6 +786,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewBlessingAltar(event))
 			{
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
@@ -796,6 +798,19 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewPrayingAltar(event))
 			{
+				ItemStack sign = new ItemStack(Material.SIGN);
+				event.setCancelled(true);
+				event.getBlock().setType(Material.AIR);
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
+			}
+			return;
+		}
+
+		if (AltarManager.get().isRitualAltar(event.getBlock(), event.getLines()))
+		{
+			if (!AltarManager.get().handleNewRitualAltar(event))
+			{
+				ItemStack sign = new ItemStack(Material.SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));

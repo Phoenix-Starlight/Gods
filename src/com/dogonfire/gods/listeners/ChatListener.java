@@ -12,28 +12,39 @@ import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.ChatManager;
 import com.dogonfire.gods.managers.GodManager;
 
-public class ChatListener implements Listener {
-
+public class ChatListener implements Listener
+{
 	@EventHandler
-	public void onPlayerChat(AsyncPlayerChatEvent event) {
+	public void onPlayerChat(AsyncPlayerChatEvent event)
+	{
 		Player player = event.getPlayer();
 
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
-		if (GodsConfiguration.instance().isChatFormattingEnabled()) {
+		if (GodsConfiguration.instance().isChatFormattingEnabled())
+		{
 			event.setFormat(ChatManager.get().formatChat(event.getPlayer(), godName, event.getFormat()));
 		}
 
-		if (godName == null) {
+		if (godName == null)
+		{
 			return;
 		}
-		if (BelieverManager.instance().getReligionChat(player.getUniqueId())) {
+		
+		if (BelieverManager.instance().getReligionChat(player.getUniqueId()))
+		{
 			event.setCancelled(true);
-			for (Player otherPlayer : Gods.instance().getServer().getOnlinePlayers()) {
+			
+			for (Player otherPlayer : Gods.instance().getServer().getOnlinePlayers())
+			{
 				String otherGod = BelieverManager.instance().getGodForBeliever(otherPlayer.getUniqueId());
-				if ((otherGod != null) && (otherGod.equals(godName))) {
-					if (GodManager.instance().isPriest(player.getUniqueId())) {
+				if ((otherGod != null) && (otherGod.equals(godName)))
+				{
+					if (GodManager.instance().isPriest(player.getUniqueId()))
+					{
 						otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + player.getName() + ": " + ChatColor.WHITE + event.getMessage());
-					} else {
+					}
+					else
+					{
 						otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + ChatColor.RED + player.getName() + ChatColor.YELLOW + ": " + ChatColor.WHITE + event.getMessage());
 					}
 				}

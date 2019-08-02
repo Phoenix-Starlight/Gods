@@ -104,17 +104,11 @@ public class GodManager
 	}
 
 	private FileConfiguration	godsConfig		= null;
-
 	private File				godsConfigFile	= null;
-
 	private Random				random			= new Random();
-
 	private List<String>		onlineGods		= new ArrayList<String>();
-
 	private long				lastSaveTime;
-
 	private String				pattern			= "HH:mm:ss dd-MM-yyyy";
-
 	DateFormat					formatter		= new SimpleDateFormat(this.pattern);
 
 	private GodManager()
@@ -929,7 +923,7 @@ public class GodManager
 				foodType = Material.COOKED_SALMON;
 				break;
 			case 3:
-				foodType = Material.MELON;
+				foodType = Material.MELON_SLICE;
 				break;
 			case 4:
 				foodType = Material.COOKED_BEEF;
@@ -1449,7 +1443,7 @@ public class GodManager
 					foodType = Material.COOKED_SALMON;
 					break;
 				case 3:
-					foodType = Material.MELON;
+					foodType = Material.MELON_SLICE;
 					break;
 				case 4:
 					foodType = Material.COOKED_BEEF;
@@ -1696,7 +1690,7 @@ public class GodManager
 				type = Material.CAKE;
 				break;
 			case 14:
-				type = Material.MELON;
+				type = Material.MELON_SLICE;
 				break;
 			case 15:
 				type = Material.COOKIE;
@@ -1714,7 +1708,7 @@ public class GodManager
 				type = Material.WHEAT;
 				break;
 			case 20:
-				type = Material.SPIDER_EYE;
+				type = Material.NETHERRACK;
 				break;
 			case 21:
 				type = Material.POTATO;
