@@ -20,10 +20,12 @@ import com.dogonfire.gods.managers.GodManager;
 import com.dogonfire.gods.managers.LanguageManager;
 import com.dogonfire.gods.managers.MarriageManager;
 
-public class GodsCommandExecuter implements CommandExecutor {
+public class GodsCommandExecuter implements CommandExecutor
+{
 	private static GodsCommandExecuter instance;
 
-	public static GodsCommandExecuter get() {
+	public static GodsCommandExecuter get()
+	{
 		if (instance == null)
 			instance = new GodsCommandExecuter();
 		return instance;
@@ -32,7 +34,8 @@ public class GodsCommandExecuter implements CommandExecutor {
 	// TODO: Change all commands into subclasses and add them here
 	private Map<String, GodsCommand> commandList;
 
-	private GodsCommandExecuter() {
+	private GodsCommandExecuter()
+	{
 		commandList = new TreeMap<String, GodsCommand>();
 		registerCommand(new CommandAccept());
 		registerCommand(new CommandAccess());
@@ -69,43 +72,56 @@ public class GodsCommandExecuter implements CommandExecutor {
 		registerCommand(new CommandToggleWar());
 	}
 
-	protected Collection<GodsCommand> getCommands() {
+	protected Collection<GodsCommand> getCommands()
+	{
 		return Collections.unmodifiableCollection(commandList.values());
 	}
 
-	protected void registerCommand(GodsCommand command) {
+	protected void registerCommand(GodsCommand command)
+	{
 		if (commandList.containsKey(command.name))
 			return;
 		commandList.put(command.name.toLowerCase(), command);
 	}
 
-	private void CommandGods(CommandSender sender) {
+	private void CommandGods(CommandSender sender)
+	{
 		sender.sendMessage(ChatColor.YELLOW + "------------------ " + Gods.instance().getDescription().getFullName() + " ------------------");
 		sender.sendMessage(ChatColor.AQUA + "By DogOnFire");
 		sender.sendMessage("" + ChatColor.AQUA);
 		sender.sendMessage(ChatColor.AQUA + "There are currently " + ChatColor.WHITE + GodManager.instance().getAllGods().size() + ChatColor.AQUA + " Gods and");
 		sender.sendMessage("" + ChatColor.WHITE + BelieverManager.instance().getBelievers().size() + ChatColor.AQUA + " believers in " + GodsConfiguration.instance().getServerName());
 		sender.sendMessage("" + ChatColor.AQUA);
-		if (sender != null && sender instanceof Player) {
+		if (sender != null && sender instanceof Player)
+		{
 			Player player = (Player) sender;
 			String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
-			if (godName != null) {
+			if (godName != null)
+			{
 				List<UUID> priests = GodManager.instance().getPriestsForGod(godName);
-				if (priests == null || !priests.contains(player.getUniqueId())) {
+				if (priests == null || !priests.contains(player.getUniqueId()))
+				{
 					sender.sendMessage(ChatColor.WHITE + "You believe in " + ChatColor.GOLD + godName);
-				} else {
+				}
+				else
+				{
 					sender.sendMessage(ChatColor.WHITE + "You are the priest of " + ChatColor.GOLD + godName);
 				}
 
-				if (GodsConfiguration.instance().isPrayersEnabled()) {
+				if (GodsConfiguration.instance().isPrayersEnabled())
+				{
 					sender.sendMessage(ChatColor.WHITE + "You have " + ChatColor.GOLD + BelieverManager.instance().getPrayerPower(player.getUniqueId()) + ChatColor.WHITE + " prayer power");
 				}
-			} else {
+			}
+			else
+			{
 				sender.sendMessage(ChatColor.RED + "You do not believe in any god");
 			}
-			if (GodsConfiguration.instance().isMarriageEnabled()) {
+			if (GodsConfiguration.instance().isMarriageEnabled())
+			{
 				String partnerName = MarriageManager.get().getPartnerName(player.getUniqueId());
-				if (partnerName != null) {
+				if (partnerName != null)
+				{
 					sender.sendMessage(ChatColor.WHITE + "You are married to " + ChatColor.GOLD + partnerName);
 				}
 			}
@@ -113,7 +129,8 @@ public class GodsCommandExecuter implements CommandExecutor {
 			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.GodsHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help", 80);
 			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.AltarHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help altar", 160);
 
-			if (GodsConfiguration.instance().isPrayersEnabled()) {
+			if (GodsConfiguration.instance().isPrayersEnabled())
+			{
 				Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.PrayForHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g prayfor", 240);
 			}
 		}
@@ -121,17 +138,20 @@ public class GodsCommandExecuter implements CommandExecutor {
 	}
 
 	// TODO: END OF FILE, REMOVE EVERYTHING BELOW HERE
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (args.length == 0) {
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
+	{
+		if (args.length == 0)
+		{
 			CommandGods(sender);
 			Gods.instance().log(sender.getName() + " /gods");
 			return true;
 		}
-		
+
 		GodsCommand gCmd = commandList.get(args[0].toLowerCase());
-		if(gCmd == null)
-		sender.sendMessage(ChatColor.RED + "Invalid Gods command!");
-		else gCmd.onCommand(sender, label, args);
+		if (gCmd == null)
+			sender.sendMessage(ChatColor.RED + "Invalid Gods command!");
+		else
+			gCmd.onCommand(sender, label, args);
 		return true;
 	}
 }

@@ -212,6 +212,7 @@ public class InstructionBookManager
 	private void setBible(String godName, String priestName, ItemStack book)
 	{
 		HolyBook b = null;
+		
 		try
 		{
 			b = new HolyBook(book);

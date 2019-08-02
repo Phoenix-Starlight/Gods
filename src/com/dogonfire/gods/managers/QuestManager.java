@@ -211,7 +211,7 @@ public class QuestManager
 					}
 					else if ((stoneTarget.getType() == Material.STONE) && (this.random.nextInt(4) == 0))
 					{
-						stoneTarget.setType(Material.SMOOTH_STONE_SLAB);
+						stoneTarget.setType(Material.STONE_SLAB);
 					}
 				}
 			}
