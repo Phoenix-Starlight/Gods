@@ -20,13 +20,13 @@
 	  <id>vault-repo</id>
 	  <url>http://nexus.hc.to/content/repositories/pub_releases</url>
     </repository>
-	<repository>
-		<id>elmakers-repo</id>
-		<url>http://maven.elmakers.com/repository/</url>
-	</repository>
-	<repository>
-        <id>placeholderapi</id>
-        <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+    <repository>
+      <id>elmakers-repo</id>
+      <url>http://maven.elmakers.com/repository/</url>
+    </repository>
+    <repository>
+          <id>placeholderapi</id>
+          <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
   </repositories>
   <dependencies>  
@@ -75,32 +75,36 @@
   <build>
     <defaultGoal>clean cobertura:cobertura</defaultGoal>
     <finalName>${project.name}-${project.version}</finalName>
-    <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+    <sourceDirectory>${project.basedir}/src/</sourceDirectory>
     <resources>
       <resource>
-        <directory>${project.basedir}/src/main/resources</directory>
         <filtering>true</filtering>
-        <directory>${project.basedir}/src/main/resources</directory>
-        <includes>
-          <include>*.yml</include>
-        </includes>
+        <directory>${project.basedir}/src/</directory>
       </resource>
     </resources>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
-            <execution>
-                <phase>package</phase>
-                <goals>
-                    <goal>shade</goal>
-                </goals>
-            </execution>
-        </executions>
-      </plugin>
-    </plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>		
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.7</version>
+    		    <configuration>
+        			<formats>
+            			<format>html</format>
+            			<format>xml</format>
+        			</formats>
+        			<check />                
+        		</configuration>			
+    		</plugin>
+		</plugins>
   </build>
   <properties>
     <jdk.version>1.8</jdk.version>
