@@ -771,7 +771,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewCursingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
+				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
@@ -783,7 +783,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewBlessingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
+				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
@@ -795,7 +795,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewPrayingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
+				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
@@ -807,7 +807,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.get().handleNewRitualAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
+				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);

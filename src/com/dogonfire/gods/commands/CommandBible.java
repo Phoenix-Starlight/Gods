@@ -11,7 +11,6 @@ import com.dogonfire.gods.managers.HolyBookManager;
 
 public class CommandBible extends GodsCommand
 {
-
 	protected CommandBible()
 	{
 		super("bible");

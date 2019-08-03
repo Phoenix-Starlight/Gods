@@ -20,7 +20,6 @@ import com.dogonfire.gods.managers.TitleManager;
 
 public class CommandInfo extends GodsCommand
 {
-
 	protected CommandInfo()
 	{
 		super("info");

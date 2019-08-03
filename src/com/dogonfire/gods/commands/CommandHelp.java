@@ -15,7 +15,6 @@ import com.dogonfire.gods.managers.PermissionsManager;
 
 public class CommandHelp extends GodsCommand
 {
-
 	protected CommandHelp()
 	{
 		super("help");

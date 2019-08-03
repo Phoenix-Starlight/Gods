@@ -907,7 +907,9 @@ public class GodManager
 	public Material getHolyFoodTypeForGod(String godName)
 	{
 		String foodTypeString = this.godsConfig.getString(godName + ".EatFoodType");
+		
 		Material foodType = Material.AIR;
+		
 		if (foodTypeString == null)
 		{
 			int r1 = this.random.nextInt(7);
@@ -932,7 +934,9 @@ public class GodManager
 				foodType = Material.COOKED_PORKCHOP;
 				break;
 			case 6:
+			default: 
 				foodType = Material.CARROT;
+					
 			}
 			foodTypeString = foodType.name();
 
@@ -944,6 +948,12 @@ public class GodManager
 		{
 			foodType = Material.getMaterial(foodTypeString);
 		}
+		
+		if(foodType == null)
+		{
+			foodType = Material.CARROT;
+		}
+		
 		return foodType;
 	}
 
@@ -1451,12 +1461,14 @@ public class GodManager
 				case 5:
 					foodType = Material.COOKED_PORKCHOP;
 					break;
+				default:	
 				case 6:
 					foodType = Material.CARROT;
 				}
 				foodTypeString = foodType.name();
 			}
 			while (foodTypeString.equals(getHolyFoodTypeForGod(godName).name()));
+			
 			this.godsConfig.set(godName + ".NotEatFoodType", foodTypeString);
 
 			saveTimed();
@@ -1465,6 +1477,12 @@ public class GodManager
 		{
 			foodType = Material.getMaterial(foodTypeString);
 		}
+		
+		if(foodType == null)
+		{
+			foodType = Material.CARROT;
+		}
+
 		return foodType;
 	}
 
@@ -1717,6 +1735,7 @@ public class GodManager
 				type = Material.BONE;
 				break;
 			case 23:
+			default:	
 				type = Material.FEATHER;
 			}
 		}
@@ -1761,7 +1780,12 @@ public class GodManager
 
 	private float getSacrificeValueForGod(String godName, Material type)
 	{
-		return (float) this.godsConfig.getDouble(godName + ".SacrificeValues." + type.name());
+		if(!this.godsConfig.isSet(godName + ".SacrificeValues." + type.name()))
+		{
+			return 0;
+		}
+						
+		return (float)this.godsConfig.getDouble(godName + ".SacrificeValues." + type.name());
 	}
 
 	public long getSeedForGod(String godName)
@@ -2120,7 +2144,9 @@ public class GodManager
 				{
 					Gods.instance().logDebug(ex.getStackTrace().toString());
 				}
+				
 				LanguageManager.instance().setPlayerName(player.getDisplayName());
+				
 				if (GodsConfiguration.instance().isCommandmentsBroadcastFoodEaten())
 				{
 					godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversEatFoodBlessing, 2 + this.random.nextInt(20));
@@ -2135,6 +2161,7 @@ public class GodManager
 		if (foodType.equals(notEatFoodType.name()))
 		{
 			addMoodForGod(godName, getAngryModifierForGod(godName));
+			
 			if (cursePlayer(godName, player.getUniqueId(), getGodPower(godName)))
 			{
 				try
@@ -2194,7 +2221,7 @@ public class GodManager
 			}
 		}
 
-		if ((holyMobType != null) && (mobType.equals(holyMobType.name())))
+		if ((holyMobType != null) && mobType.equals(holyMobType.name()))
 		{
 			if (cursePlayer(godName, player.getUniqueId(), getGodPower(godName)))
 			{
@@ -2209,6 +2236,7 @@ public class GodManager
 				{
 					Gods.instance().logDebug(ex.getStackTrace().toString());
 				}
+				
 				if (GodsConfiguration.instance().isCommandmentsBroadcastMobSlain())
 				{
 					godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversNotSlayMobCursing, 2 + this.random.nextInt(10));
@@ -3426,6 +3454,7 @@ public class GodManager
 		{
 			return;
 		}
+		
 		Material type = getSacrificeNeedForGod(godName);
 
 		float value = getSacrificeValueForGod(godName, type);

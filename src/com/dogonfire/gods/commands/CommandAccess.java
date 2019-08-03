@@ -25,24 +25,31 @@ public class CommandAccess extends GodsCommand
 		{
 			sender.sendMessage(ChatColor.RED + "You do not have permission for that");
 		}
+		
 		if (sender instanceof Player == false)
 		{
 			sender.sendMessage(stringPlayerOnly);
 			return;
 		}
+		
 		Player player = (Player) sender;
+		
 		if (!GodManager.instance().isPriest(player.getUniqueId()))
 		{
 			player.sendMessage(ChatColor.RED + "Only priests can set religion access");
 			return;
 		}
+		
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
+		
 		if (!GodManager.instance().godExist(godName))
 		{
 			player.sendMessage(ChatColor.RED + "That God does not exist");
 			return;
 		}
+		
 		String access = args[0];
+		
 		if (access.equalsIgnoreCase("open"))
 		{
 			GodManager.instance().setPrivateAccess(godName, false);

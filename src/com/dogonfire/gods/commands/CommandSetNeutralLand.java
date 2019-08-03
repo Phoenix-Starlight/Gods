@@ -10,7 +10,6 @@ import com.dogonfire.gods.managers.TitleManager;
 
 public class CommandSetNeutralLand extends GodsCommand
 {
-
 	public CommandSetNeutralLand()
 	{
 		super("setsafe");
