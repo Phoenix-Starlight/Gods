@@ -148,10 +148,16 @@ public class GodsCommandExecuter implements CommandExecutor
 		}
 
 		GodsCommand gCmd = commandList.get(args[0].toLowerCase());
+		
 		if (gCmd == null)
+		{
 			sender.sendMessage(ChatColor.RED + "Invalid Gods command!");
+		}
 		else
+		{
 			gCmd.onCommand(sender, label, args);
+		}
+		
 		return true;
 	}
 }

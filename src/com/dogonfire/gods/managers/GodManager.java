@@ -4047,6 +4047,8 @@ public class GodManager
 		}
 	}
 
+	//No language strings found for Trapdoor,GodToBelieverMarriedCouple!
+	
 	public void updateOnlineGods()
 	{
 		this.onlineGods.clear();

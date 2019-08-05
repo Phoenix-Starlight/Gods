@@ -141,6 +141,7 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.YELLOW + "--------------- God Types ---------------");
 		sender.sendMessage(ChatColor.AQUA + "These are the block types you can use for making Gods:");
 		sender.sendMessage("");
+		
 		for (GodManager.GodType godType : GodManager.GodType.values())
 		{
 			List<String> materials = AltarManager.get().getAltarBlockTypesFromGodType(godType);
@@ -152,6 +153,7 @@ public class CommandHelp extends GodsCommand
 				}
 			}
 		}
+		
 		sender.sendMessage("");
 		sender.sendMessage(ChatColor.AQUA + "Check how to build an altar with " + ChatColor.WHITE + "/g help altar");
 

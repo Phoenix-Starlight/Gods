@@ -9,7 +9,7 @@ public class CommandAccept extends GodsCommand
 {
 	protected CommandAccept()
 	{
-		super("accept");
+		super("yes");
 		this.permission = "gods.accept";
 	}
 

@@ -10,18 +10,21 @@ import org.bukkit.potion.PotionEffectType;
 import com.dogonfire.gods.managers.GodManager;
 import com.dogonfire.gods.managers.LanguageManager;
 
-public class TaskHealPlayer extends Task {
-	private Player player = null;
-	private String godName = null;
-	private LanguageManager.LANGUAGESTRING languageString;
+public class TaskHealPlayer extends Task
+{
+	private Player							player	= null;
+	private String							godName	= null;
+	private LanguageManager.LANGUAGESTRING	languageString;
 
-	public TaskHealPlayer(String god, Player p, LanguageManager.LANGUAGESTRING speak) {
+	public TaskHealPlayer(String god, Player p, LanguageManager.LANGUAGESTRING speak)
+	{
 		this.player = p;
 		this.godName = new String(god);
 		this.languageString = speak;
 	}
 
-	private boolean healPlayer() {
+	private boolean healPlayer()
+	{
 		this.player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 10, 1));
 
 		this.player.getLocation().getWorld().playEffect(this.player.getLocation(), Effect.MOBSPAWNER_FLAMES, 4);
@@ -29,9 +32,11 @@ public class TaskHealPlayer extends Task {
 	}
 
 	@Override
-	public void run() {
+	public void run()
+	{
 		Random random = new Random();
-		if (healPlayer()) {
+		if (healPlayer())
+		{
 			LanguageManager.instance().setPlayerName(this.player.getName());
 			GodManager.instance().GodSay(this.godName, this.player, this.languageString, 2 + random.nextInt(10));
 			getPlugin().log(this.godName + " healed " + this.player.getName());
