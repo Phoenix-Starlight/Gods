@@ -9,42 +9,50 @@ import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.GodManager;
 import com.dogonfire.gods.managers.LanguageManager;
 
-public class CommandInvite extends GodsCommand {
-
-	protected CommandInvite() {
+public class CommandInvite extends GodsCommand
+{
+	protected CommandInvite()
+	{
 		super("invite");
 		this.permission = "gods.priest.invite";
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!hasPermission(sender)) {
+	public void onCommand(CommandSender sender, String command, String... args)
+	{
+		if (!hasPermission(sender))
+		{
 			sender.sendMessage(stringNoPermission);
 			return;
 		}
-		if (sender instanceof Player == false) {
+		if (sender instanceof Player == false)
+		{
 			sender.sendMessage(stringPlayerOnly);
 			return;
 		}
 		Player player = (Player) sender;
-		if (!GodManager.instance().isPriest(player.getUniqueId())) {
+		if (!GodManager.instance().isPriest(player.getUniqueId()))
+		{
 			player.sendMessage(ChatColor.RED + "Only priests can invite players");
 			return;
 		}
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 
-		if (godName == null) {
+		if (godName == null)
+		{
 			player.sendMessage(ChatColor.RED + "You dont believe in a god");
 			return;
 		}
 		String playerName = args[1];
 		Player invitedPlayer = Gods.instance().getServer().getPlayer(playerName);
-		if (invitedPlayer == null) {
+		if (invitedPlayer == null)
+		{
 			player.sendMessage(ChatColor.RED + "There is no player with the name '" + ChatColor.YELLOW + playerName + ChatColor.RED + " online.");
 			return;
 		}
 		String invitedPlayerGod = BelieverManager.instance().getGodForBeliever(invitedPlayer.getUniqueId());
-		if ((invitedPlayerGod != null) && (invitedPlayerGod.equals(godName))) {
+		if ((invitedPlayerGod != null) && (invitedPlayerGod.equals(godName)))
+		{
 			player.sendMessage(ChatColor.YELLOW + playerName + ChatColor.RED + " already believes in '" + ChatColor.GOLD + godName + ChatColor.RED + "!");
 			return;
 		}

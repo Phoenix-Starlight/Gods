@@ -15,7 +15,6 @@ import com.dogonfire.gods.managers.PermissionsManager;
 
 public class CommandHelp extends GodsCommand
 {
-
 	protected CommandHelp()
 	{
 		super("help");
@@ -56,7 +55,7 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.AQUA + "/gods help altar" + ChatColor.WHITE + " - How to build an altar to a God");
 		sender.sendMessage(ChatColor.AQUA + "/gods help blocks" + ChatColor.WHITE + " - What type of blocks are used for God altars");
 
-		for (GodsCommand localCommand : GodsCommandExecuter.instance().getCommands())
+		for (GodsCommand localCommand : GodsCommandExecuter.get().getCommands())
 		{
 			if (localCommand.hasPermission(sender))
 			{
@@ -142,9 +141,10 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.YELLOW + "--------------- God Types ---------------");
 		sender.sendMessage(ChatColor.AQUA + "These are the block types you can use for making Gods:");
 		sender.sendMessage("");
+		
 		for (GodManager.GodType godType : GodManager.GodType.values())
 		{
-			List<String> materials = AltarManager.instance().getAltarBlockTypesFromGodType(godType);
+			List<String> materials = AltarManager.get().getAltarBlockTypesFromGodType(godType);
 			if (materials != null)
 			{
 				for (String blockMaterial : materials)
@@ -153,6 +153,7 @@ public class CommandHelp extends GodsCommand
 				}
 			}
 		}
+		
 		sender.sendMessage("");
 		sender.sendMessage(ChatColor.AQUA + "Check how to build an altar with " + ChatColor.WHITE + "/g help altar");
 

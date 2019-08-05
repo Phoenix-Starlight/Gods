@@ -240,6 +240,7 @@ public class LanguageManager
 				Gods.instance().log("Will NOT download from DogOnFire. Please place a valid language file in your /lang folder!");
 			}
 		}
+		
 		for (GodManager.GodType godType : GodManager.GodType.values())
 		{
 			for (GodManager.GodGender godGender : GodManager.GodGender.values())

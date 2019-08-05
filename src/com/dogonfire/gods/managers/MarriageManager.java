@@ -295,6 +295,7 @@ public class MarriageManager
 				LanguageManager.instance().setPlayerName(player.getDisplayName());
 				GodManager.instance().GodSay(godName, partner, LanguageManager.LANGUAGESTRING.GodToBelieverMarried, 10);
 
+				Gods.instance().log(player.getDisplayName() + " just married " + partner.getDisplayName() + " in the name of " + godName);
 				Gods.instance().getServer().broadcastMessage(ChatColor.WHITE + player.getDisplayName() + ChatColor.AQUA + " just married " + ChatColor.WHITE + partner.getDisplayName() + ChatColor.AQUA + " in the name of " + ChatColor.GOLD + godName + ChatColor.AQUA + "!");
 				if ((GodsConfiguration.instance().isHolyArtifactsEnabled()) && (GodsConfiguration.instance().isMarriageFireworksEnabled()))
 				{

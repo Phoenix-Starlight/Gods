@@ -794,7 +794,7 @@ public class BlockListener implements Listener
 		{
 			if (!AltarManager.instance().handleNewPrayingAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.SIGN);
+				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
 				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);

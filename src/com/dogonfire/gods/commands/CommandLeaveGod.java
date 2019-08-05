@@ -7,29 +7,35 @@ import org.bukkit.entity.Player;
 import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.GodManager;
 
-public class CommandLeaveGod extends GodsCommand {
-
-	protected CommandLeaveGod() {
+public class CommandLeaveGod extends GodsCommand
+{
+	protected CommandLeaveGod()
+	{
 		super("leave");
 	}
 
 	@Override
-	public void onCommand(CommandSender sender, String command, String... args) {
-		if (!hasPermission(sender)) {
+	public void onCommand(CommandSender sender, String command, String... args)
+	{
+		if (!hasPermission(sender))
+		{
 			sender.sendMessage(stringNoPermission);
 			return;
 		}
-		if (sender instanceof Player == false) {
+		if (sender instanceof Player == false)
+		{
 			sender.sendMessage(stringPlayerOnly);
 			return;
 		}
 		Player player = (Player) sender;
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
-		if (GodManager.instance().believerLeaveGod(player.getUniqueId())) {
+		if (GodManager.instance().believerLeaveGod(player.getUniqueId()))
+		{
 			sender.sendMessage(ChatColor.AQUA + "You left the religion of " + ChatColor.YELLOW + godName);
-		} else {
+		}
+		else
+		{
 			sender.sendMessage(ChatColor.RED + "You are not part of any religion!");
 		}
 	}
-
 }

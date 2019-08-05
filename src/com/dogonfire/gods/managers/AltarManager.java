@@ -51,7 +51,7 @@ public class AltarManager
 
 	public Block getAltarBlockFromSign(Block block)
 	{
-		if ((block == null) || (block.getType() != Material.WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
 		{
 			return null;
 		}
@@ -90,7 +90,7 @@ public class AltarManager
 
 	public Player getBlessedPlayerFromAltarSign(Block block, String[] lines)
 	{
-		if ((block == null) || (block.getType() != Material.WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
 		{
 			return null;
 		}
@@ -112,7 +112,7 @@ public class AltarManager
 
 	public Player getCursedPlayerFromAltar(Block block, String[] lines)
 	{
-		if ((block == null) || (block.getType() != Material.WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
 		{
 			return null;
 		}
@@ -134,7 +134,7 @@ public class AltarManager
 	
 	public Player getRitualFromAltar(Block block, String[] lines)
 	{
-		if ((block == null) || (block.getType() != Material.WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
 		{
 			return null;
 		}
@@ -368,7 +368,7 @@ public class AltarManager
 		
 		for (BlockFace face : new BlockFace[] { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST })
 		{
-			if (block.getRelative(face).getType() == Material.WALL_SIGN)
+			if (block.getRelative(face).getType() == Material.OAK_WALL_SIGN)
 			{
 				return true;
 			}
@@ -379,7 +379,7 @@ public class AltarManager
 
 	public boolean isAltarSign(Block block)
 	{
-		if ((block == null) || (block.getType() != Material.WALL_SIGN))
+		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
 		{
 			return false;
 		}
@@ -421,19 +421,19 @@ public class AltarManager
 		{
 			return false;
 		}
-		if (altarBlock.getRelative(BlockFace.EAST).getType() == Material.WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.EAST).getType() == Material.OAK_WALL_SIGN)
 		{
 			return true;
 		}
-		if (altarBlock.getRelative(BlockFace.WEST).getType() == Material.WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.WEST).getType() == Material.OAK_WALL_SIGN)
 		{
 			return true;
 		}
-		if (altarBlock.getRelative(BlockFace.NORTH).getType() == Material.WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.NORTH).getType() == Material.OAK_WALL_SIGN)
 		{
 			return true;
 		}
-		if (altarBlock.getRelative(BlockFace.SOUTH).getType() == Material.WALL_SIGN)
+		if (altarBlock.getRelative(BlockFace.SOUTH).getType() == Material.OAK_WALL_SIGN)
 		{
 			return true;
 		}

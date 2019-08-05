@@ -12,7 +12,6 @@ import com.dogonfire.gods.managers.LanguageManager;
 
 public class CommandToggleWar extends GodsCommand
 {
-
 	protected CommandToggleWar()
 	{
 		super("war");

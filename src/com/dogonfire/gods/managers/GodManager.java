@@ -205,7 +205,7 @@ public class GodManager
 		{
 			if (GodsConfiguration.instance().isMarriageEnabled())
 			{
-				MarriageManager.instance().divorce(player.getUniqueId());
+				MarriageManager.get().divorce(player.getUniqueId());
 			}
 			
 			QuestManager.instance().handleJoinReligion(player.getName(), godName);
@@ -259,13 +259,13 @@ public class GodManager
 				return false;
 			}
 
-			Block altarBlock = AltarManager.instance().getAltarBlockFromSign(prayerLocation.getBlock());
+			Block altarBlock = AltarManager.get().getAltarBlockFromSign(prayerLocation.getBlock());
 
-			GodGender godGender = AltarManager.instance().getGodGenderFromAltarBlock(altarBlock);
+			GodGender godGender = AltarManager.get().getGodGenderFromAltarBlock(altarBlock);
 
 			Gods.instance().logDebug("Altar is " + altarBlock.getType().name());
 
-			GodType godType = AltarManager.instance().getGodTypeForAltarBlockType(altarBlock.getType());
+			GodType godType = AltarManager.get().getGodTypeForAltarBlockType(altarBlock.getType());
 
 			Gods.instance().logDebug("God divine force is " + godType);
 
@@ -350,7 +350,7 @@ public class GodManager
 
 		LanguageManager.instance().setPlayerName(player.getName());
 /*
-		HolyLaw pendingHolyLaw = HolyLawManager.instance().getPendingHolyLaw(godName);
+		HolyLaw pendingHolyLaw = HolyLawManager.get().getPendingHolyLaw(godName);
 
 		if (pendingHolyLaw == null)
 		{	
@@ -362,20 +362,20 @@ public class GodManager
 		// New law
 		switch(a)
 		{
-			case "A" :HolyLawManager.instance().setPendingLawHoly(godName); GodManager.instance().GodSay(godName, player, "So it shall be. This law is now doctrine!.", 2);break;  
-			case "B" :HolyLawManager.instance().setPendingLawUnholy(godName); GodManager.instance().GodSay(godName, player, "So it shall be. This law is now doctrine!", 2);break;  
-			case "C" :HolyLawManager.instance().skipPendingLaw(godName); GodManager.instance().GodSay(godName, player, "Very well. This law shall remain unchanged.", 2);break;
-			default : GodManager.instance().GodSay(godName, player, "What are you talking about?", 2); break;
+			case "A" :HolyLawManager.get().setPendingLawHoly(godName); GodManager.get().GodSay(godName, player, "So it shall be. This law is now doctrine!.", 2);break;  
+			case "B" :HolyLawManager.get().setPendingLawUnholy(godName); GodManager.get().GodSay(godName, player, "So it shall be. This law is now doctrine!", 2);break;  
+			case "C" :HolyLawManager.get().skipPendingLaw(godName); GodManager.get().GodSay(godName, player, "Very well. This law shall remain unchanged.", 2);break;
+			default : GodManager.get().GodSay(godName, player, "What are you talking about?", 2); break;
 		}		
 	
 		// Law refinement
 		switch(a)
 		{
-			case "A" :HolyLawManager.instance().skipPendingLaw(godName); GodManager.instance().GodSay(godName, player, "Very well. This law shall remain unchanged.", 2);break;  
-			case "B" :HolyLawManager.instance().deleteLaw(godName); GodManager.instance().GodSay(godName, player, "So it shall be. This law is now abolished.", 2);break;
-			case "C" :HolyLawManager.instance().setPendingLawTime(godName); GodManager.instance().GodSay(godName, player, "What are you talking about?", 2);break; 
-			case "D" :HolyLawManager.instance().setPendingLawBiome(godName); GodManager.instance().GodSay(godName, player, "What are you talking about?", 2);break;  
-			default : GodManager.instance().GodSay(godName, player, "What are you talking about?", 2); break;
+			case "A" :HolyLawManager.get().skipPendingLaw(godName); GodManager.get().GodSay(godName, player, "Very well. This law shall remain unchanged.", 2);break;  
+			case "B" :HolyLawManager.get().deleteLaw(godName); GodManager.get().GodSay(godName, player, "So it shall be. This law is now abolished.", 2);break;
+			case "C" :HolyLawManager.get().setPendingLawTime(godName); GodManager.get().GodSay(godName, player, "What are you talking about?", 2);break; 
+			case "D" :HolyLawManager.get().setPendingLawBiome(godName); GodManager.get().GodSay(godName, player, "What are you talking about?", 2);break;  
+			default : GodManager.get().GodSay(godName, player, "What are you talking about?", 2); break;
 		}		
 		*/
 	}
@@ -394,13 +394,13 @@ public class GodManager
 		LanguageManager.instance().setPlayerName(player.getName());
 		if (GodsConfiguration.instance().isMarriageEnabled())
 		{
-			UUID pendingMarriagePartner = MarriageManager.instance().getProposal(believerId);
+			UUID pendingMarriagePartner = MarriageManager.get().getProposal(believerId);
 
 			if (pendingMarriagePartner != null)
 			{
 				Gods.instance().log(player.getName() + " accepted the proposal to marry " + pendingMarriagePartner);
 
-				MarriageManager.instance().handleAcceptProposal(believerId, pendingMarriagePartner, godName);
+				MarriageManager.get().handleAcceptProposal(believerId, pendingMarriagePartner, godName);
 
 				return;
 			}
@@ -480,7 +480,7 @@ public class GodManager
 
 		if (GodsConfiguration.instance().isMarriageEnabled())
 		{
-			MarriageManager.instance().divorce(believerId);
+			MarriageManager.get().divorce(believerId);
 		}
 
 		BelieverManager.instance().clearPrayerPower(believerId);
@@ -907,7 +907,9 @@ public class GodManager
 	public Material getHolyFoodTypeForGod(String godName)
 	{
 		String foodTypeString = this.godsConfig.getString(godName + ".EatFoodType");
+		
 		Material foodType = Material.AIR;
+		
 		if (foodTypeString == null)
 		{
 			int r1 = this.random.nextInt(7);
@@ -932,7 +934,9 @@ public class GodManager
 				foodType = Material.COOKED_PORKCHOP;
 				break;
 			case 6:
+			default: 
 				foodType = Material.CARROT;
+					
 			}
 			foodTypeString = foodType.name();
 
@@ -944,6 +948,12 @@ public class GodManager
 		{
 			foodType = Material.getMaterial(foodTypeString);
 		}
+		
+		if(foodType == null)
+		{
+			foodType = Material.CARROT;
+		}
+		
 		return foodType;
 	}
 
@@ -1166,7 +1176,7 @@ public class GodManager
 
 			save();
 
-			mobType = EntityType.valueOf(mobTypeString.toUpperCase());
+			mobType = EntityType.fromName(mobTypeString);
 		}
 		return mobType;
 	}
@@ -1451,12 +1461,14 @@ public class GodManager
 				case 5:
 					foodType = Material.COOKED_PORKCHOP;
 					break;
+				default:	
 				case 6:
 					foodType = Material.CARROT;
 				}
 				foodTypeString = foodType.name();
 			}
 			while (foodTypeString.equals(getHolyFoodTypeForGod(godName).name()));
+			
 			this.godsConfig.set(godName + ".NotEatFoodType", foodTypeString);
 
 			saveTimed();
@@ -1465,6 +1477,12 @@ public class GodManager
 		{
 			foodType = Material.getMaterial(foodTypeString);
 		}
+		
+		if(foodType == null)
+		{
+			foodType = Material.CARROT;
+		}
+
 		return foodType;
 	}
 
@@ -1717,6 +1735,7 @@ public class GodManager
 				type = Material.BONE;
 				break;
 			case 23:
+			default:	
 				type = Material.FEATHER;
 			}
 		}
@@ -1761,7 +1780,12 @@ public class GodManager
 
 	private float getSacrificeValueForGod(String godName, Material type)
 	{
-		return (float) this.godsConfig.getDouble(godName + ".SacrificeValues." + type.name());
+		if(!this.godsConfig.isSet(godName + ".SacrificeValues." + type.name()))
+		{
+			return 0;
+		}
+						
+		return (float)this.godsConfig.getDouble(godName + ".SacrificeValues." + type.name());
 	}
 
 	public long getSeedForGod(String godName)
@@ -1853,7 +1877,7 @@ public class GodManager
 
 			save();
 
-			mobType = EntityType.valueOf(mobTypeString.toUpperCase());
+			mobType = EntityType.fromName(mobTypeString);
 		}
 		return mobType;
 	}
@@ -2058,11 +2082,11 @@ public class GodManager
 
 		if (addBeliefByAltar(player, godName, location, BelieverManager.instance().getChangingGod(player.getUniqueId())))
 		{
-			Block altarBlock = AltarManager.instance().getAltarBlockFromSign(player.getWorld().getBlockAt(location));
+			Block altarBlock = AltarManager.get().getAltarBlockFromSign(player.getWorld().getBlockAt(location));
 
 			if (GodManager.instance().getGenderForGod(godName) == GodGender.None)
 			{
-				GodGender godGender = AltarManager.instance().getGodGenderFromAltarBlock(altarBlock);
+				GodGender godGender = AltarManager.get().getGodGenderFromAltarBlock(altarBlock);
 
 				Gods.instance().logDebug("God did not have a gender, setting gender to " + godGender);
 
@@ -2070,7 +2094,7 @@ public class GodManager
 			}
 			if (GodManager.instance().getDivineForceForGod(godName) == null)
 			{
-				GodType godType = AltarManager.instance().getGodTypeForAltarBlockType(altarBlock.getType());
+				GodType godType = AltarManager.get().getGodTypeForAltarBlockType(altarBlock.getType());
 
 				Gods.instance().logDebug("God did not have a divine force, setting divine force to " + godType);
 
@@ -2120,7 +2144,9 @@ public class GodManager
 				{
 					Gods.instance().logDebug(ex.getStackTrace().toString());
 				}
+				
 				LanguageManager.instance().setPlayerName(player.getDisplayName());
+				
 				if (GodsConfiguration.instance().isCommandmentsBroadcastFoodEaten())
 				{
 					godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversEatFoodBlessing, 2 + this.random.nextInt(20));
@@ -2135,6 +2161,7 @@ public class GodManager
 		if (foodType.equals(notEatFoodType.name()))
 		{
 			addMoodForGod(godName, getAngryModifierForGod(godName));
+			
 			if (cursePlayer(godName, player.getUniqueId(), getGodPower(godName)))
 			{
 				try
@@ -2194,7 +2221,7 @@ public class GodManager
 			}
 		}
 
-		if ((holyMobType != null) && (mobType.equals(holyMobType.name())))
+		if ((holyMobType != null) && mobType.equals(holyMobType.name()))
 		{
 			if (cursePlayer(godName, player.getUniqueId(), getGodPower(godName)))
 			{
@@ -2209,6 +2236,7 @@ public class GodManager
 				{
 					Gods.instance().logDebug(ex.getStackTrace().toString());
 				}
+				
 				if (GodsConfiguration.instance().isCommandmentsBroadcastMobSlain())
 				{
 					godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversNotSlayMobCursing, 2 + this.random.nextInt(10));
@@ -2779,7 +2807,7 @@ public class GodManager
 
 		if (GodsConfiguration.instance().isMarriageEnabled() && this.random.nextInt(501) == 0)
 		{
-			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.instance().getMarriedCouples();
+			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.get().getMarriedCouples();
 			if (marriedCouples.size() > 0)
 			{
 				MarriageManager.MarriedCouple couple = marriedCouples.get(this.random.nextInt(marriedCouples.size()));
@@ -2823,7 +2851,7 @@ public class GodManager
 		}
 		if ((GodsConfiguration.instance().isMarriageEnabled()) && (this.random.nextInt(501) == 0))
 		{
-			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.instance().getMarriedCouples();
+			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.get().getMarriedCouples();
 			if (marriedCouples.size() > 0)
 			{
 				MarriageManager.MarriedCouple couple = marriedCouples.get(this.random.nextInt(marriedCouples.size()));
@@ -2908,7 +2936,7 @@ public class GodManager
 
 		if ((GodsConfiguration.instance().isMarriageEnabled()) && (this.random.nextInt(501) == 0))
 		{
-			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.instance().getMarriedCouples();
+			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.get().getMarriedCouples();
 
 			if (marriedCouples.size() > 0)
 			{
@@ -3164,13 +3192,13 @@ public class GodManager
 //			
 //		int godLevel = this.getGodLevel(godName);
 //
-//		if(godLevel < HolyLawManager.instance().getLaws().size())
+//		if(godLevel < HolyLawManager.get().getLaws().size())
 //		{
 //			// Suggest new laws
-//			String question = HolyLawManager.instance().generateNewLawQuestionForGod(godName);
+//			String question = HolyLawManager.get().generateNewLawQuestionForGod(godName);
 //			GodSay(godName, priestPlayer, question, 2);
 //
-//			List<String> answers = HolyLawManager.instance().generateNewLawAnswers(godName);
+//			List<String> answers = HolyLawManager.get().generateNewLawAnswers(godName);
 //			priestPlayer.sendMessage("");
 //			priestPlayer.sendMessage("A) " + ChatColor.AQUA + answers.get(0));
 //			priestPlayer.sendMessage("B) " + ChatColor.AQUA + answers.get(1));
@@ -3179,10 +3207,10 @@ public class GodManager
 //		else
 //		{
 //			// refining / deleting existing laws
-//			String question = HolyLawManager.instance().generateRefinementLawQuestionForGod(godName);
+//			String question = HolyLawManager.get().generateRefinementLawQuestionForGod(godName);
 //			GodSay(godName, priestPlayer, question, 2);
 //
-//			List<String> answers = HolyLawManager.instance().generateRefinementLawAnswers(godName);			
+//			List<String> answers = HolyLawManager.get().generateRefinementLawAnswers(godName);			
 //			priestPlayer.sendMessage("");
 //			priestPlayer.sendMessage("A) " + ChatColor.AQUA + answers.get(0));
 //			priestPlayer.sendMessage("B) " + ChatColor.AQUA + answers.get(1));
@@ -3193,8 +3221,8 @@ public class GodManager
 //	
 ////		if (setPendingPriest(godName, believerId))
 ////		{
-////			Gods.instance().log(godName + " offered " + player.getName() + " to be priest");
-////			LanguageManager.instance().setPlayerName(player.getName());
+////			Gods.get().log(godName + " offered " + player.getName() + " to be priest");
+////			LanguageManager.get().setPlayerName(player.getName());
 ////
 ////			GodSayWithQuestion(godName, player, LanguageManager.LANGUAGESTRING.GodToBelieverOfferPriest, 2);
 ////
@@ -3347,10 +3375,10 @@ public class GodManager
 							break;
 /*							
 						case 5:
-							if (GodsConfiguration.instance().isHolyLawsEnabled())
+							if (GodsConfiguration.get().isHolyLawsEnabled())
 							{
-								String bibleTitle = HolyBookManager.instance().getBibleTitle(godName);
-								LanguageManager.instance().setType(bibleTitle);
+								String bibleTitle = HolyBookManager.get().getBibleTitle(godName);
+								LanguageManager.get().setType(bibleTitle);
 								GodSayToPriest(godName, LanguageManager.LANGUAGESTRING.GodToPriestHolyLawSuggestion);
 								return true;
 							}
@@ -3411,7 +3439,7 @@ public class GodManager
 			return;
 		}
 
-		AltarManager.instance().clearDroppedItems();
+		AltarManager.get().clearDroppedItems();
 	}
 
 	private void manageSacrifices(String godName)
@@ -3426,6 +3454,7 @@ public class GodManager
 		{
 			return;
 		}
+		
 		Material type = getSacrificeNeedForGod(godName);
 
 		float value = getSacrificeValueForGod(godName, type);
@@ -4018,6 +4047,8 @@ public class GodManager
 		}
 	}
 
+	//No language strings found for Trapdoor,GodToBelieverMarriedCouple!
+	
 	public void updateOnlineGods()
 	{
 		this.onlineGods.clear();

@@ -24,7 +24,7 @@ public class GodsCommandExecuter implements CommandExecutor
 {
 	private static GodsCommandExecuter instance;
 
-	public static GodsCommandExecuter instance()
+	public static GodsCommandExecuter get()
 	{
 		if (instance == null)
 			instance = new GodsCommandExecuter();
@@ -119,7 +119,7 @@ public class GodsCommandExecuter implements CommandExecutor
 			}
 			if (GodsConfiguration.instance().isMarriageEnabled())
 			{
-				String partnerName = MarriageManager.instance().getPartnerName(player.getUniqueId());
+				String partnerName = MarriageManager.get().getPartnerName(player.getUniqueId());
 				if (partnerName != null)
 				{
 					sender.sendMessage(ChatColor.WHITE + "You are married to " + ChatColor.GOLD + partnerName);
@@ -148,10 +148,16 @@ public class GodsCommandExecuter implements CommandExecutor
 		}
 
 		GodsCommand gCmd = commandList.get(args[0].toLowerCase());
+		
 		if (gCmd == null)
+		{
 			sender.sendMessage(ChatColor.RED + "Invalid Gods command!");
+		}
 		else
+		{
 			gCmd.onCommand(sender, label, args);
+		}
+		
 		return true;
 	}
 }
