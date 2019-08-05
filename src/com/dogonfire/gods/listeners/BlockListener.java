@@ -774,7 +774,7 @@ public class BlockListener implements Listener
 			{
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.OAK_SIGN, 1));
 			}
 			return;
 		}
@@ -785,7 +785,7 @@ public class BlockListener implements Listener
 			{
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.OAK_SIGN, 1));
 			}
 			return;
 		}
@@ -808,7 +808,7 @@ public class BlockListener implements Listener
 			{
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.SIGN, 1));
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.OAK_SIGN, 1));
 			}
 			return;
 		}

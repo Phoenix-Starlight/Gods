@@ -609,7 +609,9 @@ public class GodsConfiguration
 			Gods.instance().log("No worlds found in config file.");
 			for (World world : Gods.instance().getServer().getWorlds())
 			{
-				this.worlds.add(world.getName());
+				if (!this.worlds.contains(world.getName())) {
+					this.worlds.add(world.getName());
+				}
 				Gods.instance().log("Enabed in world '" + world.getName() + "'");
 			}
 			config.set("Settings.Worlds", this.worlds);
@@ -619,7 +621,9 @@ public class GodsConfiguration
 		{
 			for (String worldName : worldNames)
 			{
-				this.worlds.add(worldName);
+				if (!this.worlds.contains(worldName)) {
+					this.worlds.add(worldName);
+				}
 				Gods.instance().log("Enabled in '" + worldName + "'");
 			}
 			if (worldNames.size() == 0)

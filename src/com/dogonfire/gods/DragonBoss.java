@@ -64,7 +64,7 @@
 //		else
 //			this.yaw = 270.0F;
 //		
-//		setNewTarinstance();
+//		setNewTarget();
 //	
 //	}
 //	
@@ -73,7 +73,7 @@
 //		return name;
 //	}
 //	
-//	public void setNewTarinstance()
+//	public void setNewTarget()
 //	{
 //		startX = this.locX;
 //		startY = this.locY;
@@ -165,7 +165,7 @@
 //				//Travels.removePlayerandDragon(entity);
 //				if(random.nextInt(100)==0)	
 //				{
-//					setNewTarinstance();
+//					setNewTarget();
 //					return;
 //				}
 //				else
