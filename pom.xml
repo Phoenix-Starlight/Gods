@@ -4,7 +4,7 @@
   <groupId>com.dogonfire</groupId>
   <artifactId>gods</artifactId>
   <name>Gods</name>
-  <version>0.9.2</version>
+  <version>0.9.1</version>
   <description>Gods in Minecraft!</description>
   <url>https://github.com/DogOnFire/Gods</url>
   <packaging>jar</packaging>
