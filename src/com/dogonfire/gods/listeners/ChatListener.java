@@ -22,7 +22,7 @@ public class ChatListener implements Listener
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		if (GodsConfiguration.instance().isChatFormattingEnabled())
 		{
-			event.setFormat(ChatManager.get().formatChat(event.getPlayer(), godName, event.getFormat()));
+			event.setFormat(ChatManager.instance().formatChat(event.getPlayer(), godName, event.getFormat()));
 		}
 
 		if (godName == null)

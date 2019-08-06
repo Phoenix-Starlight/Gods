@@ -60,7 +60,7 @@ public class MarriageManager
 
 	private static MarriageManager instance;
 
-	public static MarriageManager get()
+	public static MarriageManager instance()
 	{
 		if (GodsConfiguration.instance().isMarriageEnabled() && instance == null)
 			instance = new MarriageManager();
@@ -299,8 +299,8 @@ public class MarriageManager
 				Gods.instance().getServer().broadcastMessage(ChatColor.WHITE + player.getDisplayName() + ChatColor.AQUA + " just married " + ChatColor.WHITE + partner.getDisplayName() + ChatColor.AQUA + " in the name of " + ChatColor.GOLD + godName + ChatColor.AQUA + "!");
 				if ((GodsConfiguration.instance().isHolyArtifactsEnabled()) && (GodsConfiguration.instance().isMarriageFireworksEnabled()))
 				{
-					HolyPowerManager.get().shootFirework(player, 16);
-					HolyPowerManager.get().shootFirework(partner, 16);
+					HolyPowerManager.instance().shootFirework(player, 16);
+					HolyPowerManager.instance().shootFirework(partner, 16);
 				}
 			}
 			else

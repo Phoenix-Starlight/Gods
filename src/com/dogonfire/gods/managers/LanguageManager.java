@@ -197,7 +197,7 @@ public class LanguageManager
 		this.generalLanguageFileName = (GodsConfiguration.instance().getLanguageIdentifier() + "_general.yml");
 
 		Gods.instance().logDebug("generalFileName is " + this.generalLanguageFileName);
-		Gods.instance().logDebug("GodsConfiguration.get().language is " + GodsConfiguration.instance().getLanguageIdentifier());
+		Gods.instance().logDebug("GodsConfiguration.instance().language is " + GodsConfiguration.instance().getLanguageIdentifier());
 
 		File directory = new File(Gods.instance().getDataFolder() + "/lang");
 		if (!directory.exists())

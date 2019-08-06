@@ -1,7 +1,6 @@
 package com.dogonfire.gods.tasks;
 
 import com.dogonfire.gods.Gods;
-import org.bukkit.World;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

@@ -527,7 +527,7 @@ More effects on altar destruction
 * Curses and blessing altars are now actually unresponsive when build while disabled in config 
 * Item-giving is now handled in a synced server thread, avoiding those nasty random exceptions
 * More litghninh smiting in curses (Because its just so much more god-like)
-* Fixed the "you must slay 4 SMOOTH_BRICK" ramblings
+* Fixed the "you must slay 4 SMOOTH_STONE" ramblings
 * Fixed irregular item blessings for players: Some players gets spammed with items
 * Fixed random item blessing exceptions by putting blessing into a proper server sync'ed thread 
 

@@ -45,7 +45,7 @@ public class CommandLove extends GodsCommand
 			player.sendMessage(ChatColor.RED + "You do not believe in a God");
 			return;
 		}
-		UUID partnerId = MarriageManager.get().getPartnerId(player.getUniqueId());
+		UUID partnerId = MarriageManager.instance().getPartnerId(player.getUniqueId());
 		if (partnerId == null)
 		{
 			player.sendMessage(ChatColor.RED + "You are not married, bozo!");
@@ -57,7 +57,7 @@ public class CommandLove extends GodsCommand
 			player.sendMessage(ChatColor.WHITE + Gods.instance().getServer().getOfflinePlayer(partnerId).getName() + ChatColor.RED + " is not online!");
 			return;
 		}
-		MarriageManager.get().love(player.getUniqueId());
+		MarriageManager.instance().love(player.getUniqueId());
 		player.sendMessage(ChatColor.AQUA + "You love " + ChatColor.WHITE + Gods.instance().getServer().getPlayer(partnerId).getDisplayName() + "!");
 	}
 

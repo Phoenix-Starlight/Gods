@@ -157,9 +157,9 @@ public class InstructionBookManager
 
 		save();
 
-		// if (Gods.get().propheciesEnabled)
+		// if (Gods.instance().propheciesEnabled)
 		// {
-		// Gods.get().getProphecyManager().generateProphecies(godName);
+		// Gods.instance().getProphecyManager().generateProphecies(godName);
 		// }
 	}
 

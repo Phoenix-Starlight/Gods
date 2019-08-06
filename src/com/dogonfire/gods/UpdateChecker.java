@@ -3,7 +3,6 @@ package com.dogonfire.gods;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -11,6 +10,7 @@ import java.net.URLConnection;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+@SuppressWarnings("unused")
 public class UpdateChecker
 {
 	private final int			projectID				= 39139;

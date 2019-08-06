@@ -5,13 +5,9 @@ import java.util.Random;
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.managers.HolyPowerManager;
 
-import org.bukkit.ChatColor;
 import org.bukkit.EntityEffect;
-import org.bukkit.Server;
-import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class LoveTask implements Runnable
 {
@@ -52,7 +48,7 @@ public class LoveTask implements Runnable
 
 			if (firework)
 			{
-				HolyPowerManager.get().shootFirework(player1, 16);
+				HolyPowerManager.instance().shootFirework(player1, 16);
 			}
 		}
 
@@ -63,7 +59,7 @@ public class LoveTask implements Runnable
 
 			if (firework)
 			{
-				HolyPowerManager.get().shootFirework(player2, 16);
+				HolyPowerManager.instance().shootFirework(player2, 16);
 			}
 		}	
 

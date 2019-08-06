@@ -12,7 +12,7 @@ public class ChatManager
 {
 	private static ChatManager instance;
 
-	public static ChatManager get()
+	public static ChatManager instance()
 	{
 		if (instance == null)
 			instance = new ChatManager();

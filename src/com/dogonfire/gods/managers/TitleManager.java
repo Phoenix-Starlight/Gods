@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.TitleSendEvent;
 
 public class TitleManager implements Listener
@@ -54,7 +53,7 @@ public class TitleManager implements Listener
 			Object e;
 			Object chatTitle;
 			Object chatSubtitle;
-			Constructor subtitleConstructor;
+			Constructor<?> subtitleConstructor;
 			Object titlePacket;
 			Object subtitlePacket;
 

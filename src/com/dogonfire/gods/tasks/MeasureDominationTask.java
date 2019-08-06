@@ -3,8 +3,6 @@ package com.dogonfire.gods.tasks;
 import com.dogonfire.gods.Gods;
 import java.util.Random;
 import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class MeasureDominationTask implements Runnable
 {

@@ -3,7 +3,6 @@ package com.dogonfire.gods.managers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -25,6 +24,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import com.dogonfire.gods.Gods;
 
+@SuppressWarnings("unused")
 public class HolyLawManager implements Listener
 {
 	/*
@@ -78,7 +78,7 @@ public class HolyLawManager implements Listener
 	
 	private static HolyLawManager instance;
 
-	public static HolyLawManager get()
+	public static HolyLawManager instance()
 	{
 		if (instance == null)
 			instance = new HolyLawManager();
@@ -143,7 +143,7 @@ public class HolyLawManager implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void OnBlockPlace(BlockPlaceEvent event)
 	{
-		String godName = BelieverManager.get().getGodForBeliever(event.getPlayer().getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(event.getPlayer().getUniqueId());
 		
 		if(godName==null)
 		{
@@ -159,7 +159,7 @@ public class HolyLawManager implements Listener
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void OnBlockBreak(BlockBreakEvent event)
 	{
-		String godName = BelieverManager.get().getGodForBeliever(event.getPlayer().getUniqueId());
+		String godName = BelieverManager.instance().getGodForBeliever(event.getPlayer().getUniqueId());
 		
 		if(godName==null)
 		{
