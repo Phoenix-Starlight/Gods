@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -23,12 +24,12 @@ import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -131,7 +132,7 @@ public class BlockListener implements Listener
 		{
 			return;
 		}
-		String believerName = AltarManager.get().getDroppedItemPlayer(event.getEntity().getEntityId());
+		String believerName = AltarManager.instance().getDroppedItemPlayer(event.getEntity().getEntityId());
 		if (believerName == null)
 		{
 			return;
@@ -268,9 +269,9 @@ public class BlockListener implements Listener
 			return;
 		}
 
-		// if (Gods.get().propheciesEnabled)
+		// if (Gods.instance().propheciesEnabled)
 		// {
-		// Gods.get().getProphecyManager().handleMobKill(player.getName(),
+		// Gods.instance().getProphecyManager().handleMobKill(player.getName(),
 		// godName,
 		// event.getEntityType().name());
 		// }
@@ -282,7 +283,7 @@ public class BlockListener implements Listener
 
 		if (GodsConfiguration.instance().isHolyArtifactsEnabled())
 		{
-			HolyArtifactManager.instance().handleDeath(event.getEntity().getKiller().getName(), godName, event.getEntity().getKiller().getItemInHand());
+			HolyArtifactManager.instance().handleDeath(event.getEntity().getKiller().getName(), godName, event.getEntity().getKiller().getInventory().getItemInMainHand());
 		}
 
 		if ((!player.isOp()) && (!PermissionsManager.instance().hasPermission(player, "gods.commandments")))
@@ -320,7 +321,7 @@ public class BlockListener implements Listener
 			Long currentTime = Long.valueOf(System.currentTimeMillis());
 			if ((lastEatTime == null) || (currentTime.longValue() - lastEatTime.longValue() > 10000L))
 			{
-				if ((GodsConfiguration.instance().isCommandmentsEnabled()) && (player.getHealth() != player.getMaxHealth()))
+				if ((GodsConfiguration.instance().isCommandmentsEnabled()) && (player.getHealth() != player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()))
 				{
 					if ((player.isOp()) || (PermissionsManager.instance().hasPermission(player, "gods.commandments")))
 					{
@@ -407,7 +408,7 @@ public class BlockListener implements Listener
 		{
 			return;
 		}
-		AltarManager.get().addDroppedItem(event.getItemDrop().getEntityId(), player.getName());
+		AltarManager.instance().addDroppedItem(event.getItemDrop().getEntityId(), player.getName());
 		if (GodsConfiguration.instance().isHolyArtifactsEnabled())
 		{
 			HolyArtifactManager.instance().handleDrop(player.getName(), event.getItemDrop(), event.getItemDrop().getLocation());
@@ -425,7 +426,7 @@ public class BlockListener implements Listener
 
 		if (GodsConfiguration.instance().isQuestsEnabled())
 		{
-/*			
+/*
 			if (event.getAction() == Action.PHYSICAL)
 			{
 				if (QuestManager.instance().handlePressurePlate(player.getUniqueId(), event.getClickedBlock()))
@@ -444,9 +445,9 @@ public class BlockListener implements Listener
 		{
 			if ((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 			{
-				if ((event.getItem() != null) && (player.getItemInHand() != null))
+				if ((event.getItem() != null) && (player.getInventory().getItemInMainHand() != null))
 				{
-					ItemStack book = player.getItemInHand();
+					ItemStack book = player.getInventory().getItemInMainHand();
 					if (book.getType() == Material.WRITTEN_BOOK)
 					{
 						String godName = HolyBookManager.instance().getGodForBible(book);
@@ -464,19 +465,16 @@ public class BlockListener implements Listener
 					}
 				}
 			}
-			else if ((event.getAction().equals(Action.LEFT_CLICK_AIR)) || (event.getAction().equals(Action.LEFT_CLICK_BLOCK)))
+			else if (((event.getAction().equals(Action.LEFT_CLICK_AIR)) || (event.getAction().equals(Action.LEFT_CLICK_BLOCK))) && ((event.getItem() != null) && (player.getInventory().getItemInMainHand() != null)))
 			{
-				if ((event.getItem() != null) && (player.getItemInHand() != null))
+				ItemStack book = player.getInventory().getItemInMainHand();
+				if (book.getType() == Material.WRITTEN_BOOK)
 				{
-					ItemStack book = player.getItemInHand();
-					if (book.getType() == Material.WRITTEN_BOOK)
+					String godName = HolyBookManager.instance().getGodForBible(book);
+					if (godName != null)
 					{
-						String godName = HolyBookManager.instance().getGodForBible(book);
-						if (godName != null)
-						{
-							GodManager.instance().handleBibleMelee(godName, player);
-							QuestManager.instance().handleBibleMelee(godName, player.getUniqueId());
-						}
+						GodManager.instance().handleBibleMelee(godName, player);
+						QuestManager.instance().handleBibleMelee(godName, player.getUniqueId());
 					}
 				}
 			}
@@ -509,7 +507,7 @@ public class BlockListener implements Listener
 		{
 			return;
 		}
-		if ((GodsConfiguration.instance().getHolylandBreakableBlockTypes().contains(event.getClickedBlock().getType())) || (AltarManager.get().isAltarBlock(event.getClickedBlock())))
+		if ((GodsConfiguration.instance().getHolylandBreakableBlockTypes().contains(event.getClickedBlock().getType())) || (AltarManager.instance().isAltarBlock(event.getClickedBlock())))
 		{
 			return;
 		}
@@ -547,13 +545,13 @@ public class BlockListener implements Listener
 	{
 		Player player = event.getPlayer();
 		String godName = null;
-		if ((player == null) || !Gods.instance().isEnabledInWorld(player.getWorld()))
+		if ((player == null) || (!Gods.instance().isEnabledInWorld(player.getWorld())))
 		{
 			return;
 		}
-		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
+		if ((event.getAction().equals(Action.RIGHT_CLICK_AIR)) || (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 		{
-			Material type = player.getItemInHand().getType();
+			Material type = player.getInventory().getItemInMainHand().getType();
 			if ((type != null) && (type != Material.AIR))
 			{
 				godName = BelieverManager.instance().getGodForBeliever(event.getPlayer().getUniqueId());
@@ -561,14 +559,14 @@ public class BlockListener implements Listener
 				{
 					if (GodsConfiguration.instance().isHolyArtifactsEnabled())
 					{
-						HolyArtifactManager.instance().handleActivate(player.getName(), player.getItemInHand());
+						HolyArtifactManager.instance().handleActivate(player.getName(), player.getInventory().getItemInMainHand());
 					}
 				}
 			}
 		}
 		if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK))
 		{
-			if (!AltarManager.get().isAltarSign(event.getClickedBlock()))
+			if (!AltarManager.instance().isAltarSign(event.getClickedBlock()))
 			{
 				return;
 			}
@@ -578,7 +576,7 @@ public class BlockListener implements Listener
 			Sign sign = (Sign) state;
 			if (GodsConfiguration.instance().isCursingEnabled())
 			{
-				Player cursedPlayer = AltarManager.get().getCursedPlayerFromAltar(event.getClickedBlock(), sign.getLines());
+				Player cursedPlayer = AltarManager.instance().getCursedPlayerFromAltar(event.getClickedBlock(), sign.getLines());
 
 				if (cursedPlayer != null)
 				{
@@ -614,16 +612,15 @@ public class BlockListener implements Listener
 					return;
 				}
 			}
-			
 			if (GodsConfiguration.instance().isBlessingEnabled())
 			{
-				Player blessedPlayer = AltarManager.get().getBlessedPlayerFromAltarSign(event.getClickedBlock(), sign.getLines());
+				Player blessedPlayer = AltarManager.instance().getBlessedPlayerFromAltarSign(event.getClickedBlock(), sign.getLines());
 				if (blessedPlayer != null)
 				{
 					if (GodManager.instance().isPriest(player.getUniqueId()))
 					{
 						String oldBlessedPlayer = GodManager.instance().getBlessedPlayerForGod(godName);
-						if ((oldBlessedPlayer != null) && (oldBlessedPlayer.equals(blessedPlayer)))
+						if ((oldBlessedPlayer != null) && (oldBlessedPlayer.equals(blessedPlayer.getUniqueId().toString())))
 						{
 							GodManager.instance().setBlessedPlayerForGod(godName, null);
 
@@ -662,7 +659,7 @@ public class BlockListener implements Listener
 
 			Block block = event.getClickedBlock();
 
-			if (!AltarManager.get().isPrayingAltar(block))
+			if (!AltarManager.instance().isPrayingAltar(block))
 			{
 				return;
 			}
@@ -710,9 +707,13 @@ public class BlockListener implements Listener
 	}
 
 	@EventHandler
-	public void OnPlayerPickupItem(PlayerPickupItemEvent event)
+	public void onPlayerPickupItem(EntityPickupItemEvent event)
 	{
-		Player player = event.getPlayer();
+		if (!(event.getEntity() instanceof Player)) {
+			return;
+		}
+
+		Player player = (Player) event.getEntity();
 
 		if (player == null || !Gods.instance().isEnabledInWorld(player.getWorld()))
 		{
@@ -752,7 +753,7 @@ public class BlockListener implements Listener
 		{
 			return;
 		}
-		HolyLandManager.instance().handleQuit(player.getName());
+		HolyLandManager.instance().handleQuit(player.getUniqueId());
 
 		GodManager.instance().updateOnlineGods();
 	}
@@ -767,9 +768,31 @@ public class BlockListener implements Listener
 			return;
 		}
 
-		if ((GodsConfiguration.instance().isCursingEnabled()) && (AltarManager.get().isCursingAltar(event.getBlock(), event.getLines())))
+		if ((GodsConfiguration.instance().isCursingEnabled()) && (AltarManager.instance().isCursingAltar(event.getBlock(), event.getLines())))
 		{
-			if (!AltarManager.get().handleNewCursingAltar(event))
+			if (!AltarManager.instance().handleNewCursingAltar(event))
+			{
+				event.setCancelled(true);
+				event.getBlock().setType(Material.AIR);
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.OAK_SIGN, 1));
+			}
+			return;
+		}
+
+		if ((GodsConfiguration.instance().isBlessingEnabled()) && (AltarManager.instance().isBlessingAltar(event.getBlock(), event.getLines())))
+		{
+			if (!AltarManager.instance().handleNewBlessingAltar(event))
+			{
+				event.setCancelled(true);
+				event.getBlock().setType(Material.AIR);
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.OAK_SIGN, 1));
+			}
+			return;
+		}
+
+		if (AltarManager.instance().isPrayingAltar(event.getBlock()))
+		{
+			if (!AltarManager.instance().handleNewPrayingAltar(event))
 			{
 				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
@@ -779,38 +802,13 @@ public class BlockListener implements Listener
 			return;
 		}
 
-		if ((GodsConfiguration.instance().isBlessingEnabled()) && (AltarManager.get().isBlessingAltar(event.getBlock(), event.getLines())))
+		if (AltarManager.instance().isRitualAltar(event.getBlock(), event.getLines()))
 		{
-			if (!AltarManager.get().handleNewBlessingAltar(event))
+			if (!AltarManager.instance().handleNewRitualAltar(event))
 			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
 				event.setCancelled(true);
 				event.getBlock().setType(Material.AIR);
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
-			}
-			return;
-		}
-
-		if (AltarManager.get().isPrayingAltar(event.getBlock()))
-		{
-			if (!AltarManager.get().handleNewPrayingAltar(event))
-			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
-				event.setCancelled(true);
-				event.getBlock().setType(Material.AIR);
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
-			}
-			return;
-		}
-
-		if (AltarManager.get().isRitualAltar(event.getBlock(), event.getLines()))
-		{
-			if (!AltarManager.get().handleNewRitualAltar(event))
-			{
-				ItemStack sign = new ItemStack(Material.OAK_SIGN);
-				event.setCancelled(true);
-				event.getBlock().setType(Material.AIR);
-				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), sign);
+				event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), new ItemStack(Material.OAK_SIGN, 1));
 			}
 			return;
 		}

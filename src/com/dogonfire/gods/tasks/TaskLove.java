@@ -45,7 +45,7 @@ public class TaskLove extends Task
 
 			if (firework)
 			{
-				HolyPowerManager.get().shootFirework(player1, 16);
+				HolyPowerManager.instance().shootFirework(player1, 16);
 			}
 		}
 
@@ -56,7 +56,7 @@ public class TaskLove extends Task
 
 			if (firework)
 			{
-				HolyPowerManager.get().shootFirework(player2, 16);
+				HolyPowerManager.instance().shootFirework(player2, 16);
 			}
 		}
 

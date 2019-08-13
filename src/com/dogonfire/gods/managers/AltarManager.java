@@ -10,11 +10,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.type.WallSign;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.material.Attachable;
-import org.bukkit.material.MaterialData;
 
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
@@ -24,7 +23,7 @@ public class AltarManager
 {
 	private static AltarManager instance;
 
-	public static AltarManager get()
+	public static AltarManager instance()
 	{
 		if (instance == null)
 			instance = new AltarManager();
@@ -56,9 +55,13 @@ public class AltarManager
 		{
 			return null;
 		}
+		BlockData bd = block.getBlockData();
+		if (!(bd instanceof Directional)) {
+			return null;
+		}
+		Directional directional = (Directional) bd;
 
-		WallSign wallSign = (org.bukkit.block.data.type.WallSign) block.getBlockData();
-		Block altarBlock = block.getRelative(wallSign.getFacing().getOppositeFace());
+		Block altarBlock = block.getRelative(directional.getFacing().getOppositeFace());
 
 		Gods.instance().logDebug("getAltarBlockFromSign(): AltarBlock block is " + altarBlock.getType().name());
 		if (getGodTypeForAltarBlockType(altarBlock.getType()) == null)
@@ -380,9 +383,13 @@ public class AltarManager
 		{
 			return false;
 		}
-			
-		WallSign wallSign = (org.bukkit.block.data.type.WallSign) block.getBlockData();
-		Block altarBlock = block.getRelative(wallSign.getFacing().getOppositeFace());
+		BlockData bd = block.getBlockData();
+		if (!(bd instanceof Directional)) {
+			return false;
+		}
+		Directional directional = (Directional) bd;
+
+		Block altarBlock = block.getRelative(directional.getFacing().getOppositeFace());
 
 		Gods.instance().logDebug("isAltarSign(): AltarBlock block is " + altarBlock.getType().name());
 		if (getGodTypeForAltarBlockType(altarBlock.getType()) == null)

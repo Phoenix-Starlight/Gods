@@ -43,7 +43,7 @@ public class InfoTask implements Runnable
 	{
 		this.plugin = instance;
 		this.playerId = playerId;
-		this.name1 = this.name1;
+		this.name1 = name;
 		this.name2 = String.valueOf(amount1);
 		this.message = m;
 		this.amount = amount2;

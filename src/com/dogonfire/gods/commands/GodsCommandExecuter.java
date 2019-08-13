@@ -24,7 +24,7 @@ public class GodsCommandExecuter implements CommandExecutor
 {
 	private static GodsCommandExecuter instance;
 
-	public static GodsCommandExecuter get()
+	public static GodsCommandExecuter instance()
 	{
 		if (instance == null)
 			instance = new GodsCommandExecuter();

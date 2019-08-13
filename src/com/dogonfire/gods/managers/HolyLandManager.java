@@ -30,7 +30,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
-import com.sk89q.worldedit.world.biome.BiomeType;
 
 public class HolyLandManager implements Listener
 {
@@ -193,6 +192,8 @@ public class HolyLandManager implements Listener
 				first = new String[] {"Upper ", "Lower ", "High ", ""};
 				second = new String[] {"Rock", "High", "Sky"};
 				third = new String[] {"hill", "mountain"};
+				break;
+			default:
 				break;				
 		}
 		
@@ -225,9 +226,9 @@ public class HolyLandManager implements Listener
 		return minPlayer.getName();
 	}
 
-	public void handleQuit(String playerName)
+	public void handleQuit(UUID playerId)
 	{
-		this.fromLocations.remove(playerName);
+		this.fromLocations.remove(playerId);
 	}
 
 	public long hashLocation(Location location)

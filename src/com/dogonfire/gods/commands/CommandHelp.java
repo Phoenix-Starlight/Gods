@@ -55,11 +55,11 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.AQUA + "/gods help altar" + ChatColor.WHITE + " - How to build an altar to a God");
 		sender.sendMessage(ChatColor.AQUA + "/gods help blocks" + ChatColor.WHITE + " - What type of blocks are used for God altars");
 
-		for (GodsCommand localCommand : GodsCommandExecuter.get().getCommands())
+		for (GodsCommand localCommand : GodsCommandExecuter.instance().getCommands())
 		{
 			if (localCommand.hasPermission(sender))
 			{
-				//sender.sendMessage(String.format("%g /gods %g %g %g - %g", ChatColor.AQUA.toString(), localCommand.name, localCommand.parameters == null ? "" : localCommand.parameters, ChatColor.WHITE.toString(), localCommand.description));
+				sender.sendMessage(String.format("%s /gods %s %s %s - %s", ChatColor.AQUA.toString(), localCommand.name, localCommand.parameters == null ? "" : localCommand.parameters, ChatColor.WHITE.toString(), localCommand.description));
 			}
 		}
 
@@ -144,7 +144,7 @@ public class CommandHelp extends GodsCommand
 		
 		for (GodManager.GodType godType : GodManager.GodType.values())
 		{
-			List<String> materials = AltarManager.get().getAltarBlockTypesFromGodType(godType);
+			List<String> materials = AltarManager.instance().getAltarBlockTypesFromGodType(godType);
 			if (materials != null)
 			{
 				for (String blockMaterial : materials)

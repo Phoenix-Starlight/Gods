@@ -7,8 +7,6 @@ import com.dogonfire.gods.managers.LanguageManager.LANGUAGESTRING;
 
 import java.util.Random;
 import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

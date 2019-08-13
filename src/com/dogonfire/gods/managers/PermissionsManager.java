@@ -1,9 +1,7 @@
 package com.dogonfire.gods.managers;
 
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import com.dogonfire.gods.Gods;
@@ -12,29 +10,34 @@ import net.milkbowl.vault.permission.Permission;
 
 public class PermissionsManager
 {
-	private static PermissionsManager instance;
+	private static PermissionsManager instance = null;
+
+	private String				pluginName			= "null";
+	private Gods				plugin;
+	private Permission 			vaultPermission		= null;
 
 	public static PermissionsManager instance()
 	{
 		if (instance == null)
-			instance = new PermissionsManager();
+			instance = new PermissionsManager(Gods.instance());
 		return instance;
 	}
 
-	private String				pluginName			= "null";
-	private Permission 			vaultPermission;
-	
-	private PermissionsManager()
+	public PermissionsManager(Gods g)
 	{
-		RegisteredServiceProvider<Permission> permissionProvider = Gods.instance().getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-		
-		if(permissionProvider==null)
-		{
-			Gods.instance().log(ChatColor.RED + "Could not detect Vault plugin.");
-			return;
+		this.plugin = g;
+			
+		if (g.vaultEnabled) {
+			RegisteredServiceProvider<Permission> permissionProvider = plugin.getServer().getServicesManager().getRegistration(Permission.class);
+
+			if(permissionProvider==null)
+			{
+				Gods.instance().log(ChatColor.RED + "Could not detect Vault plugin.");
+				return;
+			}
+
+			vaultPermission = permissionProvider.getProvider();
 		}
-		
-		vaultPermission = permissionProvider.getProvider();
 	}
 
 	public void load()
@@ -49,17 +52,25 @@ public class PermissionsManager
 
 	public boolean hasPermission(Player player, String node)
 	{
-		return vaultPermission.has(player, node);
+		if (Gods.instance().vaultEnabled) {
+			return vaultPermission.has(player, node);
+		}
+		return false;
 	}
 
 	public String getGroup(String playerName)
 	{
-		return vaultPermission.getPrimaryGroup(Gods.instance().getServer().getPlayer(playerName));
+		if (Gods.instance().vaultEnabled) {
+			return vaultPermission.getPrimaryGroup(null, plugin.getServer().getPlayer(playerName));
+		}
+		return "";
 	}
 
 	public void setGroup(String playerName, String groupName)
 	{
-		Player player = Gods.instance().getServer().getPlayer(playerName);
-		vaultPermission.playerAddGroup(player, groupName);
+		if (Gods.instance().vaultEnabled) {
+			Player player = plugin.getServer().getPlayer(playerName);
+			vaultPermission.playerAddGroup(null, player, groupName);
+		}
 	}
 }

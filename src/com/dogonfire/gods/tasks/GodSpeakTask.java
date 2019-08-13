@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 public class GodSpeakTask implements Runnable

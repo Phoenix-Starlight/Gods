@@ -21,7 +21,7 @@ public class HolyArtifact
 	public String generateName(Material itemType, String godName)
 	{
 		String name = "Holy Artifact of " + godName;
-			
+		
 		switch (itemType)
 		{
 		case DIAMOND_SHOVEL:
@@ -81,6 +81,8 @@ public class HolyArtifact
 //			break;
 		case MELON_STEM:
 			name = godName + "'s toothpick";
+			break;
+		default:
 			break;
 		}
 		return name;

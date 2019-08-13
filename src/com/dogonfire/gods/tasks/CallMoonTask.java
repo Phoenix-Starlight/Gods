@@ -2,11 +2,8 @@ package com.dogonfire.gods.tasks;
 
 import com.dogonfire.gods.Gods;
 import java.util.Random;
-import org.bukkit.Server;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class CallMoonTask implements Runnable
 {

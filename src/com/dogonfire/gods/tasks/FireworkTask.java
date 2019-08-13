@@ -8,16 +8,11 @@ import java.util.Random;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
-import org.bukkit.FireworkEffect.Builder;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class FireworkTask implements Runnable
 {
@@ -40,7 +35,7 @@ public class FireworkTask implements Runnable
 		int z = (int) this.player.getLocation().getZ();
 
 		int power = (int) (Math.random() * 2.0D) + 1;
-		List<Color> c = new ArrayList();
+		List<Color> c = new ArrayList<Color>();
 
 		for(int n=0; n<2; n++)
 		{

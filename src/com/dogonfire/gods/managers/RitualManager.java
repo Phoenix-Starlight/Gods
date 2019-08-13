@@ -13,7 +13,7 @@ public class RitualManager
 {
 	private static RitualManager instance;
 
-	public static RitualManager get()
+	public static RitualManager instance()
 	{
 		if (instance == null)
 			instance = new RitualManager();

@@ -8,7 +8,7 @@ Gods
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DogOnFire_Gods&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=DogOnFire_Gods)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DogOnFire_Gods&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=DogOnFire_Gods)
 
-# ![Gods](https://raw.githubusercontent.com/DogOnFire/Gods/master/img/Gods.jpg)
+# ![Gods](img/Gods.jpg)
 
 The plugin for adding Gods to minecraft!
 

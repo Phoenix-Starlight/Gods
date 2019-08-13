@@ -137,7 +137,7 @@
 //
 //		List defaultspawnblocks = new ArrayList();
 //		defaultspawnblocks.add(Material.STONE);
-//		defaultspawnblocks.add(Material.SMOOTH_BRICK);
+//		defaultspawnblocks.add(Material.SMOOTH_STONE);
 //		defaultspawnblocks.add(Material.MOSSY_COBBLESTONE);
 //		defaultspawnblocks.add(Material.OBSIDIAN);
 //

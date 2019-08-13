@@ -14,6 +14,7 @@ import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.HolyBook;
 import com.dogonfire.gods.config.GodsConfiguration;
 
+
 public class InstructionBookManager
 {
 	private static InstructionBookManager instance;
@@ -157,9 +158,9 @@ public class InstructionBookManager
 
 		save();
 
-		// if (Gods.get().propheciesEnabled)
+		// if (Gods.instance().propheciesEnabled)
 		// {
-		// Gods.get().getProphecyManager().generateProphecies(godName);
+		// Gods.instance().getProphecyManager().generateProphecies(godName);
 		// }
 	}
 

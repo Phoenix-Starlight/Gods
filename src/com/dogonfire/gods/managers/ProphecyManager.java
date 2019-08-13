@@ -32,7 +32,7 @@ public class ProphecyManager
 
 	private static ProphecyManager instance;
 
-	public static ProphecyManager get()
+	public static ProphecyManager instance()
 	{
 		if (instance == null)
 			instance = new ProphecyManager();
@@ -181,6 +181,7 @@ public class ProphecyManager
 			case RandomBelieverWillBeKilledByUnholyMob: prophecyText = "And a will be killed by a sneaky heathen!";
 			case ReligionKills100Mobs: prophecyText = "The foolish " + playerName + "was slain";
 			case HolyArtifactWillBeFound: break;
+			default: break;
 		}
 		
 		switch (effect) 
@@ -193,6 +194,7 @@ public class ProphecyManager
 			case Storm: prophecyText +=  LanguageManager.instance().getLanguageStringForBook(godName, LANGUAGESTRING.StormProphecyEffectPastBibleText); break;
 			case SilverfishSwarm: prophecyText = " and silverfish will appear, roaming the lands!"; break;
 			case SkyWillDarken: prophecyText = " and the skies will darken and sun dissapear!"; break;
+			default: break;
 		}
 		
 		return ChatColor.GOLD + prophecyText;
@@ -219,6 +221,7 @@ public class ProphecyManager
 			case RandomBelieverWillBeKilledByUnholyMob: prophecyText = "A brother will be killed by a sneaky heathen!"; break;
 			case ReligionKills100Mobs: prophecyText = "A heathen will be slain"; break;
 			case HolyArtifactWillBeFound: prophecyText = "A champion will find a holy artifact"; break;
+			default: break;
 		}
 		
 		switch (effect) 
@@ -233,6 +236,7 @@ public class ProphecyManager
 			case LongNight: prophecyText +=  " and day will turn into night"; break;
 			case SilverfishSwarm: prophecyText +=  ""; break;
 			case SkyWillDarken: prophecyText +=  ""; break;
+			default: break;
 		}
 		
 		return prophecyText;
@@ -372,7 +376,8 @@ public class ProphecyManager
 			{
 				Location location = new Location(plugin.getServer().getWorlds().get(0), 0,0,0);
 				//plugin.getBossManager().createNewBoss(BossType.TITAN, godName, location);
-			} break;		
+			} break;	
+			default: break;	
 		}
 		
 	}

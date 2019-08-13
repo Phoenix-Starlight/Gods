@@ -2,13 +2,10 @@ package com.dogonfire.gods.tasks;
 
 import com.dogonfire.gods.Gods;
 import org.bukkit.Location;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 public class SpawnGuideMobTask implements Runnable

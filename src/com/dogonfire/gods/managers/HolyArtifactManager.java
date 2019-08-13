@@ -17,6 +17,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.dogonfire.gods.Gods;
@@ -221,10 +222,10 @@ public class HolyArtifactManager
 		{
 			if (lorePage != null)
 			{
-				List<String> lorePages = new ArrayList();
+				List<String> lorePages = new ArrayList<String>();
 				lorePages.add(lorePage);
 				lorePages.add(ChatColor.WHITE + "Damage: 12");
-				lorePages.add(ChatColor.GREEN + HolyPowerManager.get().describe(holyPower, powerValue));
+				lorePages.add(ChatColor.GREEN + HolyPowerManager.instance().describe(holyPower, powerValue));
 
 				itemMeta.setLore(lorePages);
 			}
@@ -332,6 +333,9 @@ public class HolyArtifactManager
 				break;
 			case SHEARS:
 				itemName = "Friendship cookie of " + godName;
+				break;
+			default:
+				break;
 			}
 			break;
 		case SEA:
@@ -345,6 +349,9 @@ public class HolyArtifactManager
 				break;
 			case SANDSTONE_STAIRS:
 				itemName = "Partycake of " + godName;
+				break;
+			default:
+				break;
 			}
 			break;
 		case WISDOM:
@@ -364,6 +371,8 @@ public class HolyArtifactManager
 				break;
 //			case SKULL_ITEM:
 //				itemName = "Pumpkin seeds of " + godName;
+			default:
+				break;
 			}
 			break;
 		case WEREWOLVES:
@@ -377,11 +386,15 @@ public class HolyArtifactManager
 				break;
 //			case WALL_SIGN:
 //				itemName = "Enchantment book of " + godName;
+			default:
+				break;
 			}
 			break;
 		case MOON:
 			switch (itemType)
 			{
+			default:
+				break;
 //			case RAW_CHICKEN:
 //				itemName = "Moonbucket of " + godName;
 			}
@@ -389,6 +402,8 @@ public class HolyArtifactManager
 		case NATURE:
 			switch (itemType)
 			{
+			default:
+				break;
 //			case RAW_CHICKEN: itemName = "Sunbucket of " + godName;
 			}
 			break;
@@ -400,6 +415,9 @@ public class HolyArtifactManager
 				break;
 			case MELON_STEM:
 				itemName = "Thunderwand of " + godName;
+				break;
+			default:
+				break;
 			}
 			break;
 		case WAR:
@@ -407,6 +425,8 @@ public class HolyArtifactManager
 			{
 //			case SIGN_POST:	itemName = "Shears of " + godName;	break;
 			case WOODEN_AXE: itemName = "Leash of " + godName;
+			default:
+				break;
 			}
 			break;
 		case SUN:
@@ -415,6 +435,9 @@ public class HolyArtifactManager
 //			case MOB_SPAWNER: itemName = "Warsword of " + godName; break;
 			case MOSSY_COBBLESTONE:
 				itemName = "Waraxe of " + godName;
+				break;
+			default:
+				break;
 			}
 			break;
 		case FROST:
@@ -423,6 +446,9 @@ public class HolyArtifactManager
 //			case MOB_SPAWNER: itemName = "Bloodsword of " + godName; break;
 			case MOSSY_COBBLESTONE:
 				itemName = "Bloodaxe of " + godName;
+				break;
+			default:
+				break;
 			}
 			break;
 		case CREATURES:
@@ -430,7 +456,12 @@ public class HolyArtifactManager
 			{
 			case MELON_STEM:
 				itemName = "Frostwand of " + godName;
+				break;
+			default:
+				break;
 			}
+			break;
+		default:
 			break;
 		}
 		return itemName;
@@ -458,16 +489,23 @@ public class HolyArtifactManager
 		{
 			return;
 		}
-		HolyPowerManager.HolyPower holyPower = HolyPowerManager.get().getHolyPowerFromDescription(item.getItemMeta().getLore().get(2).substring(2));
+		HolyPowerManager.HolyPower holyPower = HolyPowerManager.instance().getHolyPowerFromDescription(item.getItemMeta().getLore().get(2).substring(2));
 
 		Player player = Gods.instance().getServer().getPlayer(playerName);
 		if (player == null)
 		{
 			return;
 		}
-		HolyPowerManager.get().activatePower(player, holyPower, 1);
+		HolyPowerManager.instance().activatePower(player, holyPower, 1);
+		
 
-		item.setDurability((short) (item.getDurability() - 1));
+		// item.setDurability((short) (item.getDurability() - 1));
+		ItemMeta im = item.getItemMeta();
+
+		Damageable damage = (Damageable) im;
+		damage.setDamage(damage.getDamage() - 1);
+		
+		item.setItemMeta(im);
 	}
 
 	public float handleDamage(String playerName, Entity targetEntity, ItemStack itemInHand, String godName)
@@ -491,7 +529,13 @@ public class HolyArtifactManager
 		}
 		Gods.instance().logDebug("Handling Holy Artifact damage for " + playerName);
 
-		itemInHand.setDurability((short) -2);
+		// itemInHand.setDurability((short) -2);
+		ItemMeta im = itemInHand.getItemMeta();
+
+		Damageable damage = (Damageable) im;
+		damage.setDamage(damage.getDamage() - 2);
+		
+		itemInHand.setItemMeta(im);
 
 		int used = getHolyArtifactUsed(playerName);
 

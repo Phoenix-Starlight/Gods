@@ -2,6 +2,7 @@ name: Gods
 author: DogOnFire
 version: ${project.version}
 api-version: 1.13
+load: POSTWORLD
 website: "http://dev.bukkit.org/server-mods/gods"
 main: com.dogonfire.gods.Gods
 softdepend: 
@@ -10,13 +11,12 @@ softdepend:
   - bPermissions
   - GroupManager
   - WorldGuard
+  - PlaceholderAPI
 commands:
   g:
     description: "Controls the god system"
-    usage: /g
-  gods:
-    description: "Controls the god system"
-    usage: /gods
+    usage: /<command>
+    aliases: [gods]
 permissions: 
   gods.*: 
     children: 

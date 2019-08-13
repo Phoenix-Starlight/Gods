@@ -1,11 +1,11 @@
 package com.dogonfire.gods;
 
 import java.util.UUID;
-import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -26,6 +26,8 @@ import com.dogonfire.gods.tasks.TaskInfo;
 public class Gods extends JavaPlugin
 {
 	private static Gods pluginInstance;
+
+	public boolean vaultEnabled	= false;
 
 	public static Gods instance()
 	{
@@ -57,14 +59,14 @@ public class Gods extends JavaPlugin
 
 	public void log(String message)
 	{
-		Logger.getLogger("minecraft").info("[" + getDescription().getFullName() + "] " + message);
+		this.getLogger().info(message);
 	}
 
 	public void logDebug(String message)
 	{
 		if (GodsConfiguration.instance().isDebug())
 		{
-			Logger.getLogger("minecraft").info("[" + getDescription().getFullName() + "] " + message);
+			this.getLogger().info("[Debug] " + message);
 		}
 	}
 
@@ -92,8 +94,32 @@ public class Gods extends JavaPlugin
 	{
 		pluginInstance = this;
 		
-		getCommand("gods").setExecutor(GodsCommandExecuter.get());
-		getCommand("g").setExecutor(GodsCommandExecuter.get());
+		getCommand("gods").setExecutor(GodsCommandExecuter.instance());
+		getCommand("g").setExecutor(GodsCommandExecuter.instance());
+		
+		PluginManager pm = getServer().getPluginManager();
+
+		// Check for Vault
+		if (pm.getPlugin("Vault") != null)
+		{
+			this.vaultEnabled = true;
+
+			log("Vault detected.");
+		}
+		else
+		{
+			log("Vault not found.");
+		}
+		// Check for PlaceholderAPI
+		if (pm.getPlugin("PlaceholderAPI") != null)
+		{
+			log("PlaceholderAPI found.");
+			new GodsPlaceholderExpansion(Gods.instance()).register();
+		}
+		else
+		{
+			logDebug("PlaceholderAPI not found.");
+		}
 		
 		GodsConfiguration.instance().loadSettings();
 		GodsConfiguration.instance().saveSettings();

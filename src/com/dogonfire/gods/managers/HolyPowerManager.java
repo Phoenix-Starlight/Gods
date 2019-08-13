@@ -41,7 +41,7 @@ public class HolyPowerManager
 
 	private static HolyPowerManager instance;
 
-	public static HolyPowerManager get()
+	public static HolyPowerManager instance()
 	{
 		return instance;
 	}
@@ -523,7 +523,7 @@ public class HolyPowerManager
 
 					cancel();
 
-					final HashMap<Location, Long> changedBlocks = new HashMap<Location, Long>();
+					final HashMap<Location, Material> changedBlocks = new HashMap<Location, Material>();
 
 					for (int x = -1; x < 2; x++)
 					{
@@ -537,7 +537,7 @@ public class HolyPowerManager
 
 								if (!b.getType().isSolid())
 								{
-									changedBlocks.put(b.getLocation(), Long.valueOf(b.getType().getId() | b.getData() << 16));
+									changedBlocks.put(b.getLocation(), b.getType());
 									b.setType(Material.ICE);
 								}
 							}
