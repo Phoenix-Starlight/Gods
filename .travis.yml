@@ -3,9 +3,9 @@ jdk:
   - openjdk8  
 addons:
   sonarcloud:
-    organization: "dogonfire"
+    organization: "doggycraftdk"
     token:
       secure: $SONAR_TOKEN
 
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=DogOnFire_Gods
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=DoggyCraftDK_Gods
