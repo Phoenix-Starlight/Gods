@@ -205,7 +205,7 @@ public class GodManager
 		{
 			if (GodsConfiguration.instance().isMarriageEnabled())
 			{
-				MarriageManager.get().divorce(player.getUniqueId());
+				MarriageManager.instance().divorce(player.getUniqueId());
 			}
 			
 			QuestManager.instance().handleJoinReligion(player.getName(), godName);
@@ -394,13 +394,13 @@ public class GodManager
 		LanguageManager.instance().setPlayerName(player.getName());
 		if (GodsConfiguration.instance().isMarriageEnabled())
 		{
-			UUID pendingMarriagePartner = MarriageManager.get().getProposal(believerId);
+			UUID pendingMarriagePartner = MarriageManager.instance().getProposal(believerId);
 
 			if (pendingMarriagePartner != null)
 			{
 				Gods.instance().log(player.getName() + " accepted the proposal to marry " + pendingMarriagePartner);
 
-				MarriageManager.get().handleAcceptProposal(believerId, pendingMarriagePartner, godName);
+				MarriageManager.instance().handleAcceptProposal(believerId, pendingMarriagePartner, godName);
 
 				return;
 			}
@@ -474,13 +474,14 @@ public class GodManager
 		{
 			removePriest(godName, believerId);
 		}
+		
 		BelieverManager.instance().believerLeave(godName, believerId);
 
 		LanguageManager.instance().setPlayerName(Gods.instance().getServer().getPlayer(believerId).getDisplayName());
 
 		if (GodsConfiguration.instance().isMarriageEnabled())
 		{
-			MarriageManager.get().divorce(believerId);
+			MarriageManager.instance().divorce(believerId);
 		}
 
 		BelieverManager.instance().clearPrayerPower(believerId);
@@ -1621,7 +1622,7 @@ public class GodManager
 	public Material getSacrificeItemTypeForGod(String godName)
 	{
 		String itemName = "";
-		Integer value = Integer.valueOf(0);
+		Integer value = 0;
 		String sacrificeItemName = null;
 
 		ConfigurationSection configSection = this.godsConfig.getConfigurationSection(godName + ".SacrificeValues");
@@ -2807,7 +2808,7 @@ public class GodManager
 
 		if (GodsConfiguration.instance().isMarriageEnabled() && this.random.nextInt(501) == 0)
 		{
-			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.get().getMarriedCouples();
+			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.instance().getMarriedCouples();
 			if (marriedCouples.size() > 0)
 			{
 				MarriageManager.MarriedCouple couple = marriedCouples.get(this.random.nextInt(marriedCouples.size()));
@@ -2851,7 +2852,7 @@ public class GodManager
 		}
 		if ((GodsConfiguration.instance().isMarriageEnabled()) && (this.random.nextInt(501) == 0))
 		{
-			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.get().getMarriedCouples();
+			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.instance().getMarriedCouples();
 			if (marriedCouples.size() > 0)
 			{
 				MarriageManager.MarriedCouple couple = marriedCouples.get(this.random.nextInt(marriedCouples.size()));
@@ -2936,7 +2937,7 @@ public class GodManager
 
 		if ((GodsConfiguration.instance().isMarriageEnabled()) && (this.random.nextInt(501) == 0))
 		{
-			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.get().getMarriedCouples();
+			List<MarriageManager.MarriedCouple> marriedCouples = MarriageManager.instance().getMarriedCouples();
 
 			if (marriedCouples.size() > 0)
 			{
@@ -3552,6 +3553,11 @@ public class GodManager
 		if(GodsConfiguration.instance().isHolyLandEnabled())
 		{
 			HolyLandManager.instance().removeHolyLandsForGod(godName);
+		}
+
+		if(GodsConfiguration.instance().isMarriageEnabled())
+		{
+			MarriageManager.instance().removeMarriagesForGod(godName);
 		}
 
 		save();

@@ -80,20 +80,20 @@ public class CommandMarry extends GodsCommand
 			return;
 		}
 
-		String partnerName = MarriageManager.get().getPartnerName(otherPlayer.getUniqueId());
+		String partnerName = MarriageManager.instance().getPartnerName(otherPlayer.getUniqueId());
 		if (partnerName != null)
 		{
 			player.sendMessage(ChatColor.WHITE + otherPlayerName + ChatColor.RED + " is already married to " + ChatColor.WHITE + partnerName + "!");
 			return;
 		}
-		partnerName = MarriageManager.get().getPartnerName(otherPlayer.getUniqueId());
+		partnerName = MarriageManager.instance().getPartnerName(otherPlayer.getUniqueId());
 		if (partnerName != null)
 		{
 			player.sendMessage(ChatColor.RED + "You are already married to " + ChatColor.WHITE + partnerName + "!");
 			return;
 		}
 
-		MarriageManager.get().proposeMarriage(player.getUniqueId(), otherPlayer.getUniqueId());
+		MarriageManager.instance().proposeMarriage(player.getUniqueId(), otherPlayer.getUniqueId());
 
 		LanguageManager.instance().setPlayerName(player.getName());
 		GodManager.instance().GodSayWithQuestion(thisGodName, otherPlayer, LanguageManager.LANGUAGESTRING.GodToBelieverMarriageProposal, 1);

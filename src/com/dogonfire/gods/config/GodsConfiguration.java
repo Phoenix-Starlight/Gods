@@ -637,7 +637,7 @@ public class GodsConfiguration
 		if (this.marriageEnabled)
 		{
 			this.marriageFireworksEnabled = config.getBoolean("Marriage.WeddingFireworks", true);
-			MarriageManager.get().load();
+			MarriageManager.instance().load();
 		}
 		
 		this.holyArtifactsEnabled = config.getBoolean("HolyArtifacts.Enabled", true);	

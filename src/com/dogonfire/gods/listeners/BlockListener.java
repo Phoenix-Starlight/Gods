@@ -733,7 +733,7 @@ public class BlockListener implements Listener
 
 		if (GodsConfiguration.instance().isMarriageEnabled())
 		{
-			MarriageManager.get().handlePickupItem(player, event.getItem(), event.getItem().getLocation());
+			MarriageManager.instance().handlePickupItem(player, event.getItem(), event.getItem().getLocation());
 		}
 
 		if (GodsConfiguration.instance().isQuestsEnabled())
