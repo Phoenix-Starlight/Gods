@@ -97,7 +97,7 @@
     </dependency>    
   </dependencies>
   <build>
-    <defaultGoal>clean package cobertura:cobertura</defaultGoal>
+    <defaultGoal>clean package</defaultGoal>
     <finalName>${project.name}-${project.version}</finalName>
     <sourceDirectory>${project.basedir}/src/</sourceDirectory>
     <resources>
