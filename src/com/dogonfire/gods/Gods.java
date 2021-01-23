@@ -95,8 +95,7 @@ public class Gods extends JavaPlugin
 		pluginInstance = this;
 		
 		getCommand("gods").setExecutor(GodsCommandExecuter.instance());
-		getCommand("g").setExecutor(GodsCommandExecuter.instance());
-		
+
 		PluginManager pm = getServer().getPluginManager();
 
 		// Check for Vault

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,6 +31,7 @@ import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -1220,6 +1222,16 @@ public class GodManager
 
 	private ItemStack getItemNeed(String godName, Player player)
 	{
+		if (getGodPower(godName) > GodsConfiguration.instance().getGodPowerForLevel3Items()) {
+			double randomNum = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
+			if (randomNum < 0.1) {
+				ItemStack witherRose = new ItemStack(Material.WITHER_ROSE);
+				ItemMeta witherRoseMeta = witherRose.getItemMeta();
+				witherRoseMeta.setCustomModelData(1);
+				witherRose.setItemMeta(witherRoseMeta);
+				return witherRose;
+			}
+		}
 		if (!hasFood(player, godName))
 		{
 			return new ItemStack(getFoodBlessing(godName));

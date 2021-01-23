@@ -5,22 +5,16 @@ api-version: 1.13
 load: POSTWORLD
 website: "http://dev.bukkit.org/server-mods/gods"
 main: com.dogonfire.gods.Gods
-softdepend: 
-  - PermissionsBukkit
-  - PermissionsEx
-  - bPermissions
-  - GroupManager
+softdepend:
   - WorldGuard
   - PlaceholderAPI
 commands:
-  g:
+  gods:
     description: "Controls the god system"
     usage: /<command>
-    aliases: [gods]
-permissions: 
+permissions:
   gods.*: 
-    children: 
-      gods.listen: true
+    children:
       gods.leave: true
       gods.marriages: true
       gods.love: true
@@ -67,10 +61,7 @@ permissions:
   gods.pray: 
     default: true
     description: "Player can pray directly to their Gods using /g prayfor command"
-  gods.listen: 
-    default: true
-    description: "Player can hear Gods speaking"
-  gods.updates: 
+  gods.updates:
     default: false
     description: "Player gets notifications about updates to Gods plugin"
   gods.marriages: 
