@@ -14,12 +14,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -29,6 +24,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -198,7 +194,7 @@ public class GodManager
 				Gods.instance().logDebug(ex.getStackTrace().toString());
 			}
 
-			giveItem(godName, player, foodType, false);
+			giveItem(godName, player, new ItemStack(foodType), false);
 
 			BelieverManager.instance().increasePrayerPower(player.getUniqueId(), 1);
 		}
@@ -246,7 +242,7 @@ public class GodManager
 
 			for (ItemStack items : rewards)
 			{
-				giveItem(godName, player, items.getType(), false);
+				giveItem(godName, player, items, false);
 			}
 		}
 	}
@@ -606,7 +602,7 @@ public class GodManager
 		ItemStack item = getItemNeed(godName, player);
 		if (item != null)
 		{
-			giveItem(godName, player, item.getType(), true);
+			giveItem(godName, player, item, true);
 		}
 		return item;
 	}
@@ -1924,9 +1920,9 @@ public class GodManager
 		Gods.instance().getServer().getScheduler().runTaskLater(Gods.instance(), new TaskGiveHolyArtifact(godName, godType, player, speak), 2L);
 	}
 
-	public void giveItem(String godName, Player player, Material material, boolean speak)
+	public void giveItem(String godName, Player player, ItemStack item, boolean speak)
 	{
-		Gods.instance().getServer().getScheduler().runTaskLater(Gods.instance(), new TaskGiveItem(godName, player, material, speak), 2L);
+		Gods.instance().getServer().getScheduler().runTaskLater(Gods.instance(), new TaskGiveItem(godName, player, item, speak), 2L);
 	}
 
 	public boolean godExist(String godName)
@@ -2301,18 +2297,15 @@ public class GodManager
 
 	public void handleSacrifice(String godName, Player believer, Material type)
 	{
-		if (believer == null)
-		{
+		if (believer == null) {
 			return;
 		}
 
-		if (!Gods.instance().isEnabledInWorld(believer.getWorld()))
-		{
+		if (!Gods.instance().isEnabledInWorld(believer.getWorld())) {
 			return;
 		}
 
-		if (godName == null)
-		{
+		if (godName == null) {
 			return;
 		}
 
@@ -2327,23 +2320,19 @@ public class GodManager
 			addMoodForGod(godName, getAngryModifierForGod(godName));
 			cursePlayer(godName, believer.getUniqueId(), getGodPower(godName));
 
-			try
-			{
+			try {
 				LanguageManager.instance().setType(LanguageManager.instance().getItemTypeName(eatFoodType));
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				Gods.instance().logDebug(ex.getStackTrace().toString());
 			}
 
 			LanguageManager.instance().setPlayerName(believer.getDisplayName());
 
-			if (GodsConfiguration.instance().isCommandmentsBroadcastFoodEaten())
-			{
+			if (GodsConfiguration.instance().isCommandmentsBroadcastFoodEaten()) {
 				godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieverHolyFoodSacrifice, 2 + this.random.nextInt(10));
 			}
-			else
-			{
+			else {
 				godSayToBeliever(godName, believer.getUniqueId(), LanguageManager.LANGUAGESTRING.GodToBelieverHolyFoodSacrifice);
 			}
 
@@ -3579,7 +3568,7 @@ public class GodManager
 	{
 		ItemStack items = new ItemStack(getRewardBlessing(godName));
 
-		giveItem(godName, believer, items.getType(), false);
+		giveItem(godName, believer, items, false);
 
 		return true;
 	}
@@ -3860,16 +3849,16 @@ public class GodManager
 			mobType = EntityType.ZOMBIE;
 			break;
 		case 2:
-			mobType = EntityType.PIG_ZOMBIE;
-			break;
-		case 3:
 			mobType = EntityType.SPIDER;
 			break;
-		case 4:
+		case 3:
 			mobType = EntityType.WOLF;
 			break;
+		case 4:
+			mobType = EntityType.SILVERFISH;
+			break;
 		case 5:
-			mobType = EntityType.GIANT;
+			mobType = EntityType.CAVE_SPIDER;
 		}
 		int numberOfMobs = 1 + (int) (godPower / 10.0F);
 
