@@ -566,16 +566,16 @@ public class GodManager
 		case 0:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (300.0F * blessingPower), 1));
 			break;
+		//case 1:
+		//	player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, (int) (300.0F * blessingPower), 1));
+		//	break;
 		case 1:
-			player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, (int) (300.0F * blessingPower), 1));
-			break;
-		case 2:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, (int) (300.0F * blessingPower), 1));
 			break;
-		case 3:
+		case 2:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (int) (300.0F * blessingPower), 1));
 			break;
-		case 4:
+		case 3:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (int) (300.0F * blessingPower), 1));
 		}
 
