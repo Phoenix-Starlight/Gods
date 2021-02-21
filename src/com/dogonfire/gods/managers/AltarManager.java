@@ -12,6 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.type.WallSign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
 
@@ -379,29 +380,20 @@ public class AltarManager
 
 	public boolean isAltarSign(Block block)
 	{
-		if ((block == null) || (block.getType() != Material.OAK_WALL_SIGN))
-		{
+		if (!(block instanceof WallSign)) {
 			return false;
 		}
-		BlockData bd = block.getBlockData();
-		if (!(bd instanceof Directional)) {
-			return false;
-		}
-		Directional directional = (Directional) bd;
 
+		BlockData bd = block.getBlockData();
+		Directional directional = (Directional) bd;
 		Block altarBlock = block.getRelative(directional.getFacing().getOppositeFace());
 
 		Gods.instance().logDebug("isAltarSign(): AltarBlock block is " + altarBlock.getType().name());
-		if (getGodTypeForAltarBlockType(altarBlock.getType()) == null)
-		{
+		if (getGodTypeForAltarBlockType(altarBlock.getType()) == null) {
 			return false;
 		}
-		
-		if ((!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.TORCH)) && (!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.REDSTONE_TORCH)))
-		{
-			return false;
-		}
-		return true;
+
+		return (altarBlock.getRelative(BlockFace.UP).getType().equals(Material.TORCH)) || (altarBlock.getRelative(BlockFace.UP).getType().equals(Material.REDSTONE_TORCH));
 	}
 
 	public boolean isAltarTorch(Block block)
