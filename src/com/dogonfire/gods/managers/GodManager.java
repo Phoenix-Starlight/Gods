@@ -39,6 +39,7 @@ import com.dogonfire.gods.tasks.TaskGodSpeak;
 import com.dogonfire.gods.tasks.TaskHealPlayer;
 import com.dogonfire.gods.tasks.TaskSpawnGuideMob;
 import com.dogonfire.gods.tasks.TaskSpawnHostileMobs;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GodManager
 {
@@ -2751,10 +2752,13 @@ public class GodManager
 							return true;
 						}
 
+
+						/*
 						ItemStack blessedItem = blessPlayerWithItem(godName, believer);
 
 						if (blessedItem != null)
 						{
+
 							LanguageManager.instance().setPlayerName(believer.getDisplayName());
 							try
 							{
@@ -2769,6 +2773,8 @@ public class GodManager
 
 							return true;
 						}
+						 */
+
 					}
 				}
 			}
@@ -2913,6 +2919,7 @@ public class GodManager
 							return true;
 						}
 
+						/*
 						ItemStack blessedItem = blessPlayerWithItem(godName, believer);
 
 						if (blessedItem != null)
@@ -2930,6 +2937,7 @@ public class GodManager
 
 							return true;
 						}
+						 */
 					}
 				}
 			}
@@ -3573,23 +3581,25 @@ public class GodManager
 		return true;
 	}
 
-	public void save()
-	{
+	public void save() {
 		this.lastSaveTime = System.currentTimeMillis();
-		if ((this.godsConfig == null) || (this.godsConfigFile == null))
-		{
+		if ((this.godsConfig == null) || (this.godsConfigFile == null)) {
 			return;
 		}
-		try
-		{
-			this.godsConfig.save(this.godsConfigFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save config to " + this.godsConfigFile + ": " + ex.getMessage());
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					godsConfig.save(godsConfigFile);
+				} catch (Exception ex) {
+					Gods.instance().log("Could not save config to " + godsConfigFile + ": " + ex.getMessage());
+				}
+			}
+		}.runTaskAsynchronously(Gods.instance());
 		Gods.instance().log("Saved configuration");
 	}
+
+
 
 	public void saveTimed()
 	{
@@ -3846,19 +3856,19 @@ public class GodManager
 			mobType = EntityType.SKELETON;
 			break;
 		case 1:
-			mobType = EntityType.ZOMBIE;
+			mobType = EntityType.WITCH;
 			break;
 		case 2:
-			mobType = EntityType.SPIDER;
+			mobType = EntityType.CAVE_SPIDER;
 			break;
 		case 3:
-			mobType = EntityType.WOLF;
+			mobType = EntityType.VEX;
 			break;
 		case 4:
-			mobType = EntityType.SILVERFISH;
+			mobType = EntityType.ILLUSIONER;
 			break;
 		case 5:
-			mobType = EntityType.CAVE_SPIDER;
+			mobType = EntityType.ZOMBIE;
 		}
 		int numberOfMobs = 1 + (int) (godPower / 10.0F);
 
@@ -3993,30 +4003,21 @@ public class GodManager
 		{
 			return;
 		}
+
+	//for (String godName: godNames) {
 		String godName = (String) godNames.toArray()[this.random.nextInt(godNames.size())];
 
 		Gods.instance().logDebug("Processing God '" + godName + "'");
 
-		boolean godTalk = false;
-
 		manageMood(godName);
 
-		if (!godTalk)
-		{
-			godTalk = managePriests(godName);
-		}
+		managePriests(godName);
 
 		manageLostBelievers(godName);
 
-		if (!godTalk)
-		{
-			manageBelievers(godName);
-		}
+		manageBelievers(godName);
 
-		if (!godTalk)
-		{
-			manageQuests(godName);
-		}
+		manageQuests(godName);
 
 		manageBlessings(godName);
 
@@ -4026,17 +4027,14 @@ public class GodManager
 
 		manageSacrifices();
 
-		manageHolyLands();
-		
-		manageMiracles(godName);
+		// Holy lands are disabled: manageHolyLands();
+
+		// Doesn't seem to have a function: manageMiracles(godName);
 
 		long timeAfter = System.currentTimeMillis();
 
 		Gods.instance().logDebug("Processed 1 Online God in " + (timeAfter - timeBefore) + " ms");
-		if (this.random.nextInt(1000) == 0)
-		{
-			Gods.instance().logDebug("Processing chests...");
-		}
+
 	}
 
 	//No language strings found for Trapdoor,GodToBelieverMarriedCouple!
