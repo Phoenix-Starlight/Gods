@@ -1,6 +1,7 @@
 package com.dogonfire.gods.managers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.HolyBook;
 import com.dogonfire.gods.config.GodsConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class HolyBookManager
 {
@@ -236,18 +238,20 @@ public class HolyBookManager
 
 	public void save()
 	{
-		if ((this.biblesConfig == null) || (this.biblesConfigFile == null))
-		{
+		if ((this.biblesConfig == null) || (this.biblesConfigFile == null)) {
 			return;
 		}
-		try
-		{
-			this.biblesConfig.save(this.biblesConfigFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save config to " + this.biblesConfigFile.getName() + ": " + ex.getMessage());
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					biblesConfig.save(biblesConfigFile);
+				}
+				catch (IOException ex) {
+					Gods.instance().log("Could not save config to " + biblesConfigFile.getName() + ": " + ex.getMessage());
+				}
+			}
+		}.runTaskAsynchronously(Gods.instance());
 	}
 
 	public boolean setBible(String godName, String priestName)

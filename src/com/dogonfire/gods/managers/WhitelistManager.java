@@ -1,12 +1,14 @@
 package com.dogonfire.gods.managers;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class WhitelistManager
 {
@@ -98,21 +100,22 @@ public class WhitelistManager
 
 	public void save()
 	{
-		try
-		{
-			this.whiteList.save(this.whiteListFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save whitelist to " + this.whiteListFile + ": " + ex.getMessage());
-		}
-		try
-		{
-			this.blackList.save(this.blackListFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save blacklist to " + this.blackListFile + ": " + ex.getMessage());
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					whiteList.save(whiteListFile);
+				}
+				catch (IOException ex) {
+					Gods.instance().log("Could not save whitelist to " + whiteListFile + ": " + ex.getMessage());
+				}
+				try {
+					blackList.save(blackListFile);
+				}
+				catch (IOException ex) {
+					Gods.instance().log("Could not save blacklist to " + blackListFile + ": " + ex.getMessage());
+				}
+			}
+		}.runTaskAsynchronously(Gods.instance());
 	}
 }

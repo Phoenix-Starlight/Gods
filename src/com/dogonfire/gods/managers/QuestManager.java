@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.dogonfire.gods.Gods;
@@ -2655,18 +2656,20 @@ public class QuestManager
 
 	public void save()
 	{
-		if ((this.questsConfig == null) || (this.questsConfigFile == null))
-		{
+		if ((this.questsConfig == null) || (this.questsConfigFile == null)) {
 			return;
 		}
-		try
-		{
-			this.questsConfig.save(this.questsConfigFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save config to " + this.questsConfigFile.getName() + ": " + ex.getMessage());
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					questsConfig.save(questsConfigFile);
+				}
+				catch (Exception ex) {
+					Gods.instance().log("Could not save config to " + questsConfigFile.getName() + ": " + ex.getMessage());
+				}
+			}
+		}.runTaskAsynchronously(Gods.instance());
 	}
 
 	/*
