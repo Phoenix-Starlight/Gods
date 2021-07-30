@@ -707,7 +707,7 @@ public class GodsConfiguration
 		this.commandmentsBroadcastFoodEaten = config.getBoolean("Commandments.BroadcastFoodEaten", true);
 		this.commandmentsBroadcastMobSlain = config.getBoolean("Commandments.BroadcastMobSlain", true);
 
-		this.questsEnabled = config.getBoolean("Quests.Enabled", false);
+		this.questsEnabled = config.getBoolean("Quests.Enabled", true);
 		this.minMinutesBetweenQuests = config.getInt("Quests.MinMinutesBetweenQuests", 180);
 
 		this.globalQuestsPercentChance = config.getInt("Quests.GlobalQuestsPercentChance", 1);

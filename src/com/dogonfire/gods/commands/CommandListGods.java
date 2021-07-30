@@ -120,7 +120,7 @@ public class CommandListGods extends GodsCommand
 		}
 		if (sender != null)
 		{
-			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.InfoHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g info <godname>", 80);
+			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.InfoHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/gods info <godname>", 80);
 		}
 
 	}

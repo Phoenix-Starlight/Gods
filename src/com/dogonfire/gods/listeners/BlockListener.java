@@ -125,6 +125,9 @@ public class BlockListener implements Listener
 			return;
 		}
 
+		((Item) event.getEntity()).setPickupDelay(100);
+		event.getEntity().setGlowing(true);
+
 		String believerName = AltarManager.instance().getDroppedItemPlayer(event.getEntity().getEntityId());
 		if (believerName == null) {
 			return;
@@ -149,9 +152,9 @@ public class BlockListener implements Listener
 			return;
 		}
 
-		GodManager.instance().handleSacrifice(godName, player, item.getItemStack().getType());
-
 		event.getEntity().remove();
+
+		GodManager.instance().handleSacrifice(godName, player, item.getItemStack().getType());
 	}
 
 	@EventHandler
@@ -303,14 +306,17 @@ public class BlockListener implements Listener
 	public void OnPlayerConsume(PlayerItemConsumeEvent event)
 	{
 		Player player = event.getPlayer();
-
+		// CCNet: Do not process non-vanilla foods.
+		if (event.getItem().hasItemMeta()) {
+			return;
+		}
 		String godName = BelieverManager.instance().getGodForBeliever(event.getPlayer().getUniqueId());
 		Material type = player.getInventory().getItemInMainHand().getType();
 		if (godName != null)
 		{
 			Long lastEatTime = this.lastEatTimes.get(player.getName());
-			Long currentTime = Long.valueOf(System.currentTimeMillis());
-			if ((lastEatTime == null) || (currentTime.longValue() - lastEatTime.longValue() > 10000L))
+			Long currentTime = System.currentTimeMillis();
+			if ((lastEatTime == null) || (currentTime - lastEatTime > 10000L))
 			{
 				if ((GodsConfiguration.instance().isCommandmentsEnabled()) && (player.getHealth() != player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()))
 				{
@@ -362,6 +368,7 @@ public class BlockListener implements Listener
 						Gods.instance().sendInfo(killer.getUniqueId(), LanguageManager.LANGUAGESTRING.YouEarnedPowerBySlayingHeathen, ChatColor.AQUA, (int) (powerAfter - powerBefore), killerGodName, 20);
 					}
 				}
+				/*
 				else
 				{
 					List<String> warRelations = GodManager.instance().getWarRelations(killerGodName);
@@ -378,6 +385,7 @@ public class BlockListener implements Listener
 						}
 					}
 				}
+				*/
 			}
 		}
 	}

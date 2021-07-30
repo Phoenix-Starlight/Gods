@@ -16,9 +16,9 @@ Info:
   GodsHelp: Use $PlayerName for a list of commands
   AltarHelp: Use $PlayerName for info about how to build an altar
   PrayForHelp: Use $PlayerName for info about spending your prayer power
-  InviteHelp: Use /g invite to invite a player to your religion!
-  FollowersHelp: Use /g followers to keep track of your followers!
-  DescriptionHelp: Use /g desc to set a description for your religion!
+  InviteHelp: Use /gods invite to invite a player to your religion!
+  FollowersHelp: Use /gods followers to keep track of your followers!
+  DescriptionHelp: Use /gods desc to set a description for your religion!
   PrayAlterHelp: Right click the sign on the altar to pray to your god.
   PrayToBlacklistedGodNotAllowed: You cannot pray to a God with such a name
   TeleportIntoHolylandNotAllowed: You cannot teleport into the Holy Land of $PlayerName
@@ -48,7 +48,7 @@ Info:
   NowHunting: You now hunting
   BelieverPower: Your belief in your God is now $Amount
   QuestTargetRange: You are $Amount blocks from the quest target
-  QuestTargetHelp: Use /g hunt to hunt for the quest target!
+  QuestTargetHelp: Use /gods hunt to hunt for the quest target!
   GodToBelieverQuestionHelp: Use $PlayerName to answer the God
   NotEnoughPrayerPower: You need $Amount more prayer power for that
   PrayedForBlessing: You prayed to $PlayerName for a blessing!
@@ -388,6 +388,7 @@ Mobs:
   SLIME: slime
   SKELETON: skeleton
   VILLAGER: villager
+  ILLUSIONER: illusioner
   UNKNOWN: unknown
 GodTypes:
   FROST: $Gender of Frost

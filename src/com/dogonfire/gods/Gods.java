@@ -145,7 +145,7 @@ public class Gods extends JavaPlugin
 			{
 				GodManager.instance().update();
 			}
-		}.runTaskTimer(this, 20L, 200L);
+		}.runTaskTimer(this, 20L, 12000L);
 
 	}
 

@@ -1,5 +1,6 @@
 package com.dogonfire.gods.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,8 @@ import com.dogonfire.gods.config.GodsConfiguration;
 import com.dogonfire.gods.managers.BelieverManager;
 import com.dogonfire.gods.managers.ChatManager;
 import com.dogonfire.gods.managers.GodManager;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ChatListener implements Listener
 {
@@ -39,14 +42,19 @@ public class ChatListener implements Listener
 				String otherGod = BelieverManager.instance().getGodForBeliever(otherPlayer.getUniqueId());
 				if ((otherGod != null) && (otherGod.equals(godName)))
 				{
-					if (GodManager.instance().isPriest(player.getUniqueId()))
-					{
-						otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + player.getName() + ": " + ChatColor.WHITE + event.getMessage());
-					}
-					else
-					{
+					//AtomicBoolean isPriest = new AtomicBoolean(false);
+					//Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
+					//		Gods.instance(), () -> {
+					//			isPriest.set(GodManager.instance().isPriest(player.getUniqueId()));
+					//		});
+					//if (isPriest.get())
+					//{
+					//	otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + player.getName() + ": " + ChatColor.WHITE + event.getMessage());
+					//}
+					//else
+					//{
 						otherPlayer.sendMessage(ChatColor.YELLOW + "[" + godName + "Chat] " + ChatColor.RED + player.getName() + ChatColor.YELLOW + ": " + ChatColor.WHITE + event.getMessage());
-					}
+					//}
 				}
 			}
 			Gods.instance().log(player.getName() + "(GODCHAT): " + event.getMessage());

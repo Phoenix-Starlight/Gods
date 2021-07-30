@@ -2636,11 +2636,11 @@ public class QuestManager
 		this.rewardValues.put(Material.GLOWSTONE, 50);
 		this.rewardValues.put(Material.COAL, 5);
 		this.rewardValues.put(Material.IRON_INGOT, 10);
-		this.rewardValues.put(Material.GOLD_INGOT, 50);
+		//this.rewardValues.put(Material.GOLD_INGOT, 50);
 		this.rewardValues.put(Material.DIAMOND, 100);
 		this.rewardValues.put(Material.PLAYER_HEAD, 75);
-		this.rewardValues.put(Material.ENCHANTED_BOOK, 75);
-		this.rewardValues.put(Material.POTION, 75);
+		//this.rewardValues.put(Material.ENCHANTED_BOOK, 75);
+		//this.rewardValues.put(Material.POTION, 75);
 		this.rewardValues.put(Material.COCOA, 30);
 		this.rewardValues.put(Material.BLAZE_ROD, 50);
 		this.rewardValues.put(Material.BOOK, 30);
