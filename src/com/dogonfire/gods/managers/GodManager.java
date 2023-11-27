@@ -3839,7 +3839,7 @@ public class GodManager
 
 		EntityType mobType = EntityType.UNKNOWN;
 
-		switch (this.random.nextInt(5))
+		switch (this.random.nextInt(4))
 		{
 		case 0:
 			mobType = EntityType.SKELETON;
@@ -3848,15 +3848,12 @@ public class GodManager
 			mobType = EntityType.ZOMBIE;
 			break;
 		case 2:
-			mobType = EntityType.PIG_ZOMBIE;
-			break;
-		case 3:
 			mobType = EntityType.SPIDER;
 			break;
-		case 4:
+		case 3:
 			mobType = EntityType.WOLF;
 			break;
-		case 5:
+		case 4:
 			mobType = EntityType.GIANT;
 		}
 		int numberOfMobs = 1 + (int) (godPower / 10.0F);

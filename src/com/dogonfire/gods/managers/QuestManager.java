@@ -974,11 +974,10 @@ public class QuestManager
 		List<Biome> biomeTypes = new ArrayList<Biome>();
 		biomeTypes.add(Biome.FLOWER_FOREST);
 		biomeTypes.add(Biome.ICE_SPIKES);
-		biomeTypes.add(Biome.DESERT_HILLS);
+		biomeTypes.add(Biome.DESERT);
 		biomeTypes.add(Biome.MUSHROOM_FIELDS);
-		biomeTypes.add(Biome.JUNGLE_HILLS);
-		biomeTypes.add(Biome.TAIGA_HILLS);
-		biomeTypes.add(Biome.GIANT_TREE_TAIGA_HILLS);
+		biomeTypes.add(Biome.JUNGLE);
+		biomeTypes.add(Biome.TAIGA);
 
 		World world = Gods.instance().getServer().getWorld(worldName);
 
@@ -1066,11 +1065,10 @@ public class QuestManager
 		List<Biome> biomeTypes = new ArrayList<Biome>();
 		biomeTypes.add(Biome.FLOWER_FOREST);
 		biomeTypes.add(Biome.ICE_SPIKES);
-		biomeTypes.add(Biome.DESERT_HILLS);
+		biomeTypes.add(Biome.DESERT);
 		biomeTypes.add(Biome.MUSHROOM_FIELDS);
-		biomeTypes.add(Biome.JUNGLE_HILLS);
-		biomeTypes.add(Biome.TAIGA_HILLS);
-		biomeTypes.add(Biome.GIANT_TREE_TAIGA_HILLS);
+		biomeTypes.add(Biome.JUNGLE);
+		biomeTypes.add(Biome.TAIGA);
 
 		World world = Gods.instance().getServer().getWorld(worldName);
 		do
