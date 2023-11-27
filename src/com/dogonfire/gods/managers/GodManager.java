@@ -13,8 +13,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
-
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Effect;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;

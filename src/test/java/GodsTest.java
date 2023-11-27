@@ -24,7 +24,7 @@ import com.dogonfire.gods.managers.PermissionsManager;
 import com.dogonfire.gods.managers.QuestManager;
 import com.dogonfire.gods.managers.WhitelistManager;
 
-import static org.mockito.Mockito.*;
+//import static org.mockito.Mockito.*;
 
 
 public class GodsTest
