@@ -838,6 +838,7 @@ public class GodManager
 		int x = this.godsConfig.getInt(godName + ".ContestedLand" + ".X");
 		int y = this.godsConfig.getInt(godName + ".ContestedLand" + ".Y");
 		int z = this.godsConfig.getInt(godName + ".ContestedLand" + ".Z");
+		if(x == null) return null;
 		String worldName = this.godsConfig.getString(godName + ".ContestedLand" + ".World");
 
 		return new Location(Gods.instance().getServer().getWorld(worldName), x, y, z);
