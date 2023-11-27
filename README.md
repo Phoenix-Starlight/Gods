@@ -38,7 +38,7 @@ Links
 
 Compiling Gods.jar
 ---------
-*	Gods must be compiled with Java 8 compliance. Make sure you have a JDK 8 installed.
+*	Gods must be compiled with Java 17 compliance. Make sure you have a JDK 17 installed.
 *	Gods has been developed using Eclipse (But any other IDE should work as well)
 *	Checkout the Gods repo using [git](https://git-scm.com/downloads) in a Command Line: `git clone https://github.com/DogOnFire/Gods.git`
 *	Open the Gods project folder in Eclipse (or another IDE of choice)
