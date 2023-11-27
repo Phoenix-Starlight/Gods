@@ -35,7 +35,7 @@ public class CommandAttackHolyLand extends GodsCommand
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		Location attackLocation = GodManager.instance().getContestedHolyLandAttackLocationForGod(godName);
 		if(attackLocation == null) {
-		    sender.sendMessage(ChatColor.AQUA + "You joined the attack on the Holy Land of " + ChatColor.GOLD + otherGodName);
+		    sender.sendMessage(ChatColor.RED + "No holy land found");
 		    return;
 		}
 		player.teleport(attackLocation);
