@@ -23,7 +23,8 @@ public class CommandToggleWar extends GodsCommand
 	@Override
 	public void onCommand(CommandSender sender, String command, String... args)
 	{
-		if (!hasPermission(sender))
+	    if(args.length == 1) {
+	    if (!hasPermission(sender))
 		{
 			sender.sendMessage(stringNoPermission);
 			return;
@@ -39,6 +40,7 @@ public class CommandToggleWar extends GodsCommand
 			player.sendMessage(stringPreistOnly);
 			return;
 		}
+		
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
 		String enemyGodName = GodManager.instance().formatGodName(args[1]);
 		if (!GodManager.instance().godExist(args[1]))
@@ -68,6 +70,7 @@ public class CommandToggleWar extends GodsCommand
 			LanguageManager.instance().setPlayerName(enemyGodName);
 			GodManager.instance().godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieversWarCancelled, 10);
 		}
-
+	    }
 	}
+	
 }
