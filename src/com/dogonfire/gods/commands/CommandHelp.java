@@ -133,7 +133,7 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.WHITE + "  4  - Write the name of your God on the sign");
 		sender.sendMessage("");
 		sender.sendMessage(ChatColor.AQUA + "You can now pray to your God by right-clicking the sign!");
-		sender.sendMessage(ChatColor.AQUA + "Check what type of god you can make with " + ChatColor.WHITE + "/g help blocks");
+		sender.sendMessage(ChatColor.AQUA + "Check what type of god you can make with " + ChatColor.WHITE + "/gods help blocks");
 	}
 
 	private void helpBlocks(CommandSender sender)
@@ -155,7 +155,7 @@ public class CommandHelp extends GodsCommand
 		}
 		
 		sender.sendMessage("");
-		sender.sendMessage(ChatColor.AQUA + "Check how to build an altar with " + ChatColor.WHITE + "/g help altar");
+		sender.sendMessage(ChatColor.AQUA + "Check how to build an altar with " + ChatColor.WHITE + "/gods help altar");
 
 	}
 

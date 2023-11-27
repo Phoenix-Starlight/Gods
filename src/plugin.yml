@@ -1,26 +1,20 @@
 name: Gods
 author: DogOnFire
 version: ${project.version}
-api-version: 1.13
+api-version: 1.17
 load: POSTWORLD
 website: "http://dev.bukkit.org/server-mods/gods"
 main: com.dogonfire.gods.Gods
-softdepend: 
-  - PermissionsBukkit
-  - PermissionsEx
-  - bPermissions
-  - GroupManager
+softdepend:
   - WorldGuard
   - PlaceholderAPI
 commands:
-  g:
+  gods:
     description: "Controls the god system"
     usage: /<command>
-    aliases: [gods]
-permissions: 
+permissions:
   gods.*: 
-    children: 
-      gods.listen: true
+    children:
       gods.leave: true
       gods.marriages: true
       gods.love: true
@@ -66,11 +60,8 @@ permissions:
     description: "Gives access to all Gods commands"
   gods.pray: 
     default: true
-    description: "Player can pray directly to their Gods using /g prayfor command"
-  gods.listen: 
-    default: true
-    description: "Player can hear Gods speaking"
-  gods.updates: 
+    description: "Player can pray directly to their gods using /gods prayfor command"
+  gods.updates:
     default: false
     description: "Player gets notifications about updates to Gods plugin"
   gods.marriages: 
@@ -87,7 +78,7 @@ permissions:
     description: "Allows the Player to marry"
   gods.accept: 
     default: true
-    description: "Allows the Player to accept a proposal from a God"
+    description: "Allows the Player to accept a proposal from a god"
   gods.altar.build: 
     default: true
     description: "Allows the Player to build an altar"
@@ -99,7 +90,7 @@ permissions:
     description: "Allows the Player to sacrifice items using fire"
   gods.blessings: 
     default: true
-    description: "The Player can be blessed by a God"
+    description: "The Player can be blessed by a god"
   gods.chat: 
     default: true
     description: "The Player use religion only chat"
@@ -111,13 +102,13 @@ permissions:
     description: "Allows the Player to receive commandments"
   gods.curses: 
     default: true
-    description: "The Player can be cursed by a God"
+    description: "The Player can be cursed by a god"
   gods.followers: 
     default: true
-    description: "The Player can see the list of followers of a God"
+    description: "The Player can see the list of followers of a god"
   gods.god.create: 
     default: true
-    description: "Allows the Player to create a new God"
+    description: "Allows the Player to create a new god"
   gods.help: 
     default: true
     description: "Allows player to check the help page"
@@ -132,7 +123,7 @@ permissions:
     description: "Allows the Player to see details for a god"
   gods.itemblessings: 
     default: true
-    description: "The Player can be blessed with items by a God"
+    description: "The Player can be blessed with items by a god"
   gods.list: 
     default: true
     description: "Allows the Player to see the list of gods"
@@ -141,7 +132,7 @@ permissions:
     description: "Allows the Player to hunt during hunt quests"
   gods.listen:
     default: true
-    description: "Allows a player to hear the voice of the Gods"
+    description: "Allows a player to hear the voice of the god"
   gods.priest: 
     default: true
     description: "Allows the Player to become priest"
@@ -153,7 +144,7 @@ permissions:
     description: "Allows priest to invite a player into his religion"
   gods.priest.alliance: 
     default: true
-    description: "Allows priest to declare alliance relations to another God"
+    description: "Allows priest to declare alliance relations to another god"
   gods.priest.bible: 
     default: true
     description: "Allows a priest to produce the Holy Book for his religion"
@@ -177,22 +168,22 @@ permissions:
     description: "Allows a priest to set the Holy Book for his religion"
   gods.priest.setforce: 
     default: true
-    description: "Allows priest to change the divine force for their God"
+    description: "Allows priest to change the divine force for their god"
   gods.priest.name: 
     default: true
     description: "Allows priest to name their holyland"
   gods.priest.war: 
     default: true
-    description: "Allows priest to declare war relations to another God"
+    description: "Allows priest to declare war relations to another god"
   gods.quest.slay: 
     default: true
     description: "The Player can participate in slay quests"
   gods.reject: 
     default: true
-    description: "Allows the Player to reject a proposal from a God"
+    description: "Allows the Player to reject a proposal from a god"
   gods.reload: 
     default: false
-    description: "Allows the Player to reload configuration for the Gods system"
+    description: "Allows the Player to reload configuration for the plugin"
   gods.sethome: 
     default: true
     description: "The Player can set religion home"

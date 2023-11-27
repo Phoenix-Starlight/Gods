@@ -1,6 +1,7 @@
 package com.dogonfire.gods.managers;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ import org.bukkit.entity.Player;
 import com.dogonfire.gods.Gods;
 import com.dogonfire.gods.config.GodsConfiguration;
 import com.dogonfire.gods.managers.LanguageManager.LANGUAGESTRING;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class BelieverManager
 {
@@ -659,18 +661,20 @@ public class BelieverManager
 	public void save()
 	{
 		this.lastSaveTime = System.currentTimeMillis();
-		if ((this.believersConfig == null) || (this.believersConfigFile == null))
-		{
+		if ((this.believersConfig == null) || (this.believersConfigFile == null)) {
 			return;
 		}
-		try
-		{
-			this.believersConfig.save(this.believersConfigFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save config to " + this.believersConfigFile.getName() + ": " + ex.getMessage());
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					believersConfig.save(believersConfigFile);
+				}
+				catch (IOException ex) {
+					Gods.instance().log("Could not save config to " + believersConfigFile.getName() + ": " + ex.getMessage());
+				}
+			}
+		}.runTaskAsynchronously(Gods.instance());
 	}
 
 	public void saveTimed()

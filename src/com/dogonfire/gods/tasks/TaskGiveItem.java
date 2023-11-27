@@ -14,14 +14,14 @@ import com.dogonfire.gods.managers.LanguageManager;
 
 public class TaskGiveItem extends Task {
 	private Player player = null;
-	private Material itemType;
+	private ItemStack item;
 	private String godName = null;
 	private boolean speak = false;
 
-	public TaskGiveItem(String god, Player p, Material material, boolean godspeak) {
+	public TaskGiveItem(String god, Player p, ItemStack item, boolean godspeak) {
 		this.player = p;
 		this.godName = new String(god);
-		this.itemType = material;
+		this.item = item;
 		this.speak = godspeak;
 	}
 
@@ -37,7 +37,7 @@ public class TaskGiveItem extends Task {
 			return false;
 		}
 		try {
-			spawnLocation.getWorld().dropItem(spawnLocation, new ItemStack(this.itemType, 1));
+			spawnLocation.getWorld().dropItem(spawnLocation, item);
 
 			spawnLocation.getWorld().playEffect(spawnLocation, Effect.MOBSPAWNER_FLAMES, 25);
 		} catch (Exception ex) {
@@ -53,7 +53,7 @@ public class TaskGiveItem extends Task {
 			if (this.speak) {
 				LanguageManager.instance().setPlayerName(this.player.getName());
 				try {
-					LanguageManager.instance().setType(this.itemType.name());
+					LanguageManager.instance().setType(item.getType().name());
 				} catch (Exception ex) {
 					getPlugin().logDebug(ex.getStackTrace().toString());
 				}

@@ -92,7 +92,7 @@ public class GodsCommandExecuter implements CommandExecutor
 		sender.sendMessage(ChatColor.AQUA + "There are currently " + ChatColor.WHITE + GodManager.instance().getAllGods().size() + ChatColor.AQUA + " Gods and");
 		sender.sendMessage("" + ChatColor.WHITE + BelieverManager.instance().getBelievers().size() + ChatColor.AQUA + " believers in " + GodsConfiguration.instance().getServerName());
 		sender.sendMessage("" + ChatColor.AQUA);
-		if (sender != null && sender instanceof Player)
+		if (sender instanceof Player)
 		{
 			Player player = (Player) sender;
 			String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
@@ -126,12 +126,12 @@ public class GodsCommandExecuter implements CommandExecutor
 				}
 			}
 			sender.sendMessage("" + ChatColor.AQUA);
-			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.GodsHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help", 80);
-			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.AltarHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g help altar", 160);
+			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.GodsHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/gods help", 80);
+			Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.AltarHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/gods help altar", 160);
 
 			if (GodsConfiguration.instance().isPrayersEnabled())
 			{
-				Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.PrayForHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/g prayfor", 240);
+				Gods.instance().sendInfo(player.getUniqueId(), LanguageManager.LANGUAGESTRING.PrayForHelp, ChatColor.AQUA, 0, ChatColor.WHITE + "/gods prayfor", 240);
 			}
 		}
 		sender.sendMessage(ChatColor.GREEN + "For the full command list, please use " + ChatColor.AQUA + "/gods help");

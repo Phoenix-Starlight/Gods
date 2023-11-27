@@ -33,7 +33,7 @@ public class CommandPrayFor extends GodsCommand
 			sender.sendMessage(stringNoPermission);
 			return;
 		}
-		if (sender instanceof Player == false)
+		if (!(sender instanceof Player))
 		{
 			sender.sendMessage(stringPlayerOnly);
 			return;
@@ -68,18 +68,18 @@ public class CommandPrayFor extends GodsCommand
 
 	private void prayForHelp(CommandSender sender)
 	{
-		sender.sendMessage(ChatColor.YELLOW + "--------------- How to pray for things ---------------");
-		sender.sendMessage(ChatColor.AQUA + "Pray for something specific from your God:");
+		sender.sendMessage(ChatColor.YELLOW + "--------------- How to request for things ---------------");
+		sender.sendMessage(ChatColor.AQUA + "Pray for something specific from your god:");
 		sender.sendMessage("");
-		sender.sendMessage(ChatColor.WHITE + "/g prayfor item - " + ChatColor.AQUA + " pray for an item");
-		sender.sendMessage(ChatColor.WHITE + "/g prayfor health - " + ChatColor.AQUA + " pray for health");
-		sender.sendMessage(ChatColor.WHITE + "/g prayfor blessing - " + ChatColor.AQUA + " pray for a magical blessing");
+		sender.sendMessage(ChatColor.WHITE + "/gods prayfor item - " + ChatColor.AQUA + " request an item");
+		sender.sendMessage(ChatColor.WHITE + "/gods prayfor health - " + ChatColor.AQUA + " request health");
+		sender.sendMessage(ChatColor.WHITE + "/gods prayfor blessing - " + ChatColor.AQUA + "request a potion effect");
 		if (GodsConfiguration.instance().isQuestsEnabled())
 		{
-			sender.sendMessage(ChatColor.WHITE + "/g prayfor quest - " + ChatColor.AQUA + " pray for a quest");
+			sender.sendMessage(ChatColor.WHITE + "/gods prayfor quest - " + ChatColor.AQUA + " request a quest");
 		}
 		sender.sendMessage("");
-		sender.sendMessage(ChatColor.AQUA + "Note that you need prayer power to perform these prayers.");
+		sender.sendMessage(ChatColor.AQUA + "Note that you need prayer power to perform these requests.");
 	}
 
 	private void prayForBlessing(CommandSender sender)

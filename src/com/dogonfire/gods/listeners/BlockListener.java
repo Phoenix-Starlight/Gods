@@ -26,11 +26,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import com.dogonfire.gods.Gods;
@@ -111,54 +107,52 @@ public class BlockListener implements Listener
 	@EventHandler
 	public void OnEntityCombust(EntityCombustEvent event)
 	{
-		if (!GodsConfiguration.instance().isSacrificesEnabled())
-		{
+
+		if (!GodsConfiguration.instance().isSacrificesEnabled()) {
 			return;
 		}
-		if (event.getEntity() == null)
-		{
+
+		if (!(event.getEntity() instanceof Item)) {
 			return;
 		}
-		if (!(event.getEntity() instanceof Item))
-		{
-			return;
-		}
+
 		Item item = (Item) event.getEntity();
-		if (!Gods.instance().isEnabledInWorld(item.getWorld()))
-		{
+		if (!Gods.instance().isEnabledInWorld(item.getWorld())) {
 			return;
 		}
-		if (event.getEntity().getType() != EntityType.DROPPED_ITEM)
-		{
+
+		if (event.getEntity().getType() != EntityType.DROPPED_ITEM) {
 			return;
 		}
+
+		((Item) event.getEntity()).setPickupDelay(100);
+		event.getEntity().setGlowing(true);
+
 		String believerName = AltarManager.instance().getDroppedItemPlayer(event.getEntity().getEntityId());
-		if (believerName == null)
-		{
+		if (believerName == null) {
 			return;
 		}
+
 		Player player = Gods.instance().getServer().getPlayer(believerName);
-		if (player == null)
-		{
+		if (player == null) {
 			return;
 		}
-		if ((!player.isOp()) && (!PermissionsManager.instance().hasPermission(player, "gods.altar.sacrifice")))
-		{
+
+		if ((!player.isOp()) && (!PermissionsManager.instance().hasPermission(player, "gods.altar.sacrifice"))) {
 			Gods.instance().logDebug("Does not have gods.altar.sacrifice");
 			return;
 		}
 
 		String godName = BelieverManager.instance().getGodForBeliever(player.getUniqueId());
-
-		if (godName == null)
-		{
+		if (godName == null) {
 			return;
 		}
 
-		if (QuestManager.instance().handleSacrifice(player, godName, item.getItemStack().getType().name()))
-		{
+		if (QuestManager.instance().handleSacrifice(player, godName, item.getItemStack().getType().name())) {
 			return;
 		}
+
+		event.getEntity().remove();
 
 		GodManager.instance().handleSacrifice(godName, player, item.getItemStack().getType());
 	}
@@ -312,14 +306,17 @@ public class BlockListener implements Listener
 	public void OnPlayerConsume(PlayerItemConsumeEvent event)
 	{
 		Player player = event.getPlayer();
-
+		// CCNet: Do not process non-vanilla foods.
+		if (event.getItem().hasItemMeta()) {
+			return;
+		}
 		String godName = BelieverManager.instance().getGodForBeliever(event.getPlayer().getUniqueId());
 		Material type = player.getInventory().getItemInMainHand().getType();
 		if (godName != null)
 		{
 			Long lastEatTime = this.lastEatTimes.get(player.getName());
-			Long currentTime = Long.valueOf(System.currentTimeMillis());
-			if ((lastEatTime == null) || (currentTime.longValue() - lastEatTime.longValue() > 10000L))
+			Long currentTime = System.currentTimeMillis();
+			if ((lastEatTime == null) || (currentTime - lastEatTime > 10000L))
 			{
 				if ((GodsConfiguration.instance().isCommandmentsEnabled()) && (player.getHealth() != player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()))
 				{
@@ -371,6 +368,7 @@ public class BlockListener implements Listener
 						Gods.instance().sendInfo(killer.getUniqueId(), LanguageManager.LANGUAGESTRING.YouEarnedPowerBySlayingHeathen, ChatColor.AQUA, (int) (powerAfter - powerBefore), killerGodName, 20);
 					}
 				}
+				/*
 				else
 				{
 					List<String> warRelations = GodManager.instance().getWarRelations(killerGodName);
@@ -387,6 +385,7 @@ public class BlockListener implements Listener
 						}
 					}
 				}
+				*/
 			}
 		}
 	}

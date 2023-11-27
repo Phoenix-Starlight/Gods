@@ -12,13 +12,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -28,8 +24,10 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -41,6 +39,7 @@ import com.dogonfire.gods.tasks.TaskGodSpeak;
 import com.dogonfire.gods.tasks.TaskHealPlayer;
 import com.dogonfire.gods.tasks.TaskSpawnGuideMob;
 import com.dogonfire.gods.tasks.TaskSpawnHostileMobs;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GodManager
 {
@@ -196,7 +195,7 @@ public class GodManager
 				Gods.instance().logDebug(ex.getStackTrace().toString());
 			}
 
-			giveItem(godName, player, foodType, false);
+			giveItem(godName, player, new ItemStack(foodType), false);
 
 			BelieverManager.instance().increasePrayerPower(player.getUniqueId(), 1);
 		}
@@ -244,7 +243,7 @@ public class GodManager
 
 			for (ItemStack items : rewards)
 			{
-				giveItem(godName, player, items.getType(), false);
+				giveItem(godName, player, items, false);
 			}
 		}
 	}
@@ -568,16 +567,16 @@ public class GodManager
 		case 0:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (int) (300.0F * blessingPower), 1));
 			break;
+		//case 1:
+		//	player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, (int) (300.0F * blessingPower), 1));
+		//	break;
 		case 1:
-			player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, (int) (300.0F * blessingPower), 1));
-			break;
-		case 2:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, (int) (300.0F * blessingPower), 1));
 			break;
-		case 3:
+		case 2:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (int) (300.0F * blessingPower), 1));
 			break;
-		case 4:
+		case 3:
 			player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, (int) (300.0F * blessingPower), 1));
 		}
 
@@ -604,7 +603,7 @@ public class GodManager
 		ItemStack item = getItemNeed(godName, player);
 		if (item != null)
 		{
-			giveItem(godName, player, item.getType(), true);
+			giveItem(godName, player, item, true);
 		}
 		return item;
 	}
@@ -1220,6 +1219,16 @@ public class GodManager
 
 	private ItemStack getItemNeed(String godName, Player player)
 	{
+		if (getGodPower(godName) > GodsConfiguration.instance().getGodPowerForLevel3Items()) {
+			double randomNum = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
+			if (randomNum < 0.1) {
+				ItemStack witherRose = new ItemStack(Material.WITHER_ROSE);
+				ItemMeta witherRoseMeta = witherRose.getItemMeta();
+				witherRoseMeta.setCustomModelData(1);
+				witherRose.setItemMeta(witherRoseMeta);
+				return witherRose;
+			}
+		}
 		if (!hasFood(player, godName))
 		{
 			return new ItemStack(getFoodBlessing(godName));
@@ -1912,9 +1921,9 @@ public class GodManager
 		Gods.instance().getServer().getScheduler().runTaskLater(Gods.instance(), new TaskGiveHolyArtifact(godName, godType, player, speak), 2L);
 	}
 
-	public void giveItem(String godName, Player player, Material material, boolean speak)
+	public void giveItem(String godName, Player player, ItemStack item, boolean speak)
 	{
-		Gods.instance().getServer().getScheduler().runTaskLater(Gods.instance(), new TaskGiveItem(godName, player, material, speak), 2L);
+		Gods.instance().getServer().getScheduler().runTaskLater(Gods.instance(), new TaskGiveItem(godName, player, item, speak), 2L);
 	}
 
 	public boolean godExist(String godName)
@@ -2289,18 +2298,15 @@ public class GodManager
 
 	public void handleSacrifice(String godName, Player believer, Material type)
 	{
-		if (believer == null)
-		{
+		if (believer == null) {
 			return;
 		}
 
-		if (!Gods.instance().isEnabledInWorld(believer.getWorld()))
-		{
+		if (!Gods.instance().isEnabledInWorld(believer.getWorld())) {
 			return;
 		}
 
-		if (godName == null)
-		{
+		if (godName == null) {
 			return;
 		}
 
@@ -2315,23 +2321,19 @@ public class GodManager
 			addMoodForGod(godName, getAngryModifierForGod(godName));
 			cursePlayer(godName, believer.getUniqueId(), getGodPower(godName));
 
-			try
-			{
+			try {
 				LanguageManager.instance().setType(LanguageManager.instance().getItemTypeName(eatFoodType));
 			}
-			catch (Exception ex)
-			{
+			catch (Exception ex) {
 				Gods.instance().logDebug(ex.getStackTrace().toString());
 			}
 
 			LanguageManager.instance().setPlayerName(believer.getDisplayName());
 
-			if (GodsConfiguration.instance().isCommandmentsBroadcastFoodEaten())
-			{
+			if (GodsConfiguration.instance().isCommandmentsBroadcastFoodEaten()) {
 				godSayToBelievers(godName, LanguageManager.LANGUAGESTRING.GodToBelieverHolyFoodSacrifice, 2 + this.random.nextInt(10));
 			}
-			else
-			{
+			else {
 				godSayToBeliever(godName, believer.getUniqueId(), LanguageManager.LANGUAGESTRING.GodToBelieverHolyFoodSacrifice);
 			}
 
@@ -2750,10 +2752,13 @@ public class GodManager
 							return true;
 						}
 
+
+						/*
 						ItemStack blessedItem = blessPlayerWithItem(godName, believer);
 
 						if (blessedItem != null)
 						{
+
 							LanguageManager.instance().setPlayerName(believer.getDisplayName());
 							try
 							{
@@ -2768,6 +2773,8 @@ public class GodManager
 
 							return true;
 						}
+						 */
+
 					}
 				}
 			}
@@ -2912,6 +2919,7 @@ public class GodManager
 							return true;
 						}
 
+						/*
 						ItemStack blessedItem = blessPlayerWithItem(godName, believer);
 
 						if (blessedItem != null)
@@ -2929,6 +2937,7 @@ public class GodManager
 
 							return true;
 						}
+						 */
 					}
 				}
 			}
@@ -3567,28 +3576,30 @@ public class GodManager
 	{
 		ItemStack items = new ItemStack(getRewardBlessing(godName));
 
-		giveItem(godName, believer, items.getType(), false);
+		giveItem(godName, believer, items, false);
 
 		return true;
 	}
 
-	public void save()
-	{
+	public void save() {
 		this.lastSaveTime = System.currentTimeMillis();
-		if ((this.godsConfig == null) || (this.godsConfigFile == null))
-		{
+		if ((this.godsConfig == null) || (this.godsConfigFile == null)) {
 			return;
 		}
-		try
-		{
-			this.godsConfig.save(this.godsConfigFile);
-		}
-		catch (Exception ex)
-		{
-			Gods.instance().log("Could not save config to " + this.godsConfigFile + ": " + ex.getMessage());
-		}
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				try {
+					godsConfig.save(godsConfigFile);
+				} catch (Exception ex) {
+					Gods.instance().log("Could not save config to " + godsConfigFile + ": " + ex.getMessage());
+				}
+			}
+		}.runTaskAsynchronously(Gods.instance());
 		Gods.instance().log("Saved configuration");
 	}
+
+
 
 	public void saveTimed()
 	{
@@ -3845,16 +3856,19 @@ public class GodManager
 			mobType = EntityType.SKELETON;
 			break;
 		case 1:
-			mobType = EntityType.ZOMBIE;
+			mobType = EntityType.WITCH;
 			break;
 		case 2:
-			mobType = EntityType.SPIDER;
+			mobType = EntityType.CAVE_SPIDER;
 			break;
 		case 3:
-			mobType = EntityType.WOLF;
+			mobType = EntityType.VEX;
 			break;
 		case 4:
-			mobType = EntityType.GIANT;
+			mobType = EntityType.ILLUSIONER;
+			break;
+		case 5:
+			mobType = EntityType.ZOMBIE;
 		}
 		int numberOfMobs = 1 + (int) (godPower / 10.0F);
 
@@ -3989,30 +4003,21 @@ public class GodManager
 		{
 			return;
 		}
+
+	//for (String godName: godNames) {
 		String godName = (String) godNames.toArray()[this.random.nextInt(godNames.size())];
 
 		Gods.instance().logDebug("Processing God '" + godName + "'");
 
-		boolean godTalk = false;
-
 		manageMood(godName);
 
-		if (!godTalk)
-		{
-			godTalk = managePriests(godName);
-		}
+		managePriests(godName);
 
 		manageLostBelievers(godName);
 
-		if (!godTalk)
-		{
-			manageBelievers(godName);
-		}
+		manageBelievers(godName);
 
-		if (!godTalk)
-		{
-			manageQuests(godName);
-		}
+		manageQuests(godName);
 
 		manageBlessings(godName);
 
@@ -4022,17 +4027,14 @@ public class GodManager
 
 		manageSacrifices();
 
-		manageHolyLands();
-		
-		manageMiracles(godName);
+		// Holy lands are disabled: manageHolyLands();
+
+		// Doesn't seem to have a function: manageMiracles(godName);
 
 		long timeAfter = System.currentTimeMillis();
 
 		Gods.instance().logDebug("Processed 1 Online God in " + (timeAfter - timeBefore) + " ms");
-		if (this.random.nextInt(1000) == 0)
-		{
-			Gods.instance().logDebug("Processing chests...");
-		}
+
 	}
 
 	//No language strings found for Trapdoor,GodToBelieverMarriedCouple!

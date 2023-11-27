@@ -345,7 +345,7 @@ GodToBelieversPilgrimageQuestFailed:
 - My Children, I am displeased in you. You have not shown respect for our faith...
 - My Children, I am displeased in you. You have failed to complete this simple task for me...
 GodToBelieversPilgrimageQuestHelp:
-- You must find your way to the holy mountain before any other! Type /g hunt
+- You must find your way to the holy mountain before any other! Type /gods hunt
 GodToBelieversPilgrimageQuestRange:
 - You are only $Amount blocks away from mount $Type!
 - You must Hurry! You are $Amount blocks away from the holy mountain!
