@@ -188,11 +188,6 @@ public class HolyLandManager implements Listener
 				second = new String[] {"Fire", "Dank", "Cold"};
 				third = new String[] {"forest", "wood", ""};
 				break;
-			case MOUNTAINS :
-				first = new String[] {"Upper ", "Lower ", "High ", ""};
-				second = new String[] {"Rock", "High", "Sky"};
-				third = new String[] {"hill", "mountain"};
-				break;
 			default:
 				break;				
 		}
