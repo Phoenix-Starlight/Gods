@@ -2006,6 +2006,7 @@ public class GodManager
 		String playerNameString = LanguageManager.instance().getPlayerName();
 		String typeNameString = LanguageManager.instance().getType();
 		int amount = LanguageManager.instance().getAmount();
+		System.out.println(godName);
 
 		if (player == null)
 		{

@@ -27,6 +27,7 @@ public class CommandMarry extends GodsCommand
 		if (!GodsConfiguration.instance().isMarriageEnabled())
 		{
 			sender.sendMessage(ChatColor.RED + "Marrige is not enabled on this server");
+			return;
 		}
 		if (!hasPermission(sender))
 		{
@@ -96,7 +97,7 @@ public class CommandMarry extends GodsCommand
 		MarriageManager.instance().proposeMarriage(player.getUniqueId(), otherPlayer.getUniqueId());
 
 		LanguageManager.instance().setPlayerName(player.getName());
-		GodManager.instance().GodSayWithQuestion(thisGodName, otherPlayer, LanguageManager.LANGUAGESTRING.GodToBelieverMarriageProposal, 1);
+		GodManager.instance().GodSayWithQuestion(thisGodName, otherPlayer, LanguageManager.LANGUAGESTRING.GodToBelieverMarriageProposal, 0);
 
 		player.sendMessage(ChatColor.AQUA + "You proposed " + ChatColor.WHITE + otherPlayerName + ChatColor.AQUA + " to marry you in the name of " + ChatColor.GOLD + thisGodName + "!");
 	}
