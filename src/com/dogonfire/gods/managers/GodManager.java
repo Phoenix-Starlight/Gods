@@ -698,25 +698,6 @@ public class GodManager
 		return godName.substring(0, 1).toUpperCase() + godName.substring(1).toLowerCase();
 	}
 
-	private String generateHolyMobTypeForGod()
-	{
-		EntityType mobType = EntityType.UNKNOWN;
-		EntityType[] holyMobTypes = new EntityType[] { EntityType.CHICKEN, EntityType.COW, EntityType.PIG, EntityType.SHEEP, EntityType.RABBIT, EntityType.HORSE, EntityType.BAT };
-				
-		int r1 = this.random.nextInt(holyMobTypes.length);
-
-		return holyMobTypes[r1].name();
-	}
-
-	private String generateUnholyMobTypeForGod()
-	{
-		EntityType mobType = EntityType.UNKNOWN;
-		EntityType[] holyMobTypes = new EntityType[] { EntityType.CHICKEN, EntityType.COW, EntityType.PIG, EntityType.SHEEP, EntityType.RABBIT, EntityType.HORSE, EntityType.BAT, EntityType.WOLF, EntityType.SKELETON, EntityType.ZOMBIE };
-				
-		int r1 = this.random.nextInt(holyMobTypes.length);
-
-		return holyMobTypes[r1].name();
-	}
 
 	public Set<String> getAllGods()
 	{
@@ -907,56 +888,40 @@ public class GodManager
 		}
 		return type;
 	}
-
 	public Material getHolyFoodTypeForGod(String godName)
 	{
 		String foodTypeString = this.godsConfig.getString(godName + ".EatFoodType");
 		
 		Material foodType = Material.AIR;
-		
+		Material[] foodTypes = new Material[]{Material.APPLE, Material.BREAD, Material.COOKED_SALMON, Material.MELON_SLICE, Material.COOKED_BEEF};
+		int holyfoodnum;
 		if (foodTypeString == null)
 		{
-			int r1 = this.random.nextInt(7);
-			switch (r1)
+		    // we no longer randomly decide what a god likes, instead we use a basic hashing function based on god name.
+		    // this is because somewhere in this 40k lines of code it decides to reset god names occasionally
+		    // do not touch the hashing function unless you want random preferences assigned to gods
+		    int hash = 3;
+		    for (int i = 0; i < godName.length(); i++) {
+			hash = hash*31 + godName.charAt(i);
+		    }
+		    foodTypeString = foodType.name();
+		    holyfoodnum = hash % 6;
+		    foodTypeString = foodTypes[holyfoodnum].name();
+		    if(foodTypeString.equals(getUnholyFoodTypeForGod(godName).name()))
 			{
-			case 0:
-				foodType = Material.APPLE;
-				break;
-			case 1:
-				foodType = Material.BREAD;
-				break;
-			case 2:
-				foodType = Material.COOKED_SALMON;
-				break;
-			case 3:
-				foodType = Material.MELON_SLICE;
-				break;
-			case 4:
-				foodType = Material.COOKED_BEEF;
-				break;
-			case 5:
-				foodType = Material.COOKED_PORKCHOP;
-				break;
-			case 6:
-			default: 
-				foodType = Material.CARROT;
-					
+			    holyfoodnum = (holyfoodnum + 1) % 6;
+			    foodTypeString = foodTypes[holyfoodnum].name();
 			}
-			foodTypeString = foodType.name();
 
-			this.godsConfig.set(godName + ".EatFoodType", foodTypeString);
+		    this.godsConfig.set(godName + ".EatFoodType", foodTypeString);
 
-			saveTimed();
-		}
-		else
+		    foodType = Material.getMaterial(foodTypeString);
+		    saveTimed();
+		}else
 		{
 			foodType = Material.getMaterial(foodTypeString);
 		}
 		
-		if(foodType == null)
-		{
-			foodType = Material.CARROT;
-		}
 		
 		return foodType;
 	}
@@ -1157,31 +1122,32 @@ public class GodManager
 	{
 		String mobTypeString = this.godsConfig.getString(godName + ".NotSlayMobType");
 		EntityType mobType = EntityType.UNKNOWN;
+		EntityType[] holyMobTypes = new EntityType[] { EntityType.CHICKEN, EntityType.COW, EntityType.PIG, EntityType.SHEEP, EntityType.RABBIT, EntityType.HORSE, EntityType.BAT };
+		int holymobnum;
 		if (mobTypeString == null)
 		{
+		    // we no longer randomly decide what a god likes, instead we use a basic hashing function based on god name.
+		    // this is because somewhere in this 40k lines of code it decides to reset god names occasionally
+		    // do not touch the hashing function unless you want random preferences assigned to gods
+			int hash = 7;
+			for (int i = 0; i < godName.length(); i++) {
+			    hash = hash*31 + godName.charAt(i);
+			}
 			
-			while (mobTypeString.equals(getUnholyMobTypeForGod(godName).name()))
+			holymobnum = hash % 6;
+			mobTypeString = holyMobTypes[holymobnum].name();
+			if(mobTypeString.equals(getUnholyMobTypeForGod(godName).name()))
 			    {
-				mobTypeString = generateHolyMobTypeForGod();
+				holymobnum = (holymobnum + 1) % 6;
+				mobTypeString = holyMobTypes[holymobnum].name();
 			    }
-			
 			this.godsConfig.set(godName + ".NotSlayMobType", mobTypeString);
 
 			saveTimed();
-		}
-		mobType = Enum.valueOf(EntityType.class, mobTypeString);
-		if (mobType == null)
-		{
-			while (mobTypeString.equals(getUnholyMobTypeForGod(godName).name()))
-			    {
-				mobTypeString = generateHolyMobTypeForGod();
-			    }
+			mobType = holyMobTypes[holymobnum];
 
-			this.godsConfig.set(godName + ".NotSlayMobType", mobTypeString);
-
-			save();
-
-			mobType = EntityType.fromName(mobTypeString);
+		} else {
+		    mobType = Enum.valueOf(EntityType.class, mobTypeString);
 		}
 		return mobType;
 	}
@@ -1451,52 +1417,28 @@ public class GodManager
 	{
 		String foodTypeString = this.godsConfig.getString(godName + ".NotEatFoodType");
 		Material foodType = Material.AIR;
+		Material[] foodTypes = new Material[]{Material.APPLE, Material.BREAD, Material.COOKED_SALMON, Material.MELON_SLICE, Material.COOKED_BEEF};
+		int unholyfoodnum;
 		if (foodTypeString == null)
 		{
-			do
-			{
-				int r1 = this.random.nextInt(7);
-				switch (r1)
-				{
-				case 0:
-					foodType = Material.APPLE;
-					break;
-				case 1:
-					foodType = Material.BREAD;
-					break;
-				case 2:
-					foodType = Material.COOKED_SALMON;
-					break;
-				case 3:
-					foodType = Material.MELON_SLICE;
-					break;
-				case 4:
-					foodType = Material.COOKED_BEEF;
-					break;
-				case 5:
-					foodType = Material.COOKED_PORKCHOP;
-					break;
-				default:	
-				case 6:
-					foodType = Material.CARROT;
-				}
-				foodTypeString = foodType.name();
-			}
-			while (foodTypeString.equals(getHolyFoodTypeForGod(godName).name()));
-			
-			this.godsConfig.set(godName + ".NotEatFoodType", foodTypeString);
+		    // we no longer randomly decide what a god likes, instead we use a basic hashing function based on god name.
+		    // this is because somewhere in this 40k lines of code it decides to reset god names occasionally
+		    // do not touch the hashing function unless you want random preferences assigned to gods
+		    int hash = 7;
+		    for (int i = 0; i < godName.length(); i++) {
+			hash = hash*31 + godName.charAt(i);
+		    }
+		    unholyfoodnum = hash % 6;
+		    foodTypeString = foodTypes[unholyfoodnum].name();
+		    this.godsConfig.set(godName + ".NotEatFoodType", foodTypeString);
+		    saveTimed();
+		    foodType = Material.getMaterial(foodTypeString);
 
-			saveTimed();
-		}
-		else
+		} else
 		{
 			foodType = Material.getMaterial(foodTypeString);
 		}
-		
-		if(foodType == null)
-		{
-			foodType = Material.CARROT;
-		}
+		saveTimed();
 
 		return foodType;
 	}
@@ -1875,27 +1817,29 @@ public class GodManager
 	{
 		String mobTypeString = this.godsConfig.getString(godName + ".SlayMobType");
 		EntityType mobType = EntityType.UNKNOWN;
+		EntityType[] unholyMobTypes = new EntityType[] { EntityType.CHICKEN, EntityType.COW, EntityType.PIG, EntityType.SHEEP, EntityType.RABBIT, EntityType.HORSE, EntityType.BAT };
+		int unholymobnum;
 		if (mobTypeString == null)
 		{
-			mobTypeString = generateUnholyMobTypeForGod();
+			int hash = 3;
+			for (int i = 0; i < godName.length(); i++) {
+			    hash = hash*31 + godName.charAt(i);
+			}
+			
+			unholymobnum = hash % 6;
+			mobTypeString = unholyMobTypes[unholymobnum].name();
 
 			this.godsConfig.set(godName + ".SlayMobType", mobTypeString);
 
 			saveTimed();
-		}
-		mobType = Enum.valueOf(EntityType.class, mobTypeString);
-		if (mobType == null)
-		{
-			mobTypeString = generateUnholyMobTypeForGod();
+			mobType = unholyMobTypes[unholymobnum];
 
-			this.godsConfig.set(godName + ".SlayMobType", mobTypeString);
-
-			save();
-
-			mobType = EntityType.fromName(mobTypeString);
+		} else {
+		    mobType = Enum.valueOf(EntityType.class, mobTypeString);
 		}
 		return mobType;
 	}
+	
 
 	private int getVerbosityForGod(String godName)
 	{
