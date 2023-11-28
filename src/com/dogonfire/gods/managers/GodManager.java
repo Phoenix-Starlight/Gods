@@ -905,7 +905,7 @@ public class GodManager
 			hash = hash*31 + godName.charAt(i);
 		    }
 		    foodTypeString = foodType.name();
-		    holyfoodnum = hash % 6;
+		    holyfoodnum = (hash >= 0 ? hash : -hash) % 4;
 		    foodTypeString = foodTypes[holyfoodnum].name();
 		    if(foodTypeString.equals(getUnholyFoodTypeForGod(godName).name()))
 			{
@@ -1134,7 +1134,7 @@ public class GodManager
 			    hash = hash*31 + godName.charAt(i);
 			}
 			
-			holymobnum = hash % 6;
+			holymobnum = (hash >= 0 ? hash : -hash)  % 6;
 			mobTypeString = holyMobTypes[holymobnum].name();
 			if(mobTypeString.equals(getUnholyMobTypeForGod(godName).name()))
 			    {
@@ -1428,7 +1428,7 @@ public class GodManager
 		    for (int i = 0; i < godName.length(); i++) {
 			hash = hash*31 + godName.charAt(i);
 		    }
-		    unholyfoodnum = hash % 6;
+		    unholyfoodnum = (hash >= 0 ? hash : -hash) % 4;
 		    foodTypeString = foodTypes[unholyfoodnum].name();
 		    this.godsConfig.set(godName + ".NotEatFoodType", foodTypeString);
 		    saveTimed();
@@ -1826,7 +1826,7 @@ public class GodManager
 			    hash = hash*31 + godName.charAt(i);
 			}
 			
-			unholymobnum = hash % 6;
+			unholymobnum = (hash >= 0 ? hash : -hash)  % 6;
 			mobTypeString = unholyMobTypes[unholymobnum].name();
 
 			this.godsConfig.set(godName + ".SlayMobType", mobTypeString);
