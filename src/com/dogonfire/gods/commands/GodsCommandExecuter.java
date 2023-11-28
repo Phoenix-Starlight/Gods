@@ -87,7 +87,7 @@ public class GodsCommandExecuter implements CommandExecutor
 	private void CommandGods(CommandSender sender)
 	{
 		sender.sendMessage(ChatColor.YELLOW + "------------------ " + Gods.instance().getDescription().getFullName() + " ------------------");
-		sender.sendMessage(ChatColor.AQUA + "By DogOnFire");
+		sender.sendMessage(ChatColor.AQUA + "By DogOnFire, improved by galacticwarrior9, updated by aki173873 and Openmindedness");
 		sender.sendMessage("" + ChatColor.AQUA);
 		sender.sendMessage(ChatColor.AQUA + "There are currently " + ChatColor.WHITE + GodManager.instance().getAllGods().size() + ChatColor.AQUA + " Gods and");
 		sender.sendMessage("" + ChatColor.WHITE + BelieverManager.instance().getBelievers().size() + ChatColor.AQUA + " believers in " + GodsConfiguration.instance().getServerName());

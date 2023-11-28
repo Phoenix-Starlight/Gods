@@ -1159,11 +1159,12 @@ public class GodManager
 		EntityType mobType = EntityType.UNKNOWN;
 		if (mobTypeString == null)
 		{
-			do
-			{
+			
+			while (mobTypeString.equals(getUnholyMobTypeForGod(godName).name()))
+			    {
 				mobTypeString = generateHolyMobTypeForGod();
-			}
-			while (mobTypeString.equals(getUnholyMobTypeForGod(godName).name()));
+			    }
+			
 			this.godsConfig.set(godName + ".NotSlayMobType", mobTypeString);
 
 			saveTimed();
@@ -1171,11 +1172,11 @@ public class GodManager
 		mobType = Enum.valueOf(EntityType.class, mobTypeString);
 		if (mobType == null)
 		{
-			do
-			{
+			while (mobTypeString.equals(getUnholyMobTypeForGod(godName).name()))
+			    {
 				mobTypeString = generateHolyMobTypeForGod();
-			}
-			while (mobTypeString.equals(getUnholyMobTypeForGod(godName).name()));
+			    }
+
 			this.godsConfig.set(godName + ".NotSlayMobType", mobTypeString);
 
 			save();
