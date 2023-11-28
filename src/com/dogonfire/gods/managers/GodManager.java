@@ -1750,8 +1750,11 @@ public class GodManager
 		long seed = this.godsConfig.getLong(godName + ".Seed");
 		if (seed == 0L)
 		{
-			seed = this.random.nextLong();
-			this.godsConfig.set(godName + ".Seed", Long.valueOf(seed));
+			int hash = 3;
+			for (int i = 0; i < godName.length(); i++) {
+			    hash = hash*31 + godName.charAt(i);
+			}
+			this.godsConfig.set(godName + ".Seed", Long.valueOf(hash));
 
 			saveTimed();
 		}
