@@ -68,7 +68,7 @@ public class AltarManager
 		{
 			return null;
 		}
-		if ((!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.TORCH)) && (!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.REDSTONE_TORCH)))
+		if ((!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.SOUL_TORCH)) && (!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.TORCH)) && (!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.REDSTONE_TORCH)))
 		{
 			return null;
 		}
@@ -365,7 +365,7 @@ public class AltarManager
 		{
 			return false;
 		}
-		if ((block.getRelative(BlockFace.UP).getType() != Material.TORCH) && (block.getRelative(BlockFace.UP).getType() != Material.REDSTONE_TORCH))
+		if ((block.getRelative(BlockFace.UP).getType() != Material.SOUL_TORCH) && (block.getRelative(BlockFace.UP).getType() != Material.TORCH) && (block.getRelative(BlockFace.UP).getType() != Material.REDSTONE_TORCH))
 		{
 			return false;
 		}
@@ -401,7 +401,7 @@ public class AltarManager
 			return false;
 		}
 		
-		if ((!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.TORCH)) && (!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.REDSTONE_TORCH)))
+		if ((!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.SOUL_TORCH)) &&(!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.TORCH)) && (!altarBlock.getRelative(BlockFace.UP).getType().equals(Material.REDSTONE_TORCH)))
 		{
 			return false;
 		}
@@ -414,7 +414,7 @@ public class AltarManager
 		{
 			return false;
 		}
-		if ((block.getType() != Material.TORCH) && (block.getType() != Material.REDSTONE_TORCH))
+		if ((block.getType() != Material.TORCH) && (block.getType() != Material.SOUL_TORCH) && (block.getType() != Material.REDSTONE_TORCH))
 		{
 			return false;
 		}
