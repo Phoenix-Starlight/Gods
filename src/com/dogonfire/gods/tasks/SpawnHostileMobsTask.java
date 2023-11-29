@@ -18,7 +18,7 @@ public class SpawnHostileMobsTask implements Runnable
 		this.plugin = instance;
 		this.numberOfMobs = n;
 		this.player = p;
-		this.godName = new String(god);
+		this.godName = god;
 		this.mobType = entityType;
 	}
 

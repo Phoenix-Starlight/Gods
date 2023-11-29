@@ -23,7 +23,7 @@ public class TaskGiveHolyArtifact extends Task
 	public TaskGiveHolyArtifact(String god, GodType godType, Player p, boolean godspeak)
 	{
 		this.player = p;
-		this.godName = new String(god);
+		this.godName = god;
 		this.godType = godType;
 		this.speak = godspeak;
 	}

@@ -12,7 +12,6 @@ public class TaskSpawnHostileMobs extends Task {
 	public TaskSpawnHostileMobs(String god, Player p, EntityType entityType, int n) {
 		this.numberOfMobs = n;
 		this.player = p;
-		new String(god);
 		this.mobType = entityType;
 	}
 

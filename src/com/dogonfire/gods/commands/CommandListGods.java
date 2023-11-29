@@ -135,7 +135,7 @@ class God
 	God(String godName, int godPower, int godbelievers)
 	{
 		this.power = godPower;
-		this.name = new String(godName);
+		this.name = godName;
 		this.believers = godbelievers;
 	}
 }

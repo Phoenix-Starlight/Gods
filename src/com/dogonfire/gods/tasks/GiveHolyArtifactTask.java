@@ -25,7 +25,7 @@ public class GiveHolyArtifactTask implements Runnable
 	{
 		this.plugin = instance;
 		this.player = p;
-		this.godName = new String(god);
+		this.godName = god;
 		this.godType = godType;
 		this.speak = godspeak;
 	}

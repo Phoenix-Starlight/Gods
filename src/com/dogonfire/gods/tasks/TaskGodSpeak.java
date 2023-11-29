@@ -17,19 +17,19 @@ public class TaskGodSpeak extends Task {
 
 	public TaskGodSpeak(String gname, UUID playerId, String player, String type, int a) {
 		this.playerId = playerId;
-		this.godName = new String(gname);
+		this.godName = gname;
 		this.message = null;
 	}
 
 	public TaskGodSpeak(String gname, UUID playerId, String player, String type, int a, LanguageManager.LANGUAGESTRING m) {
 		this.playerId = playerId;
-		this.godName = new String(gname);
+		this.godName = gname;
 		this.message = m;
 
-		this.playerNameString = new String(player);
+		this.playerNameString = player;
 		this.amount = a;
 		if (type != null) {
-			this.typeString = new String(type);
+			this.typeString = type;
 		} else {
 			type = "";
 		}

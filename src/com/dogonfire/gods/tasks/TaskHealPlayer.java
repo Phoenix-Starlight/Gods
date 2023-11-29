@@ -19,7 +19,7 @@ public class TaskHealPlayer extends Task
 	public TaskHealPlayer(String god, Player p, LanguageManager.LANGUAGESTRING speak)
 	{
 		this.player = p;
-		this.godName = new String(god);
+		this.godName = god;
 		this.languageString = speak;
 	}
 

@@ -22,7 +22,7 @@ public class HealPlayerTask implements Runnable
 	{
 		this.plugin = instance;
 		this.player = p;
-		this.godName = new String(god);
+		this.godName = god;
 		this.languageString = speak;
 	}
 

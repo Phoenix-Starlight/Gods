@@ -20,7 +20,7 @@ public class TaskGiveItem extends Task {
 
 	public TaskGiveItem(String god, Player p, ItemStack item, boolean godspeak) {
 		this.player = p;
-		this.godName = new String(god);
+		this.godName = god;
 		this.item = item;
 		this.speak = godspeak;
 	}

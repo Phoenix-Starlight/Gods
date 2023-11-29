@@ -24,7 +24,7 @@ public class GodSpeakTask implements Runnable
 	{
 		this.plugin = instance;
 		this.playerId = playerId;
-		this.godName = new String(gname);
+		this.godName = gname;
 		this.message = null;
 	}
 
@@ -32,14 +32,14 @@ public class GodSpeakTask implements Runnable
 	{
 		this.plugin = instance;
 		this.playerId = playerId;
-		this.godName = new String(gname);
+		this.godName = gname;
 		this.message = m;
 
-		this.playerNameString = new String(player);
+		this.playerNameString = player;
 		this.amount = a;
 		if (type != null)
 		{
-			this.typeString = new String(type);
+			this.typeString = type;
 		}
 		else
 		{

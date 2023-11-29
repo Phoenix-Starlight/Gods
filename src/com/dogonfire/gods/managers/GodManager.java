@@ -1043,7 +1043,7 @@ public class GodManager
 		String description = this.godsConfig.getString(godName + ".Description");
 		if (description == null)
 		{
-			description = new String("No description :/");
+			description = "No description :/";
 		}
 		return description;
 	}
