@@ -165,6 +165,10 @@ public class AltarManager
 		{
 			return GodManager.GodGender.Female;
 		}
+		if (block.getRelative(BlockFace.UP).getType().equals(Material.SOUL_TORCH))
+		{
+			return GodManager.GodGender.Nonbinary;
+		}
 		return GodManager.GodGender.Male;
 	}
 

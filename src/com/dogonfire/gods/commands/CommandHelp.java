@@ -129,6 +129,7 @@ public class CommandHelp extends GodsCommand
 		sender.sendMessage(ChatColor.WHITE + "  1  - Place a block");
 		sender.sendMessage(ChatColor.WHITE + "  2a - Place a torch on top for a male god");
 		sender.sendMessage(ChatColor.WHITE + "  2b - Place a redstone torch on top for a female god");
+		sender.sendMessage(ChatColor.WHITE + "  2c - Place a soul torch on top for a nonbinary god");
 		sender.sendMessage(ChatColor.WHITE + "  3  - Place a sign on the side of the block");
 		sender.sendMessage(ChatColor.WHITE + "  4  - Write the name of your God on the sign");
 		sender.sendMessage("");

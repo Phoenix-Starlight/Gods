@@ -48,7 +48,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class GodManager
 {
 	public static enum GodGender {
-		None, Male, Female;
+	    None, Male, Female, Nonbinary;
 	}
 
 	public static enum GodMood {
@@ -1256,6 +1256,9 @@ public class GodManager
 					break;
 				case 1:
 					godGender = GodGender.Female;
+					break;
+				case 2:
+					godGender = GodGender.Nonbinary;
 					break;
 				}
 			}
