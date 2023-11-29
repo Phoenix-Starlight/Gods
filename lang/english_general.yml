@@ -407,9 +407,9 @@ GodTypes:
   CREATURES: $Gender of Mobs
   NATURE: $Gender of Nature 
 GodGender:
-  None: God
   Male: God
   Female: Goddess
+  Nonbinary: God
 GodMood:
   EXALTED: Exalted
   PLEASED: Pleased
